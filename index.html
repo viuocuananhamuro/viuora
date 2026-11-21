@@ -1290,6 +1290,37 @@ async function syncRoleCategoryEntries(sectionKey, ownerDisplayName){
   }
  }
 }
+async function backfillApprovedRoleCategories(){
+ if(!configured)return;
+ if(!creatorProfiles.length)await fetchCreatorProfiles();
+ let changed=false;
+ for(const p of (creatorProfiles||[])){
+  const dname=(p.display_name||p.username||"").trim();
+  if(!dname)continue;
+  if(p.can_creator||p.is_approved){
+   const hasCrt=categories.some(c=>c.section==="creator"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
+   if(!hasCrt){await syncRoleCategoryEntries("creator",dname);changed=true;}
+  }
+  if(p.can_commission){
+   const hasComm=categories.some(c=>c.section==="commission"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
+   if(!hasComm){await syncRoleCategoryEntries("commission",dname);changed=true;}
+  }
+ }
+ if(changed){
+  const {data:cData}=await client.from("categories").select("*").order("sort_order");
+  if(cData)categories=cData;
+ }
+}
+async function renameCategoryOwnerForProfile(oldName, newName){
+ if(!configured)return;
+ const prev=String(oldName||"").trim();
+ const next=String(newName||"").trim();
+ if(!prev||!next||prev.toLowerCase()===next.toLowerCase())return;
+ const matching=categories.filter(c=>String(c.owner_name||"").toLowerCase()===prev.toLowerCase());
+ for(const c of matching){
+  await client.from("categories").update({owner_name:next}).eq("id",c.id);
+ }
+}
 async function propagateTemplateToSection(sectionKey, groupName, catName, subcats=[]){
  if(!configured)return;
  const g=(groupName||"CHAR").trim()||"CHAR";
@@ -1481,7 +1512,9 @@ async function openProfile(p){
  modal("profileModal")
 }
 $("editMyProfile").onclick=()=>{renderProfileEditor(currentProfile);$("profileEditor").style.display="block";if($("saveProfile"))$("saveProfile").style.display="inline-flex"};
-$("saveProfile").onclick=async()=>{if(!currentProfile||!session)return;const btn=$("saveProfile");if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}try{const name=$("profileName").value.trim(),handle=$("profileHandle").value.trim().toLowerCase(),bio=$("profileBio").value.trim(),links=$("profileLinks").value.split(/\r?\n/).map(x=>safeWebUrl(x.trim())).filter(Boolean),theme={titleBadge:($("profileTitleBadge")?.value||"").trim(),accent:validColor($("profileAccent").value,"#d99ac6"),accent2:validColor($("profileAccent2").value,"#b8a5e5"),background:validColor($("profileBackground").value,"#fff7fc"),surface:validColor($("profileSurface").value,"#ffffff"),textColor:validColor($("profileTextColor").value,"#51425e"),bodyFont:CREATOR_FONTS.includes($("profileBodyFont").value)?$("profileBodyFont").value:"Quicksand",headerFont:CREATOR_FONTS.includes($("profileHeaderFont").value)?$("profileHeaderFont").value:"Playfair Display",borderStyle:$("profileBorderStyle").value||"solid",glowColor:validColor($("profileGlowColor").value,"#e89ad4"),glowSize:Math.max(0,Math.min(32,Number($("profileGlowSize").value)||0)),effect:$("profileEffect").value||"none",bannerFx:$("profileBannerFx").value||"none"};if(!name||! /^[a-z0-9-]{3,30}$/.test(handle))return toast("Tên hiển thị và username chưa hợp lệ");let avatar_url=currentProfile.avatar_url||null,banner_url=currentProfile.banner_url||null;const avatarFile=$("profileAvatarFile").files[0],bannerFile=$("profileBannerFile").files[0];if(avatarFile)avatar_url=await uploadImage(avatarFile,`creator/${session.user.id}/profile`);if(bannerFile)banner_url=await uploadImage(bannerFile,`creator/${session.user.id}/profile`);let {data,error}=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links,theme}).eq("user_id",session.user.id).select().single();if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){const retry=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links}).eq("user_id",session.user.id).select().single();data=retry.data;error=retry.error;}if(error)throw error;currentProfile=data;await fetchCreatorProfiles();toast("Đã lưu hồ sơ Creator ♡");openProfile(data)}catch(err){toast("Không lưu được hồ sơ: "+(err.message||err))}finally{if(btn){btn.disabled=false;btn.textContent="Lưu hồ sơ"}}};
+$("saveProfile").onclick=async()=>{if(!currentProfile||!session)return;const btn=$("saveProfile");if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}try{const name=$("profileName").value.trim(),handle=$("profileHandle").value.trim().toLowerCase(),bio=$("profileBio").value.trim(),links=$("profileLinks").value.split(/\r?\n/).map(x=>safeWebUrl(x.trim())).filter(Boolean),theme={titleBadge:($("profileTitleBadge")?.value||"").trim(),accent:validColor($("profileAccent").value,"#d99ac6"),accent2:validColor($("profileAccent2").value,"#b8a5e5"),background:validColor($("profileBackground").value,"#fff7fc"),surface:validColor($("profileSurface").value,"#ffffff"),textColor:validColor($("profileTextColor").value,"#51425e"),bodyFont:CREATOR_FONTS.includes($("profileBodyFont").value)?$("profileBodyFont").value:"Quicksand",headerFont:CREATOR_FONTS.includes($("profileHeaderFont").value)?$("profileHeaderFont").value:"Playfair Display",borderStyle:$("profileBorderStyle").value||"solid",glowColor:validColor($("profileGlowColor").value,"#e89ad4"),glowSize:Math.max(0,Math.min(32,Number($("profileGlowSize").value)||0)),effect:$("profileEffect").value||"none",bannerFx:$("profileBannerFx").value||"none"};if(!name||! /^[a-z0-9-]{3,30}$/.test(handle))return toast("Tên hiển thị và username chưa hợp lệ");let avatar_url=currentProfile.avatar_url||null,banner_url=currentProfile.banner_url||null;const avatarFile=$("profileAvatarFile").files[0],bannerFile=$("profileBannerFile").files[0];if(avatarFile)avatar_url=await uploadImage(avatarFile,`creator/${session.user.id}/profile`);if(bannerFile)banner_url=await uploadImage(bannerFile,`creator/${session.user.id}/profile`);const prevDisplayName=currentProfile.display_name||"";
+let {data,error}=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links,theme}).eq("user_id",session.user.id).select().single();
+if(!error&&data){await renameCategoryOwnerForProfile(prevDisplayName,name);if(data.can_creator||data.is_approved)await syncRoleCategoryEntries("creator",name);if(data.can_commission)await syncRoleCategoryEntries("commission",name);await loadAll();}if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){const retry=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links}).eq("user_id",session.user.id).select().single();data=retry.data;error=retry.error;}if(error)throw error;currentProfile=data;await fetchCreatorProfiles();toast("Đã lưu hồ sơ Creator ♡");openProfile(data)}catch(err){toast("Không lưu được hồ sơ: "+(err.message||err))}finally{if(btn){btn.disabled=false;btn.textContent="Lưu hồ sơ"}}};
 let lastAnnouncedUnreadCount=0;
 function formatVnDayMonth(iso){
  const d=iso?new Date(iso):new Date();
@@ -1933,7 +1966,7 @@ async function refreshAdmin(){if(!session){isAdmin=false;refreshRoleUI();return}
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
 if(c.error||i.error){toast("Không tải được dữ liệu. Kiểm tra cấu hình và SQL.");console.error(c.error,i.error);return}
-categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;applySettings();render();await migrateStickerPositions();renderStickers();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
+categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
 }
 function itemMatchesFilter(x, opts={}){
  const c=categories.find(v=>v.id===x.category_id);
