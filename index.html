@@ -26,7 +26,7 @@ body.grad-flow-pastel_wave{background-size:200% 200%,var(--page-background-size,
 body.grad-flow-dream_mesh{animation:bgGradMesh 12s ease-in-out infinite}
 
 
-#bgAmbientCanvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1}.hero,.wrap,footer{position:relative;z-index:2}
+#bgAmbientCanvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;background:transparent;z-index:1}.hero,.wrap,footer,.panel,.card,.site-intro-box,.announce-drawer{position:relative;z-index:2}
 button,input,textarea,select{font:inherit}button{cursor:pointer}.hero{font-family:var(--font-header,'Playfair Display'),Georgia,serif;min-height:230px;position:relative;display:grid;place-items:center;text-align:center;padding:42px 20px 28px;background:linear-gradient(120deg,#f8d5e9d9,#ded4f7d9),var(--cover);background-size:cover;background-position:center;overflow:hidden;overflow:visible;isolation:isolate}.hero::after{content:'';position:absolute;z-index:0;left:0;right:0;bottom:-1px;height:var(--hero-fade-height,58px);pointer-events:none;background:var(--page-fade-gradient,linear-gradient(to bottom,transparent,var(--bg,#fff7fc)));-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 92%);mask-image:linear-gradient(to bottom,transparent 0%,#000 92%);opacity:var(--hero-fade-strength,.86)}
 
 .hero-inner{position:relative;z-index:1;max-width:800px;padding-top:24px}.eyebrow{font-size:9.5px;letter-spacing:2.5px;color:#866c91}.hero h1{font:clamp(30px,5vw,52px)/1.12 var(--font-header,'Playfair Display'),Georgia,serif;color:#6c547c;margin:8px 0;text-shadow:0 2px #fff}.hero p{color:#806c8c;margin:0;font-size:13px}.hero-actions{position:absolute;z-index:3;right:calc(var(--hero-frame-inset,12px) + 14px);top:calc(var(--hero-frame-inset,12px) + 12px);display:flex;gap:5px;padding:3px 5px;border-radius:12px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -564,8 +564,8 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
   <span id="l_sec6"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Sáng)</strong>
   <div class="cols">
-   <div class="field"><label>Hiệu ứng chuyển động nền 1</label><select id="dBgAmbient"><option value="none">Không chuyển động</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
-   <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp)</label><select id="dBgAmbient2"><option value="none">Không chuyển động</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
+   <div class="field"><label>Hiệu ứng chuyển động nền 1</label><select id="dBgAmbient"><option value="none">Không chuyển động</option><option value="sunbeam_petals_dew">☀ Nắng sớm, Hoa &amp; Sương mai (Hợp nền trắng)</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
+   <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp)</label><select id="dBgAmbient2"><option value="none">Không chuyển động</option><option value="sunbeam_petals_dew">☀ Nắng sớm, Hoa &amp; Sương mai (Hợp nền trắng)</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
   </div>
   <div class="cols"><div class="field"><label>Màu hạt chuyển động</label><input id="dBgAmbientColor" type="color" value="#ffffff"></div><div class="field"><label>Mật độ hạt (%): <span id="dBgAmbientDensityValue">55%</span></label><input id="dBgAmbientDensity" type="range" min="15" max="100" value="55"></div></div>
   <div class="field"><label>Tốc độ chuyển động: <span id="dBgAmbientSpeedValue">1.0x</span></label><input id="dBgAmbientSpeed" type="range" min="0.4" max="2.2" step="0.1" value="1"></div>
@@ -640,8 +640,8 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
   <span id="d_sec6"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Tối)</strong>
   <div class="cols">
-   <div class="field"><label>Hiệu ứng chuyển động nền 1 (Tối)</label><select id="dDarkBgAmbient"><option value="none">Không chuyển động</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
-   <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp - Tối)</label><select id="dDarkBgAmbient2"><option value="none">Không chuyển động</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
+   <div class="field"><label>Hiệu ứng chuyển động nền 1 (Tối)</label><select id="dDarkBgAmbient"><option value="none">Không chuyển động</option><option value="sunbeam_petals_dew">☀ Nắng sớm, Hoa &amp; Sương mai (Hợp nền trắng)</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
+   <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp - Tối)</label><select id="dDarkBgAmbient2"><option value="none">Không chuyển động</option><option value="sunbeam_petals_dew">☀ Nắng sớm, Hoa &amp; Sương mai (Hợp nền trắng)</option><option value="starlight_dust">✦ Bụi sao &amp; Ánh trăng lấp lánh</option><option value="shooting_comets">☄ Mưa sao băng lụa mượt</option><option value="sakura_breeze">❀ Cánh hoa anh đào bay trong gió</option><option value="fairy_fireflies">✧ Đom đóm &amp; Đốm sáng tiên</option><option value="dream_bubbles">○ Bong bóng pha lê ánh ngọc</option><option value="silk_aurora">〰 Dải lụa cực quang mềm</option><option value="floating_hearts">♡ Trái tim pha lê bay nhẹ</option></select></div>
   </div>
   <div class="cols"><div class="field"><label>Màu hạt chuyển động (Tối)</label><input id="dDarkBgAmbientColor" type="color" value="#e9d5ff"></div><div class="field"><label>Mật độ hạt (%): <span id="dDarkBgAmbientDensityValue">60%</span></label><input id="dDarkBgAmbientDensity" type="range" min="15" max="100" value="60"></div></div>
   <div class="field"><label>Tốc độ chuyển động (Tối): <span id="dDarkBgAmbientSpeedValue">1.0x</span></label><input id="dDarkBgAmbientSpeed" type="range" min="0.4" max="2.2" step="0.1" value="1"></div>
@@ -894,7 +894,7 @@ function applySettings(){
  }
 }
 
-// V36 Refined Aesthetic Ambient Motion Engine (60fps Canvas)
+// V37 Polished Light & Dark Ambient Motion Engine (60fps Canvas)
 let ambientState={mode:"none",mode2:"none",color:"#ffffff",density:55,speed:1,isDark:false},ambientParticles=[],ambientParticles2=[],ambientMeteors=[],ambientRaf=null,ambientLastTs=0;
 function normalizeAmbientMode(m){
  const map={
@@ -914,6 +914,14 @@ function hexToRgbTuple(hex){
  const n=parseInt(h,16);
  return Number.isNaN(n)?[255,255,255]:[(n>>16)&255,(n>>8)&255,n&255];
 }
+function effectiveAmbientRgb(hex,isDark){
+ const [r,g,b]=hexToRgbTuple(hex);
+ if(!isDark&&(r+g+b)>690){
+  // Pure/near-white on a white/light theme would blend into white; shift to soft pastel plum-rose for crisp visibility
+  return [176,118,178];
+ }
+ return [r,g,b];
+}
 function resizeAmbientCanvas(){
  const cv=$("bgAmbientCanvas");if(!cv)return;
  const dpr=Math.min(window.devicePixelRatio||1,2);
@@ -929,30 +937,32 @@ function buildParticlePoolForMode(rawMode,dens){
  const pool=[];
  if(!modeName||modeName==="none"||modeName==="silk_aurora")return pool;
  const counts={
-  starlight_dust:Math.round(72*dens),
-  shooting_comets:Math.round(48*dens),
-  sakura_breeze:Math.round(32*dens),
-  fairy_fireflies:Math.round(34*dens),
-  dream_bubbles:Math.round(26*dens),
-  floating_hearts:Math.round(26*dens)
+  sunbeam_petals_dew:Math.round(38*dens),
+  starlight_dust:Math.round(74*dens),
+  shooting_comets:Math.round(50*dens),
+  sakura_breeze:Math.round(34*dens),
+  fairy_fireflies:Math.round(36*dens),
+  dream_bubbles:Math.round(28*dens),
+  floating_hearts:Math.round(28*dens)
  };
- const baseCount=counts[modeName]||Math.round(32*dens);
+ const baseCount=counts[modeName]||Math.round(34*dens);
  for(let i=0;i<baseCount;i++){
-  const depth=0.45+Math.random()*0.75;
+  const depth=0.5+Math.random()*0.75;
   pool.push({
    x:Math.random()*w,
    y:Math.random()*h,
    depth,
-   r:(modeName==="dream_bubbles"?(7+Math.random()*15):modeName==="sakura_breeze"?(4.5+Math.random()*4.2):modeName==="floating_hearts"?(4.2+Math.random()*4.0):(1.2+Math.random()*2.3))*depth,
-   vx:(Math.random()-0.5)*(modeName==="sakura_breeze"?1.05:0.45)*depth,
-   vy:(modeName==="sakura_breeze"?(0.55+Math.random()*0.85):modeName==="dream_bubbles"||modeName==="floating_hearts"?(-0.38-Math.random()*0.65):((Math.random()-0.5)*0.28))*depth,
+   kind:i%3,
+   r:(modeName==="dream_bubbles"?(8+Math.random()*15):modeName==="sakura_breeze"||modeName==="sunbeam_petals_dew"?(4.8+Math.random()*4.2):modeName==="floating_hearts"?(4.5+Math.random()*4.0):(1.4+Math.random()*2.4))*depth,
+   vx:(Math.random()-0.5)*(modeName==="sakura_breeze"||modeName==="sunbeam_petals_dew"?0.95:0.45)*depth,
+   vy:(modeName==="sakura_breeze"||modeName==="sunbeam_petals_dew"?(0.55+Math.random()*0.8):modeName==="dream_bubbles"||modeName==="floating_hearts"?(-0.4-Math.random()*0.65):((Math.random()-0.5)*0.3))*depth,
    phase:Math.random()*Math.PI*2,
    phase2:Math.random()*Math.PI*2,
    rot:Math.random()*Math.PI*2,
-   vrot:(Math.random()-0.5)*0.025,
+   vrot:(Math.random()-0.5)*0.024,
    flip:Math.random()*Math.PI*2,
    vflip:0.018+Math.random()*0.025,
-   alpha:(0.28+Math.random()*0.52)*Math.min(1,depth+0.15)
+   alpha:(0.36+Math.random()*0.52)*Math.min(1,depth+0.15)
   });
  }
  return pool;
@@ -974,7 +984,7 @@ function spawnComet(){
   vx:5.8+Math.random()*3.2,
   vy:3.6+Math.random()*2.1,
   len:120+Math.random()*95,
-  size:1.7+Math.random()*1.3,
+  size:1.8+Math.random()*1.3,
   life:0,
   maxLife:62+Math.random()*28
  });
@@ -1004,7 +1014,7 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
   const t=ts*0.00038*(ambientState.speed||1);
   const bands=Math.max(2,Math.min(4,Math.round((ambientState.density||55)/28)));
   ctx.save();
-  ctx.globalCompositeOperation="screen";
+  ctx.globalCompositeOperation=ambientState.isDark?"screen":"source-over";
   for(let b=0;b<bands;b++){
    ctx.beginPath();
    const baseY=h*(0.16+b*0.19);
@@ -1016,9 +1026,10 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    }
    ctx.lineTo(w,baseY+170);ctx.lineTo(0,baseY+170);ctx.closePath();
    const g=ctx.createLinearGradient(0,baseY-30,0,baseY+170);
+   const bandAlpha=ambientState.isDark?(0.12+(b%2)*0.04):(0.14+(b%2)*0.05);
    g.addColorStop(0,`rgba(${cr},${cg},${cb},0)`);
-   g.addColorStop(0.45,`rgba(${cr},${cg},${cb},${(0.11+(b%2)*0.04).toFixed(3)})`);
-   g.addColorStop(0.75,`rgba(${Math.min(255,cr+25)},${Math.min(255,cg+15)},${Math.min(255,cb+30)},0.05)`);
+   g.addColorStop(0.45,`rgba(${cr},${cg},${cb},${bandAlpha.toFixed(3)})`);
+   g.addColorStop(0.75,`rgba(${Math.min(255,cr+25)},${Math.min(255,cg+15)},${Math.min(255,cb+30)},${(bandAlpha*0.55).toFixed(3)})`);
    g.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
    ctx.fillStyle=g;ctx.fill();
   }
@@ -1030,21 +1041,48 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
   p.phase2+=0.017*spd;
   p.rot+=p.vrot*spd;
   p.flip+=p.vflip*spd;
-  if(m==="starlight_dust"||m==="shooting_comets"){
+  if(m==="sunbeam_petals_dew"){
+   const sway=Math.sin(p.phase*0.8)*0.75;
+   p.x+=(p.vx+sway)*spd;
+   p.y+=p.vy*spd;
+   if(p.y>h+24){p.y=-20;p.x=Math.random()*w}
+   if(p.x>w+24)p.x=-20;if(p.x<-24)p.x=w+20;
+   if(p.kind===0){
+    const scaleX=0.45+0.55*Math.abs(Math.cos(p.flip));
+    ctx.save();
+    ctx.translate(p.x,p.y);
+    ctx.rotate(p.rot);
+    ctx.scale(scaleX,1);
+    ctx.fillStyle=`rgba(${cr},${cg},${cb},${(p.alpha*0.62).toFixed(3)})`;
+    ctx.beginPath();
+    ctx.moveTo(0,-p.r*1.3);
+    ctx.bezierCurveTo(p.r*1.1,-p.r*0.55,p.r*0.95,p.r*0.75,0,p.r*1.3);
+    ctx.bezierCurveTo(-p.r*0.95,p.r*0.75,-p.r*1.1,-p.r*0.55,0,-p.r*1.3);
+    ctx.fill();
+    ctx.restore();
+   }else if(p.kind===1){
+    const sp=(0.35+0.65*(0.5+0.5*Math.sin(p.phase*1.6)));
+    ctx.fillStyle=`rgba(${cr},${cg},${cb},${(p.alpha*sp*0.78).toFixed(3)})`;
+    drawFourPointStar(ctx,p.x,p.y,p.r*1.15);
+   }else{
+    ctx.fillStyle=`rgba(${cr},${cg},${cb},${(p.alpha*0.42).toFixed(3)})`;
+    ctx.beginPath();ctx.arc(p.x,p.y,Math.max(2.2,p.r*0.68),0,Math.PI*2);ctx.fill();
+   }
+  }else if(m==="starlight_dust"||m==="shooting_comets"){
    p.x+=Math.cos(p.phase2)*0.08*spd;
    p.y+=Math.sin(p.phase)*0.08*spd;
-   const twinkle=0.25+0.75*(0.5+0.5*Math.sin(p.phase*1.35));
+   const twinkle=0.35+0.65*(0.5+0.5*Math.sin(p.phase*1.35));
    const a=(p.alpha*twinkle).toFixed(3);
    if(p.r>1.75){
     const halo=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4.2);
-    halo.addColorStop(0,`rgba(${cr},${cg},${cb},${(p.alpha*twinkle*0.55).toFixed(3)})`);
+    halo.addColorStop(0,`rgba(${cr},${cg},${cb},${(p.alpha*twinkle*0.52).toFixed(3)})`);
     halo.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
     ctx.fillStyle=halo;ctx.beginPath();ctx.arc(p.x,p.y,p.r*4.2,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=`rgba(255,255,255,${Math.min(0.95,p.alpha*twinkle*1.15).toFixed(3)})`;
+    ctx.fillStyle=`rgba(${cr},${cg},${cb},${Math.min(0.9,p.alpha*twinkle*1.05).toFixed(3)})`;
     drawFourPointStar(ctx,p.x,p.y,p.r*2.4);
    }else{
     ctx.fillStyle=`rgba(${cr},${cg},${cb},${a})`;
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.85,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.9,0,Math.PI*2);ctx.fill();
    }
   }else if(m==="sakura_breeze"){
    const gust=Math.sin(p.phase*0.85)*0.95+0.35;
@@ -1058,9 +1096,9 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    ctx.rotate(p.rot);
    ctx.scale(scaleX,1);
    const pg=ctx.createLinearGradient(0,-p.r*1.4,0,p.r*1.4);
-   pg.addColorStop(0,`rgba(255,245,250,${(p.alpha*0.88).toFixed(3)})`);
+   pg.addColorStop(0,`rgba(${Math.min(255,cr+35)},${Math.min(255,cg+35)},${Math.min(255,cb+35)},${(p.alpha*0.85).toFixed(3)})`);
    pg.addColorStop(0.55,`rgba(${cr},${cg},${cb},${(p.alpha*0.78).toFixed(3)})`);
-   pg.addColorStop(1,`rgba(${Math.max(0,cr-24)},${Math.max(0,cg-28)},${Math.max(0,cb-12)},${(p.alpha*0.65).toFixed(3)})`);
+   pg.addColorStop(1,`rgba(${Math.max(0,cr-24)},${Math.max(0,cg-28)},${Math.max(0,cb-12)},${(p.alpha*0.68).toFixed(3)})`);
    ctx.fillStyle=pg;
    ctx.beginPath();
    ctx.moveTo(0,-p.r*1.35);
@@ -1073,11 +1111,11 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    p.y+=(p.vy+Math.sin(p.phase2)*0.45)*spd;
    if(p.x<-20)p.x=w+20;if(p.x>w+20)p.x=-20;
    if(p.y<-20)p.y=h+20;if(p.y>h+20)p.y=-20;
-   const pulse=0.22+0.78*(0.5+0.5*Math.sin(p.phase*1.2));
-   const rad=p.r*5.2;
+   const pulse=0.3+0.7*(0.5+0.5*Math.sin(p.phase*1.2));
+   const rad=p.r*5.0;
    const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,rad);
-   g.addColorStop(0,`rgba(255,255,248,${(0.92*pulse).toFixed(3)})`);
-   g.addColorStop(0.28,`rgba(${cr},${cg},${cb},${(0.58*pulse).toFixed(3)})`);
+   g.addColorStop(0,`rgba(${cr},${cg},${cb},${(0.75*pulse).toFixed(3)})`);
+   g.addColorStop(0.35,`rgba(${cr},${cg},${cb},${(0.42*pulse).toFixed(3)})`);
    g.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,rad,0,Math.PI*2);ctx.fill();
   }else if(m==="dream_bubbles"){
@@ -1085,13 +1123,12 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    p.y+=p.vy*spd;
    if(p.y<-28){p.y=h+24;p.x=Math.random()*w}
    const g=ctx.createRadialGradient(p.x-p.r*0.28,p.y-p.r*0.28,p.r*0.08,p.x,p.y,p.r);
-   g.addColorStop(0,`rgba(255,255,255,${(p.alpha*0.42).toFixed(3)})`);
-   g.addColorStop(0.65,`rgba(${cr},${cg},${cb},${(p.alpha*0.10).toFixed(3)})`);
-   g.addColorStop(0.92,`rgba(${cr},${cg},${cb},${(p.alpha*0.36).toFixed(3)})`);
-   g.addColorStop(1,`rgba(255,255,255,${(p.alpha*0.48).toFixed(3)})`);
+   g.addColorStop(0,`rgba(255,255,255,${(p.alpha*0.55).toFixed(3)})`);
+   g.addColorStop(0.65,`rgba(${cr},${cg},${cb},${(p.alpha*0.14).toFixed(3)})`);
+   g.addColorStop(0.92,`rgba(${cr},${cg},${cb},${(p.alpha*0.45).toFixed(3)})`);
+   g.addColorStop(1,`rgba(${cr},${cg},${cb},${(p.alpha*0.58).toFixed(3)})`);
    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
-   ctx.fillStyle=`rgba(255,255,255,${(p.alpha*0.65).toFixed(3)})`;
-   ctx.beginPath();ctx.arc(p.x-p.r*0.34,p.y-p.r*0.34,p.r*0.18,0,Math.PI*2);ctx.fill();
+   ctx.strokeStyle=`rgba(${cr},${cg},${cb},${(p.alpha*0.35).toFixed(3)})`;ctx.lineWidth=1;ctx.stroke();
   }else if(m==="floating_hearts"){
    p.x+=Math.sin(p.phase*0.8)*0.48*spd;
    p.y+=p.vy*spd;
@@ -1100,7 +1137,7 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    ctx.save();
    ctx.translate(p.x,p.y);
    ctx.scale(beat,beat);
-   ctx.fillStyle=`rgba(${cr},${cg},${cb},${(p.alpha*0.56).toFixed(3)})`;
+   ctx.fillStyle=`rgba(${cr},${cg},${cb},${(p.alpha*0.62).toFixed(3)})`;
    drawCrystalHeart(ctx,0,0,p.r*1.8);
    ctx.restore();
   }
@@ -1117,17 +1154,12 @@ function renderSingleAmbientLayer(ctx,rawMode,pool,w,h,ts,spd,cr,cg,cb){
    const norm=Math.hypot(mt.vx,mt.vy)||1;
    const tx=mt.x-(mt.vx/norm)*mt.len,ty=mt.y-(mt.vy/norm)*mt.len;
    const grad=ctx.createLinearGradient(mt.x,mt.y,tx,ty);
-   grad.addColorStop(0,`rgba(255,255,255,${(0.92*fade).toFixed(3)})`);
-   grad.addColorStop(0.22,`rgba(${cr},${cg},${cb},${(0.65*fade).toFixed(3)})`);
+   grad.addColorStop(0,`rgba(${cr},${cg},${cb},${(0.88*fade).toFixed(3)})`);
+   grad.addColorStop(0.45,`rgba(${cr},${cg},${cb},${(0.45*fade).toFixed(3)})`);
    grad.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
    ctx.strokeStyle=grad;ctx.lineWidth=mt.size;ctx.lineCap="round";
    ctx.beginPath();ctx.moveTo(mt.x,mt.y);ctx.lineTo(tx,ty);ctx.stroke();
-   const glow=ctx.createRadialGradient(mt.x,mt.y,0,mt.x,mt.y,mt.size*5.5);
-   glow.addColorStop(0,`rgba(255,255,255,${(0.95*fade).toFixed(3)})`);
-   glow.addColorStop(0.4,`rgba(${cr},${cg},${cb},${(0.45*fade).toFixed(3)})`);
-   glow.addColorStop(1,`rgba(${cr},${cg},${cb},0)`);
-   ctx.fillStyle=glow;ctx.beginPath();ctx.arc(mt.x,mt.y,mt.size*5.5,0,Math.PI*2);ctx.fill();
-   ctx.fillStyle=`rgba(255,255,255,${(0.95*fade).toFixed(3)})`;
+   ctx.fillStyle=`rgba(${cr},${cg},${cb},${(0.85*fade).toFixed(3)})`;
    drawFourPointStar(ctx,mt.x,mt.y,mt.size*2.8);
   }
  }
@@ -1148,7 +1180,7 @@ function stepAmbientCanvas(ts){
  const w=window.innerWidth||1280,h=window.innerHeight||720;
  const ctx=cv.getContext("2d");
  ctx.clearRect(0,0,w,h);
- const [cr,cg,cb]=hexToRgbTuple(ambientState.color);
+ const [cr,cg,cb]=effectiveAmbientRgb(ambientState.color,ambientState.isDark);
  if(m1!=="none")renderSingleAmbientLayer(ctx,m1,ambientParticles,w,h,ts,spd,cr,cg,cb);
  if(m2!=="none")renderSingleAmbientLayer(ctx,m2,ambientParticles2,w,h,ts,spd,cr,cg,cb);
  ambientRaf=requestAnimationFrame(stepAmbientCanvas);
