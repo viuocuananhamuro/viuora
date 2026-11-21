@@ -341,9 +341,6 @@ body[data-theme="dark"] .field label.check-row{background:#2d253a!important;bord
 body[data-theme="dark"] .field label.check-row:hover{background:#362c45!important;border-color:#746088!important}
 .request-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border:1px solid var(--line);border-radius:13px;margin:9px 0;background:var(--surface-soft,rgba(255,255,255,.05))}.request-actions{display:flex;gap:7px;flex-wrap:wrap}.request-status{display:inline-block;margin-top:5px;font-size:12px;color:#b58a42}.request-list{max-height:55vh;overflow:auto}body[data-theme="dark"] .request-row{background:#30283d;color:#f4edf8;border-color:#62536e}body[data-theme="dark"] .request-row .hint{color:#c9bad4}
 /* V9.4: Public Creator/Admin Announcement Bar + Guest Activity Feed */
-.intro-box{margin:0 0 12px;border:1px solid var(--line);border-radius:18px;padding:13px 16px;background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px)}
-.intro-box-inner{white-space:pre-wrap;word-break:break-word;font-size:13.5px;color:var(--ink);line-height:1.55}
-body[data-theme="dark"] .intro-box{background:rgba(36,31,49,.9);border-color:#51445e;box-shadow:none!important}
 .announce-drawer{margin:12px 0 0;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s ease}
 .announce-bar-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 16px;border:0;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 16%,transparent),color-mix(in srgb,var(--accent2) 14%,transparent));color:var(--ink);text-align:left;font-weight:700;font-size:13px}
 .announce-bar-head:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 24%,transparent),color-mix(in srgb,var(--accent2) 20%,transparent))}
@@ -439,25 +436,32 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 }
 .outside-admin-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.72);font-size:12px}.outside-admin-label{color:#765d85}body[data-theme="dark"] .outside-admin-bar{background:rgba(43,34,51,.85);border-color:#51415b}body[data-theme="dark"] .outside-admin-label{color:#e8c9f0}
 .admin-profile-pill,body[data-theme="dark"] .admin-profile-pill{display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--pill-border,var(--accent))!important;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700;line-height:1.3;background:var(--pill-bg,#fff7fc)!important;color:var(--pill-ink,#51425e)!important;box-shadow:0 3px 10px color-mix(in srgb,var(--pill-glow,var(--accent2)) 35%,transparent)!important;transition:transform .16s ease,box-shadow .16s ease}.admin-profile-pill:hover,body[data-theme="dark"] .admin-profile-pill:hover{transform:translateY(-1px)}
+
+.site-intro-box{margin:0 0 14px;padding:13px 16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.site-intro-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.site-intro-text{font-size:13.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap;word-break:break-word;flex:1}
+.site-intro-editor{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.site-intro-editor textarea{width:100%;min-height:66px;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:var(--surface,#fff);color:var(--ink);resize:vertical}
+body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-color:#51445e}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
 <header class="hero" id="hero"><div class="hero-lace-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div><div class="hero-actions"><div class="visitor-tools"><button class="icon-btn notify-btn" id="notifyBtn" title="Cập nhật mới &amp; Thông báo" aria-label="Cập nhật mới &amp; Thông báo">♧ Cập nhật</button><button class="icon-btn" id="creatorAccountBtn" title="Tài khoản Creator &amp; Share Comm">♡ Creator / Comm</button><button class="btn ghost" id="loginBtn">Admin Login</button><button class="btn ghost" id="logoutBtn" style="display:none">Đăng xuất Admin</button></div></div><div class="hero-inner" id="heroTextFrames"><div class="eyebrow" id="heroEyebrow">✧ YOUR PERSONAL CHARACTER UNIVERSE ✧</div><div id="heroTitleGroup"><h1 id="siteTitle">♡ Anime GGAI Library ♡</h1><p id="siteSubtitle">Collect your favorite characters & explore new worlds</p></div></div></header>
 <main class="wrap"><div class="adminbar" id="adminBarText">✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.</div>
-<section class="intro-box" id="webIntroSection" aria-label="Lời giới thiệu website">
- <div class="intro-box-inner" id="webIntroDisplay">Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.</div>
- <div class="admin-only" style="margin-top:8px;justify-content:flex-end;width:100%">
-  <button type="button" class="btn ghost sm" id="editIntroBtn">✎ Sửa lời giới thiệu</button>
+<section class="site-intro-box" id="siteIntroBox">
+ <div class="site-intro-top">
+  <div id="siteIntroText" class="site-intro-text">Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.</div>
+  <button type="button" class="btn ghost sm admin-only" id="editSiteIntroBtn">✎ Sửa lời giới thiệu</button>
  </div>
- <div class="intro-editor" id="webIntroEditor" style="display:none;margin-top:10px">
-  <div class="field" style="margin:0 0 8px"><label>Lời giới thiệu website (Admin)</label><textarea id="webIntroInput" style="min-height:68px" placeholder="Nhập lời giới thiệu cho website..."></textarea></div>
-  <div style="display:flex;gap:7px;justify-content:flex-end">
-   <button type="button" class="btn ghost sm" id="cancelIntroBtn">Hủy</button>
-   <button type="button" class="btn sm" id="saveIntroBtn">Lưu lời giới thiệu</button>
+ <div id="siteIntroEditor" class="site-intro-editor" style="display:none">
+  <textarea id="siteIntroInput" maxlength="600" placeholder="Nhập lời giới thiệu cho website..."></textarea>
+  <div style="display:flex;gap:7px;justify-content:flex-end;margin-top:8px">
+   <button type="button" class="btn ghost sm" id="cancelSiteIntroBtn">Hủy</button>
+   <button type="button" class="btn sm" id="saveSiteIntroBtn">Lưu lời giới thiệu</button>
   </div>
  </div>
 </section>
-<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn" id="addBtn">＋ Đăng tải</button><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng CHAR</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ Danh sách Creator &amp; Comm</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
+<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn sm" id="addBtn">＋ Đăng tải</button><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng CHAR</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ Danh sách Creator &amp; Comm</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
 <nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="outsideAdminBar" class="outside-admin-bar"><strong class="outside-admin-label">✦ Admin:</strong><span id="outsideAdminList" class="hint" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">Đang tải...</span></div></div>
 <section class="announce-drawer" id="announceDrawer" aria-label="Bảng thông báo từ Creator">
  <button type="button" class="announce-bar-head" id="announceToggle" aria-expanded="false">
@@ -490,17 +494,16 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 <button type="button" class="design-tab" data-tab="stickers">✧ Sticker</button>
 <button type="button" class="design-tab" data-tab="media_footer">♫ Nhạc &amp; Footer</button>
 </nav>
-<div class="design-panel active" data-panel="light_mode">
-<div class="subtabs" style="margin:6px 0 10px" aria-label="Mục nhanh Chế độ Sáng">
- <button type="button" class="subtab active" onclick="scrollDesignSub(this,'light_mode',0)">1. Header &amp; Ảnh</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',1)">2. Màu &amp; Chuyển tiếp</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',2)">3. Font &amp; Chữ</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',3)">4. Khung viền</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',4)">5. Nền &amp; Họa tiết</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',5)">6. Chuyển động</button>
+<div class="design-panel active" data-panel="light_mode"><div class="subtabs" style="margin:6px 0 10px;gap:5px;flex-wrap:wrap" id="lightSubJump">
+ <button type="button" class="subtab active" data-jump="l_sec1">1. Header</button>
+ <button type="button" class="subtab" data-jump="l_sec2">2. Chuyển tiếp</button>
+ <button type="button" class="subtab" data-jump="l_sec3">3. Font &amp; Chữ</button>
+ <button type="button" class="subtab" data-jump="l_sec4">4. Khung viền</button>
+ <button type="button" class="subtab" data-jump="l_sec5">5. Nền &amp; Họa tiết</button>
+ <button type="button" class="subtab" data-jump="l_sec6">6. Chuyển động</button>
 </div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
-  <strong>1. Chữ &amp; Ảnh bìa Header (Sáng)</strong>
+  <span id="l_sec1" style="scroll-margin-top:46px"></span><span id="d_sec1" style="scroll-margin-top:46px"></span><strong>1. Chữ &amp; Ảnh bìa Header (Sáng)</strong>
   <div class="field"><label>Tiêu đề</label><input id="dTitle"></div>
   <div class="field"><label>Tiêu đề phụ</label><input id="dSubtitle"></div>
   <div class="field"><label>Dòng chữ nhỏ trên Header (Eyebrow)</label><input id="dEyebrow" placeholder="✧ YOUR PERSONAL CHARACTER UNIVERSE ✧"></div>
@@ -509,7 +512,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Sáng)</strong>
+  <span id="l_sec2" style="scroll-margin-top:46px"></span><span id="d_sec2" style="scroll-margin-top:46px"></span><strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Sáng)</strong>
   <div class="field"><label>Kiểu chuyển màu Header</label><select id="dHeroMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Header màu 1</label><input id="dHero1" type="color"></div><div class="field"><label>Header màu 2</label><input id="dHero2" type="color"></div></div>
   <div class="cols"><div class="field"><label>Header màu 3</label><input id="dHero3" type="color"></div><div class="field"><label>Góc chuyển màu</label><input id="dHeroAngle" type="number" min="0" max="360" value="120"></div></div>
@@ -518,7 +521,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>3. Font chữ &amp; Kiểu chữ Header (Sáng)</strong>
+  <span id="l_sec3" style="scroll-margin-top:46px"></span><span id="d_sec3" style="scroll-margin-top:46px"></span><strong>3. Font chữ &amp; Kiểu chữ Header (Sáng)</strong>
   <div class="cols">
    <div class="field"><label>Font nội dung</label><select id="dBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Nunito">Nunito – mềm mại</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – hỗ trợ tiếng Việt tốt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Roboto">Roboto – đơn giản</option><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
    <div class="field"><label>Font Header</label><select id="dHeaderFont"><option value="Playfair Display">Playfair Display – sang trọng</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – dễ thương</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
@@ -534,7 +537,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>4. Khung viền Header &amp; Khung chữ (Sáng)</strong>
+  <span id="l_sec4" style="scroll-margin-top:46px"></span><span id="d_sec4" style="scroll-margin-top:46px"></span><strong>4. Khung viền Header &amp; Khung chữ (Sáng)</strong>
   <div class="field"><label>Kiểu khung Header</label><select id="dHeroFrameStyle"><option value="none">Không khung</option><option value="soft">Viền đơn mảnh</option><option value="double">Viền đôi thanh lịch</option><option value="dotted">Viền chấm ngọc trai</option><option value="dashed">Viền nét đứt</option><option value="ribbon">Viền ruy-băng kép</option><option value="lace">Viền ren hoa góc (Classic)</option><option value="lace_crochet">Viền ren móc đăng ten (Crochet Lace)</option><option value="royal_filigree">Viền hoa văn cổ điển 4 góc (Filigree)</option><option value="starlight_vine">Viền dây sao &amp; ngọc (Starlight)</option></select></div>
   <div class="cols"><div class="field"><label>Màu viền</label><input id="dHeroFrameColor" type="color"></div><div class="field"><label>Độ mờ (%)</label><input id="dHeroFrameOpacity" type="range" min="0" max="100"><span id="dHeroFrameOpacityValue">45%</span></div></div>
   <div class="cols"><div class="field"><label>Độ dày (px)</label><input id="dHeroFrameWidth" type="range" min="1" max="8"><span id="dHeroFrameWidthValue">2px</span></div><div class="field"><label>Cách mép ảnh (px)</label><input id="dHeroFrameInset" type="range" min="3" max="36"><span id="dHeroFrameInsetValue">12px</span></div></div>
@@ -546,7 +549,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Sáng)</strong>
+  <span id="l_sec5" style="scroll-margin-top:46px"></span><span id="d_sec5" style="scroll-margin-top:46px"></span><strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Sáng)</strong>
   <div class="cols"><div class="field"><label>Màu nền dự phòng</label><input id="dBg" type="color"></div><div class="field"><label>Màu nhấn</label><input id="dAccent" type="color"></div></div>
   <div class="field"><label>Kiểu chuyển màu nền</label><select id="dGradientMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Màu chuyển 1</label><input id="dGradient1" type="color"></div><div class="field"><label>Màu chuyển 2</label><input id="dGradient2" type="color"></div></div>
@@ -559,7 +562,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Sáng)</strong>
+  <span id="l_sec6" style="scroll-margin-top:46px"></span><span id="d_sec6" style="scroll-margin-top:46px"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Sáng)</strong>
   <div class="cols">
    <div class="field"><label>Hiệu ứng chuyển động nền 1</label><select id="dBgAmbient"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
    <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp)</label><select id="dBgAmbient2"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
@@ -571,14 +574,13 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  </div>
 </div>
 
-<div class="design-panel" data-panel="dark_mode">
-<div class="subtabs" style="margin:6px 0 10px" aria-label="Mục nhanh Chế độ Tối">
- <button type="button" class="subtab active" onclick="scrollDesignSub(this,'dark_mode',0)">1. Tổng quan</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',1)">2. Màu &amp; Chuyển tiếp</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',2)">3. Font &amp; Chữ</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',3)">4. Khung viền</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',4)">5. Nền &amp; Họa tiết</button>
- <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',5)">6. Chuyển động</button>
+<div class="design-panel" data-panel="dark_mode"><div class="subtabs" style="margin:6px 0 10px;gap:5px;flex-wrap:wrap" id="darkSubJump">
+ <button type="button" class="subtab active" data-jump="d_sec1">1. Header (Tối)</button>
+ <button type="button" class="subtab" data-jump="d_sec2">2. Chuyển tiếp</button>
+ <button type="button" class="subtab" data-jump="d_sec3">3. Font &amp; Chữ</button>
+ <button type="button" class="subtab" data-jump="d_sec4">4. Khung viền</button>
+ <button type="button" class="subtab" data-jump="d_sec5">5. Nền &amp; Họa tiết</button>
+ <button type="button" class="subtab" data-jump="d_sec6">6. Chuyển động</button>
 </div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
   <strong>1. Tổng quan &amp; Ảnh bìa Header (Tối)</strong>
@@ -711,22 +713,11 @@ const SUPABASE_ANON_KEY="sb_publishable_kCWMASYWHpHdFrD80kqytw_T_9qGcYF";
 const BUCKET="library-images";
 const configured=!SUPABASE_URL.startsWith("YOUR_")&&!SUPABASE_ANON_KEY.startsWith("YOUR_");
 const client=configured?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
-let session=null,isAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],items=[],categories=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
+let session=null,isAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],items=[],categories=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",intro_text:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function toast(t){$("notice").textContent=t;$("notice").classList.add("show");setTimeout(()=>$("notice").classList.remove("show"),2600)}
 function modal(id,on=true){$(id).classList.toggle("show",on)}
 // Chuyển tab trong bảng chỉnh giao diện, không làm mất giá trị các trường.
-
-window.scrollDesignSub=(btn,panelName,idx)=>{
- const panel=document.querySelector(`#designModal .design-panel[data-panel="${panelName}"]`);
- if(!panel)return;
- const subtabsWrap=btn.parentElement;
- if(subtabsWrap)subtabsWrap.querySelectorAll(".subtab").forEach(b=>b.classList.toggle("active",b===btn));
- const cards=[...panel.querySelectorAll(":scope > div[style*='border:1px solid']")];
- const target=cards[idx];
- if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
-};
-
 function activateDesignTab(name){
  document.querySelectorAll("#designModal .design-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
  document.querySelectorAll("#designModal .design-panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===name));
@@ -863,7 +854,7 @@ function applySettings(){
  $("siteSubtitle").textContent=settings.subtitle??"";
  if($("heroEyebrow")){const eb=settings.eyebrow_text??"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧";$("heroEyebrow").textContent=eb;$("heroEyebrow").style.display=eb===""?"none":""}
  if($("magicTagline")){const mt=settings.magic_tagline??"♡ Save a little magic every day ♡";$("magicTagline").textContent=mt;$("magicTagline").style.display=mt===""?"none":""}
-if(typeof renderWebIntro==="function")renderWebIntro();
+  if($("siteIntroText")){const it=settings.intro_text??"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.";$("siteIntroText").textContent=it;$("siteIntroBox").style.display=(it===""&&!isAdmin)?"none":"block";}
   $("siteFooter").textContent=settings.footer_text??"Made with love ♡ Anime GGAI Library";
  $("siteFooter").style.display=(settings.footer_text??"Made with love ♡ Anime GGAI Library")===""?"none":"block";
 
@@ -1824,49 +1815,6 @@ function syncAnnouncementComposer(){
  $("announcePinWrap").style.display=isAdmin?"inline-flex":"none";
  if(!canPost){editingAnnouncementId=null;$("announceInput").value="";$("announceCancelEdit").style.display="none"}
 }
-
-const WEB_INTRO_STORAGE_KEY="animeggai-web-intro";
-function getWebIntroText(){
- if(settings.intro_text!==undefined&&settings.intro_text!==null)return String(settings.intro_text);
- const saved=localStorage.getItem(WEB_INTRO_STORAGE_KEY);
- return saved!==null?saved:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.";
-}
-function renderWebIntro(){
- const el=$("webIntroDisplay");if(!el)return;
- const txt=getWebIntroText();
- el.textContent=txt;
- el.style.display=txt.trim()===""&&!isAdmin?"none":"block";
-}
-$("editIntroBtn")?.addEventListener("click",()=>{
- if(!isAdmin)return toast("Chỉ Admin mới sửa được lời giới thiệu.");
- if($("webIntroInput"))$("webIntroInput").value=getWebIntroText();
- if($("webIntroEditor"))$("webIntroEditor").style.display="block";
- $("webIntroInput")?.focus();
-});
-$("cancelIntroBtn")?.addEventListener("click",()=>{
- if($("webIntroEditor"))$("webIntroEditor").style.display="none";
-});
-$("saveIntroBtn")?.addEventListener("click",async()=>{
- if(!isAdmin)return toast("Chỉ Admin mới lưu được lời giới thiệu.");
- const val=($("webIntroInput")?.value??"").trim();
- const btn=$("saveIntroBtn");if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}
- try{
-  localStorage.setItem(WEB_INTRO_STORAGE_KEY,val);
-  settings={...settings,intro_text:val};
-  if(configured&&client){
-   const {error}=await client.from("site_settings").upsert({id:1,intro_text:val});
-   if(error&&!/column "intro_text"|'intro_text' column/i.test(String(error.message||"")))throw error;
-  }
-  renderWebIntro();
-  if($("webIntroEditor"))$("webIntroEditor").style.display="none";
-  toast("Đã lưu lời giới thiệu website ♡");
- }catch(err){
-  toast("Đã lưu tạm trên trình duyệt ("+(err.message||err)+")");
- }finally{
-  if(btn){btn.disabled=false;btn.textContent="Lưu lời giới thiệu"}
- }
-});
-
 function renderAnnouncements(){
  const listEl=$("announceList"),prevEl=$("announcePreviewText");
  if(!listEl||!prevEl)return;
@@ -2276,7 +2224,7 @@ function allowedSectionsForUser(){
  if(currentProfile?.can_commission)list.push("commission");
  return list;
 }
-function openItem(x,asCreator=false){editing=x?.id||null;creatorItemMode=!!asCreator||(!isAdmin&&!!session);if(!isAdmin&&!session)return modal("creatorAuthModal");const allowed=allowedSectionsForUser();if(!isAdmin&&!allowed.length)return toast("Tài khoản đang chờ Admin duyệt quyền.");if(x&&!isAdmin&&x.owner_id!==session.user.id)return toast("Bạn chỉ được chỉnh sửa CHAR do mình đăng");$("itemHeading").textContent=x?"Chỉnh sửa CHAR":"Đăng link mới";let f=$("itemForm");f.reset();f.elements.section.disabled=false;let c=x?categories.find(v=>v.id===x.category_id):null;const defaultSec=c?.section&&allowed.includes(c.section)?c.section:allowed[0];f.elements.section.value=defaultSec;f.elements.section.disabled=!isAdmin&&allowed.length===1;f.elements.creator.readOnly=creatorItemMode;f.dataset.owner=c?.owner_name||"";f.dataset.group=c?.group_name||"";f.dataset.subcategory=x?.subcategory||"";setItemCategoryOptions(x?.category_id);const dl=$("creatorOptionsList");
+function openItem(x,asCreator=false){editing=x?.id||null;creatorItemMode=!!asCreator||(!isAdmin&&!!session);if(!isAdmin&&!session)return modal("creatorAuthModal");const allowed=allowedSectionsForUser();if(!isAdmin&&!allowed.length)return toast("Tài khoản đang chờ Admin duyệt quyền.");if(x&&!isAdmin&&x.owner_id!==session.user.id)return toast("Bạn chỉ được chỉnh sửa CHAR do mình đăng");$("itemHeading").textContent=x?"Chỉnh sửa CHAR":"Đăng tải";let f=$("itemForm");f.reset();f.elements.section.disabled=false;let c=x?categories.find(v=>v.id===x.category_id):null;const defaultSec=c?.section&&allowed.includes(c.section)?c.section:allowed[0];f.elements.section.value=defaultSec;f.elements.section.disabled=!isAdmin&&allowed.length===1;f.elements.creator.readOnly=creatorItemMode;f.dataset.owner=c?.owner_name||"";f.dataset.group=c?.group_name||"";f.dataset.subcategory=x?.subcategory||"";setItemCategoryOptions(x?.category_id);const dl=$("creatorOptionsList");
 const knownCreators=[...new Set([
  ...(creatorProfiles||[]).map(p=>(p.display_name||"").trim()).filter(Boolean),
  ...(items||[]).map(it=>(it.creator||"").trim()).filter(Boolean),
@@ -2289,7 +2237,7 @@ f.elements.creator.readOnly=!canEditCreatorField;
 if(creatorItemMode||!canEditCreatorField){
  f.elements.creator.value=currentProfile?.display_name||f.elements.creator.value||"";
 }if(x){for(let k of ["name","url","creator","description"])f.elements[k].value=x[k]||"";f.elements.tags.value=(x.tags||[]).join(", ")}if($("reqSubcatBtnRow"))$("reqSubcatBtnRow").style.display=(!isAdmin&&!!session)?"block":"none";modal("itemModal")}
-$("addBtn").onclick=()=>openItem(null,false);$("creatorAddCharBtn").onclick=()=>openItem(null,true);window.editItem=id=>{let x=items.find(a=>a.id===id);if(!x)return;modal("profileModal",false);openItem(x,!isAdmin)};
+$("addBtn").onclick=()=>{if(isAdmin)return openItem(null,false);if(!session)return modal("creatorAuthModal");openItem(null,true)};$("creatorAddCharBtn").onclick=()=>openItem(null,true);window.editItem=id=>{let x=items.find(a=>a.id===id);if(!x)return;modal("profileModal",false);openItem(x,!isAdmin)};
 async function uploadImage(file,folderOverride=null){if(!file)throw new Error("Chưa chọn file");const maxBytes=100*1024*1024;if(file.size>maxBytes)throw new Error("File vượt quá 100 MB");const ext=(file.name.split(".").pop()||"jpg").toLowerCase(),baseFolder=folderOverride||(creatorItemMode&&session&&!isAdmin?`creator/${session.user.id}`:""),path=`${baseFolder?baseFolder.replace(/\/$/,"")+"/":""}${crypto.randomUUID()}.${ext}`,mime=file.type||"application/octet-stream";if(file.size<=6*1024*1024){const {error}=await client.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:mime,cacheControl:"3600"});if(error)throw error;}else{if(!window.tus?.Upload)throw new Error("Không tải được thư viện upload resumable; hãy tải lại trang");const {data,error}=await client.auth.getSession();if(error||!data.session)throw new Error("Phiên đăng nhập hết hạn, vui lòng đăng nhập lại");await new Promise((resolve,reject)=>{const upload=new tus.Upload(file,{endpoint:`${SUPABASE_URL}/storage/v1/upload/resumable`,retryDelays:[0,1000,3000,5000],chunkSize:6*1024*1024,headers:{authorization:`Bearer ${data.session.access_token}`,apikey:SUPABASE_ANON_KEY},metadata:{bucketName:BUCKET,objectName:path,contentType:mime,cacheControl:"3600"},onError:reject,onSuccess:resolve});upload.start()})}return client.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
 $("itemForm").onsubmit=async e=>{e.preventDefault();let f=e.target,old=items.find(x=>x.id===editing),creatorMode=!isAdmin&&!!session;const allowed=allowedSectionsForUser();if(!isAdmin&&!creatorMode)return toast("Bạn cần đăng nhập để đăng CHAR");if(creatorMode&&!allowed.length)return toast("Tài khoản chưa được Admin duyệt quyền.");if(creatorMode&&editing&&old?.owner_id!==session.user.id)return toast("Bạn không sở hữu CHAR này");let image_url=old?.image_url||"";try{if(f.elements.image_file.files[0])image_url=await uploadImage(f.elements.image_file.files[0]);let selectedCat=categories.find(c=>c.id===f.elements.category_id.value);if(!selectedCat)throw new Error("Vui lòng chọn phân loại hợp lệ.");if(!isAdmin&&currentProfile?.display_name&&String(selectedCat.owner_name||"").trim().toLowerCase()!==currentProfile.display_name.trim().toLowerCase()){throw new Error("Bạn chỉ có thể đăng link trong mục tên của riêng mình.");}if(creatorMode&&!allowed.includes(selectedCat.section)){throw new Error(selectedCat.section==="creator"?"Tài khoản Bbi share comm chỉ được đăng trong khu vực Bbi share commission.":"Tài khoản Creator chỉ được đăng trong khu vực Creator.")}let row={name:f.elements.name.value.trim(),main:selectedCat.section,category_id:f.elements.category_id.value,subcategory:f.elements.subcategory.value||null,url:f.elements.url.value.trim(),creator:(!isAdmin&&!currentProfile?.can_commission)?(currentProfile?.display_name||f.elements.creator.value.trim()):f.elements.creator.value.trim(),tags:f.elements.tags.value.split(",").map(t=>t.trim()).filter(Boolean).slice(0,10),description:f.elements.description.value.trim(),image_url,owner_id:old?.owner_id||(creatorMode?session.user.id:null),is_published:old?.is_published!==false};let result=editing?await client.from("library_items").update(row).eq("id",editing):await client.from("library_items").insert(row);if(result.error)throw result.error;if(!editing&&row.is_published!==false){const actorName=row.creator||currentProfile?.display_name||(isAdmin?"Admin":"Creator");const catLabel=categoryName(row.category_id);try{await client.from("public_activity_logs").insert({creator_id:session?.user?.id||null,creator_name:actorName,item_name:row.name,detail:`Khu vực: ${sectionLabel(row.main)} · Danh mục: ${catLabel}`})}catch(_){}}f.elements.section.disabled=false;modal("itemModal",false);await loadAll();toast(editing?"Đã cập nhật CHAR":"Đã đăng CHAR thành công ♡");if(creatorMode&&currentProfile&&$("profileModal")?.classList.contains("show"))openProfile(currentProfile)}catch(err){f.elements.section.disabled=false;toast("Lỗi lưu CHAR: "+err.message)}};
 window.deleteItem=async id=>{let x=items.find(a=>a.id===id);if(!x||(!isAdmin&&(!session||x.owner_id!==session.user.id)))return toast("Bạn không có quyền xóa CHAR này");if(!confirm("Xóa CHAR này? Hành động này không thể hoàn tác."))return;const wasProfileOpen=$("profileModal")?.classList.contains("show");let {error}=await client.from("library_items").delete().eq("id",id);if(error)return toast(error.message);await loadAll();toast("Đã xóa CHAR");if(wasProfileOpen&&currentProfile)openProfile(currentProfile)};
@@ -2549,5 +2497,47 @@ function kickGifPlayback(forceReloadGif=false){
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)kickGifPlayback(true)});
 window.addEventListener("pageshow",e=>kickGifPlayback(!!e.persisted));
 setTimeout(()=>kickGifPlayback(false),250);
+
+$("editSiteIntroBtn")?.addEventListener("click",()=>{
+ if(!$("siteIntroEditor")||!$("siteIntroInput"))return;
+ $("siteIntroInput").value=settings.intro_text??"";
+ $("siteIntroEditor").style.display="block";
+ $("siteIntroInput").focus();
+});
+$("cancelSiteIntroBtn")?.addEventListener("click",()=>{
+ if($("siteIntroEditor"))$("siteIntroEditor").style.display="none";
+});
+$("saveSiteIntroBtn")?.addEventListener("click",async()=>{
+ if(!isAdmin)return toast("Chỉ Admin mới sửa được lời giới thiệu.");
+ const val=$("siteIntroInput")?.value??"";
+ const btn=$("saveSiteIntroBtn");
+ if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}
+ try{
+  if(configured){
+   const {error}=await client.from("site_settings").upsert({id:1,intro_text:val});
+   if(error)throw error;
+  }
+  settings={...settings,intro_text:val};
+  applySettings();
+  if($("siteIntroEditor"))$("siteIntroEditor").style.display="none";
+  toast("Đã lưu lời giới thiệu web ♡");
+ }catch(err){
+  toast("Không lưu được lời giới thiệu: "+(err.message||err));
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent="Lưu lời giới thiệu"}
+ }
+});
+
+
+document.querySelectorAll("#lightSubJump [data-jump], #darkSubJump [data-jump]").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const targetId=btn.dataset.jump;
+  const targetEl=$(targetId);
+  const group=btn.closest(".subtabs");
+  if(group)group.querySelectorAll(".subtab").forEach(b=>b.classList.toggle("active",b===btn));
+  if(targetEl)targetEl.scrollIntoView({behavior:"smooth",block:"start"});
+ });
+});
+
 init();
 </script></body></html>
