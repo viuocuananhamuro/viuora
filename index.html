@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#fff5fc"><title>♡ Anime GGAI Library V30.1</title>
+<meta name="theme-color" content="#fff5fc"><title>♡ Anime GGAI Library V35</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="dynamicGoogleFonts" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -24,11 +24,11 @@
 body.grad-flow-breathe{animation:bgGradBreathe 11s ease-in-out infinite}
 body.grad-flow-pastel_wave{background-size:200% 200%,var(--page-background-size,cover),cover!important;animation:bgGradWave 14s ease-in-out infinite}
 body.grad-flow-dream_mesh{animation:bgGradMesh 12s ease-in-out infinite}
-@media(prefers-reduced-motion:reduce){body.grad-flow-breathe,body.grad-flow-pastel_wave,body.grad-flow-dream_mesh{animation:none!important}}
+
 
 #bgAmbientCanvas{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:1}.hero,.wrap,footer{position:relative;z-index:2}
 button,input,textarea,select{font:inherit}button{cursor:pointer}.hero{font-family:var(--font-header,'Playfair Display'),Georgia,serif;min-height:285px;position:relative;display:grid;place-items:center;text-align:center;padding:55px 20px 35px;background:linear-gradient(120deg,#f8d5e9d9,#ded4f7d9),var(--cover);background-size:cover;background-position:center;overflow:hidden;overflow:visible;isolation:isolate}.hero::after{content:'';position:absolute;z-index:0;left:0;right:0;bottom:-1px;height:var(--hero-fade-height,58px);pointer-events:none;background:var(--page-fade-gradient,linear-gradient(to bottom,transparent,var(--bg,#fff7fc)));-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 92%);mask-image:linear-gradient(to bottom,transparent 0%,#000 92%);opacity:var(--hero-fade-strength,.86)}
-@media(prefers-reduced-motion:reduce){.sticker{animation:none!important}}
+
 .hero-inner{position:relative;z-index:1;max-width:800px;padding-top:42px}.eyebrow{font-size:11px;letter-spacing:4px;color:#866c91}.hero h1{font:clamp(34px,6vw,58px)/1.1 var(--font-header,'Playfair Display'),Georgia,serif;color:#6c547c;margin:13px 0;text-shadow:0 2px #fff}.hero p{color:#806c8c;margin:0}.hero-actions{position:absolute;z-index:3;right:calc(var(--hero-frame-inset,12px) + 14px);top:calc(var(--hero-frame-inset,12px) + 12px);display:flex;gap:5px;padding:3px 5px;border-radius:12px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .wrap{max-width:1180px;margin:auto;padding:22px 20px 55px}.panel{background:rgba(255,255,255,var(--panel-opacity,.88));border:1px solid white;border-radius:22px;padding:16px;box-shadow:var(--shadow)}
 .toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.search{position:relative;flex:1 1 230px;max-width:340px;min-width:190px}.search input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);outline-color:var(--accent)}.search b{position:absolute;left:13px;top:8px;font-size:18px;color:var(--muted)}
@@ -47,7 +47,7 @@ body[data-theme="dark"] .bottom-theme-dock .theme-toggle-btn:hover{background:#3
 .music-player{position:static;display:flex;align-items:center;gap:9px;max-width:min(360px,calc(100vw - 32px));padding:9px 12px;border:1px solid #ffffffaa;border-radius:16px;background:rgba(255,250,255,.9);box-shadow:0 8px 28px #62466b22;backdrop-filter:blur(12px);color:var(--ink)}.music-player button{border:0;border-radius:50%;width:34px;height:34px;background:var(--accent);color:white}.music-player .music-name{font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.music-player audio{display:none}.notice{position:fixed;z-index:40;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#5c4969;color:white;padding:11px 18px;border-radius:99px;transition:.25s;pointer-events:none}.notice.show{opacity:1;transform:translate(-50%,0)}.category-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);gap:8px}
 footer{text-align:center;padding:22px;color:#a18fa8;font-size:12px}
 @media(max-width:600px){.hero{min-height:240px}.hero-actions{right:10px;top:10px}.wrap{padding:14px 12px 40px}.cols{grid-template-columns:1fr}.heading{align-items:start;flex-direction:column}}
-footer{color:var(--footer-color,#806c8c);text-align:center;padding:22px 12px 28px;font-size:13px} .sticker img{width:58px;height:58px;object-fit:contain;vertical-align:middle;pointer-events:none;background:transparent}.sticker.bg-remove_white img{mix-blend-mode:multiply}.sticker.bg-remove_black img{mix-blend-mode:screen}.sticker.bg-circle img{border-radius:50%;object-fit:cover}.sticker.bg-rounded img{border-radius:16px;object-fit:cover}
+footer{color:var(--footer-color,#806c8c);text-align:center;padding:22px 12px 28px;font-size:13px} .sticker img{width:58px;height:58px;object-fit:contain;vertical-align:middle;pointer-events:none;background:transparent}
 /* Compact, tabbed design editor */
 #designModal .dialog{width:min(760px,100%);max-height:94vh;max-height:94dvh;padding:18px 20px 0;display:flex;flex-direction:column;overflow:hidden}
 #designModal .dialog h2{flex:0 0 auto;margin-bottom:5px}
@@ -315,7 +315,7 @@ body[data-theme="dark"] .tab.active,body[data-theme="dark"] .subtab.active{backg
 body[data-theme="dark"] .card:hover{border-color:rgba(217,154,198,.6);box-shadow:0 16px 36px rgba(0,0,0,.45)}
 .notify-btn{white-space:nowrap;font-weight:700}
 body[data-theme="dark"] .notify-btn{background:#392d49;color:#f8eafa;border-color:#766084}
-@media(max-width:600px){.notify-btn{font-size:0}.notify-btn:first-letter{font-size:16px}}
+
 
 
 /* V8.5: reliable dark-mode artwork + stable text colors + upload controls */
@@ -369,6 +369,69 @@ body[data-theme="dark"] .announce-body{border-color:#51445e}
 body[data-theme="dark"] .announce-card{background:#2d253a;border-color:#51445e;color:#f0e8f5}
 body[data-theme="dark"] .announce-card.pinned{background:linear-gradient(135deg,#3b2b49,#2d253a);border-color:var(--accent)}
 body[data-theme="dark"] .activity-row{border-color:#493b52}
+/* V32: Compact, single-line header & proportional mobile controls (desktop untouched) */
+@media(max-width:640px){
+ html,body{overflow-x:hidden;max-width:100vw;-webkit-text-size-adjust:100%}
+ input,textarea,select{font-size:14px}
+ .hero{min-height:178px;padding:42px 10px 20px}
+ .hero-actions{left:auto;right:8px;top:8px;width:fit-content;max-width:calc(100vw - 16px);justify-content:flex-end;flex-wrap:nowrap;gap:4px;padding:3px 5px;border-radius:10px;background:rgba(255,255,255,.24)}
+ .visitor-tools{flex-wrap:nowrap;justify-content:flex-end;gap:4px;width:auto;max-width:100%}
+ .visitor-tools .icon-btn,.visitor-tools .btn.ghost{padding:4px 7px;font-size:10.5px;line-height:1.15;border-radius:8px;white-space:nowrap}
+ #notifyBtn .pill-count{min-width:15px;height:15px;font-size:9px;top:-5px;right:-5px}
+ .hero-inner{padding-top:26px;width:100%;max-width:100%}
+ .hero-inner::before,.hero-inner::after{display:none}
+ #heroTextFrames{width:fit-content!important;max-width:92vw!important;padding:0!important;gap:5px}
+ #heroTextFrames.frame-one{padding:8px 14px!important;border-radius:13px!important}
+ #heroTextFrames.frame-two #heroEyebrow,#heroTextFrames.frame-three #heroEyebrow{padding:3px 10px!important;font-size:8.5px!important;letter-spacing:1.2px!important}
+ #heroTextFrames.frame-two #heroTitleGroup{padding:7px 14px!important;border-radius:13px!important}
+ #heroTextFrames.frame-three #siteTitle{padding:6px 14px!important;border-radius:12px!important}
+ #heroTextFrames.frame-three #siteSubtitle{padding:4px 11px!important}
+ .eyebrow{letter-spacing:1.3px;font-size:8.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:88vw}
+ .hero h1{font-size:clamp(20px,6.2vw,28px)!important;line-height:1.15!important;margin:2px 0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:86vw}
+ .hero p{font-size:clamp(10.5px,3.1vw,12.5px)!important;line-height:1.25!important;margin:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:86vw}
+ .wrap{padding:10px 10px 68px}
+ .panel{padding:10px;border-radius:15px}
+ .toolbar{gap:6px;align-items:center}
+ .search{flex:1 1 100%;max-width:100%}
+ .search input{padding:8px 11px 8px 32px;font-size:13px;border-radius:11px}
+ .search b{left:10px;top:6px;font-size:15px}
+ .toolbar .btn{padding:6px 9px;font-size:11px;border-radius:9px;line-height:1.2}
+ .tabs{gap:5px;margin:9px 0 6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .tabs::-webkit-scrollbar,.subtabs::-webkit-scrollbar{display:none}
+ .subtabs{gap:5px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .tab{padding:5px 10px;font-size:11px;flex:none}
+ .subtab{padding:4px 9px;font-size:10.5px;flex:none}
+ .heading{flex-direction:column;align-items:flex-start;gap:2px;margin:11px 0 8px}
+ .heading h2{font-size:18px}
+ .muted,.hint{font-size:11px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .card{border-radius:13px}
+ .cover{height:102px}
+ .cardbody{padding:8px}
+ .card h3{font-size:13.5px;line-height:1.25}
+ .desc{font-size:11px;min-height:28px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .creator{font-size:10.5px;margin:5px 0}
+ .tags{gap:3px;margin:5px 0}
+ .tag{font-size:9.5px;padding:2px 6px}
+ .actions{gap:4px;margin-top:6px}
+ .actions button{padding:5px 6px;font-size:10.5px;border-radius:8px}
+ .announce-drawer{margin-top:9px;border-radius:13px}
+ .announce-bar-head{padding:8px 10px;font-size:11px}
+ .announce-badge{font-size:9.5px;padding:2px 7px}
+ .announce-chevron{font-size:10.5px}
+ .bottom-theme-dock{right:8px;bottom:8px;gap:5px}
+ .music-player{padding:5px 8px;border-radius:12px;max-width:calc(100vw - 58px);gap:6px}
+ .music-player button{width:24px;height:24px;font-size:10px}
+ .music-player .music-name{font-size:10.5px;max-width:96px}
+ .bottom-theme-dock .theme-toggle-btn{width:30px;height:30px;font-size:13px}
+}
+@media(max-width:380px){
+ .visitor-tools .icon-btn,.visitor-tools .btn.ghost{padding:3.5px 6px;font-size:9.8px}
+ .hero h1{font-size:19px!important}
+ .hero p{font-size:10px!important}
+ .eyebrow{font-size:8px!important;letter-spacing:1px!important}
+ .tab{padding:4.5px 8.5px;font-size:10.5px}
+}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
@@ -517,7 +580,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 <div class="field"><label>Màu chữ Footer</label><input id="dFooterColor" type="color">
 <div class="hint">Bạn có thể đổi nội dung, màu chữ và giữ trống nếu muốn ẩn dòng này.</div></div>
 </div>
-<div class="design-panel" data-panel="stickers"><div class="field"><label>Hiển thị sticker mới ở giao diện nào?</label><select id="stickerThemeMode"><option value="light">Chỉ giao diện sáng (☀)</option><option value="dark">Chỉ giao diện tối (☾)</option><option value="all">Cả hai giao diện (☀ + ☾)</option></select></div><div class="field"><label>Thêm sticker / emoji</label><div style="display:flex;gap:8px"><input id="stickerText" placeholder="🦋 ✨ 🌷"><button class="btn" id="addSticker" type="button">Thêm</button></div><div class="field" style="margin-top:9px"><label>Hoặc tải ảnh sticker (PNG, JPG, GIF, WebP, SVG, AVIF... — chọn 1 hoặc nhiều ảnh)</label><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input id="stickerFile" type="file" accept="image/*,.png,.jpg,.jpeg,.gif,.webp,.svg,.avif,.bmp,.ico" multiple style="flex:1;min-width:190px"><button class="btn" id="addStickerImage" type="button">＋ Tải ảnh sticker lên</button></div><label class="check-row" style="margin-top:7px"><input id="stickerAutoCutout" type="checkbox"> Tự động xóa nền đơn sắc (biến ảnh JPG/PNG có nền thành sticker không nền trong suốt)</label></div><div class="hint">Kéo sticker để di chuyển; mỗi sticker có thể gán riêng cho Giao diện sáng, Giao diện tối hoặc Cả hai, kèm hiệu ứng, kích thước, tốc độ và âm thanh riêng. Bấm đúp sticker trong chế độ Admin để xóa.</div></div>
+<div class="design-panel" data-panel="stickers"><div class="field"><label>Hiển thị sticker mới ở giao diện nào?</label><select id="stickerThemeMode"><option value="light">Chỉ giao diện sáng (☀)</option><option value="dark">Chỉ giao diện tối (☾)</option><option value="all">Cả hai giao diện (☀ + ☾)</option></select></div><div class="field"><label>Thêm sticker / emoji</label><div style="display:flex;gap:8px"><input id="stickerText" placeholder="🦋 ✨ 🌷"><button class="btn" id="addSticker" type="button">Thêm</button></div><div class="field" style="margin-top:9px"><label>Hoặc tải ảnh sticker (PNG, JPG, GIF, WebP, SVG, AVIF... — chọn 1 hoặc nhiều ảnh)</label><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input id="stickerFile" type="file" accept="image/*,.png,.jpg,.jpeg,.gif,.webp,.svg,.avif,.bmp,.ico" multiple style="flex:1;min-width:190px"><button class="btn" id="addStickerImage" type="button">＋ Tải ảnh sticker lên</button></div></div><div class="hint">Kéo sticker để di chuyển; mỗi sticker có thể gán riêng cho Giao diện sáng, Giao diện tối hoặc Cả hai, kèm hiệu ứng, kích thước, tốc độ và âm thanh riêng. Bấm đúp sticker trong chế độ Admin để xóa.</div></div>
 <div style="border:1px solid var(--line);border-radius:14px;padding:11px;margin:10px 0"><strong>✦ Hiệu ứng &amp; Âm thanh mặc định khi chạm Sticker</strong><div class="hint">Áp dụng cho các sticker chưa đặt hiệu ứng chạm riêng. Bạn cũng có thể chỉnh riêng từng sticker bên dưới.</div>
 <div class="cols"><div class="field"><label>Chuyển động khi ấn vào Sticker</label><select id="dStickerTapMotion"><option value="pop">Nảy phồng đáng yêu (Pop)</option><option value="jelly">Rung dẻo kẹo (Jelly)</option><option value="spin">Xoay tít 360° (Spin)</option><option value="wobble">Lắc lư tinh nghịch (Wobble)</option><option value="flip">Lật 3D lấp lánh (3D Flip)</option><option value="heartbeat">Đập nhịp tim (Heartbeat)</option><option value="none">Đứng yên</option></select></div><div class="field"><label>Hạt phát ra khi ấn vào Sticker</label><select id="dStickerTapBurst"><option value="sparkles">Sao &amp; Hoa lấp lánh (✦✧❀)</option><option value="hearts">Mưa trái tim hồng (♡♥💕)</option><option value="notes">Nốt nhạc bay bổng (♪♫♬)</option><option value="petals">Cánh hoa anh đào (🌸💮✿)</option><option value="confetti">Pháo sao rực rỡ (★☆✨)</option><option value="bubbles">Bong bóng xà phòng (○◌🫧)</option><option value="none">Không phát hạt</option></select></div></div>
 <div class="cols"><div class="field"><label>Kiểu âm thanh mặc định</label><select id="dStickerSoundPreset"><option value="chime">Chuông pha lê (Mặc định)</option><option value="pop">Bong bóng Pop</option><option value="bell">Chuông mèo / Lục lạc</option><option value="sparkle">Lấp lánh phép thuật</option><option value="custom">File âm thanh tải lên</option><option value="none">Tắt âm thanh</option></select></div><div class="field"><label>Tải file âm thanh mặc định lên</label><input id="dStickerSoundFile" type="file" accept="audio/mpeg,audio/wav,audio/ogg,audio/mp4"></div></div><div class="field"><label class="check-row"><input id="dStickerSoundRemove" type="checkbox"> Gỡ file âm thanh mặc định đã tải lên</label></div>
@@ -1013,9 +1076,8 @@ function stepAmbientCanvas(ts){
 }
 function syncBgAmbient(next){
  const cv=$("bgAmbientCanvas");if(!cv)return;
- const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
- const mode=reduced?"none":(next.mode||"none");
- const lightFx=reduced?"none":(next.lightFx||"none");
+ const mode=next.mode||"none";
+ const lightFx=next.lightFx||"none";
  const needReinit=mode!==ambientState.mode||Math.abs((next.density||55)-(ambientState.density||55))>=5;
  ambientState={...ambientState,...next,mode,lightFx};
  if(mode==="none"&&lightFx==="none"){
@@ -1813,7 +1875,7 @@ function drawTabs(){
  $("subcatTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{subcat=b.dataset.subcat;render()});
 }
 function render(){drawTabs();let q=$("search").value.toLowerCase().trim();let found=items.filter(x=>{const c=categories.find(v=>v.id===x.category_id);return (section==="all"||(c?.section||x.main)===section)&& (owner==="all"||c?.owner_name===owner)&&(group==="all"||c?.group_name===group)&&(leaf==="all"||x.category_id===leaf)&&(subcat==="all"||(x.subcategory||"")===subcat)&&(!q||[x.name,x.creator,x.description,...(x.tags||[])].join(" ").toLowerCase().includes(q))});$("sectionTitle").textContent=section==="all"?"Khám phá thư viện":sectionLabel(section)+(owner!=="all"?" · "+owner:"")+(group!=="all"?" · "+group:"");$("count").textContent=found.length+" mục";if(!found.length){$("cards").innerHTML=`<div class="empty" id="emptySearchText" style="grid-column:1/-1">${esc(settings.empty_search_text??"Chưa tìm thấy nội dung phù hợp ♡")}</div>`;return}
- $("cards").innerHTML=found.map(x=>{const c=categories.find(v=>v.id===x.category_id);return `<article class="card"><div class="cover">${x.image_url?`<img class="cover-image" src="${esc(x.image_url)}" alt="Ảnh ${esc(x.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.classList.add('image-fallback');this.parentElement.textContent='🌸'">`:`🌸`}</div><div class="cardbody"><h3>${esc(x.name)}</h3><div class="desc">${esc(x.description||"Chưa có mô tả.")}</div><div class="creator">Creator: <button class="btn ghost sm" style="padding:3px 8px" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(x.creator||"")}'))">${esc(x.creator||"Chưa cập nhật")}</button></div><div class="tags"><span class="tag">${esc(sectionLabel(c?.section||"creator"))}</span><span class="tag">${esc(c?.owner_name||"")}</span><span class="tag">${esc(c?.group_name||"")}</span><span class="tag">${esc(c?.name||"Other")}</span>${x.subcategory?`<span class="tag">${esc(x.subcategory)}</span>`:""}${(x.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</div><div class="actions"><button class="btn sm" onclick="toggleUrl('${x.id}')">Hiện link</button><button class="btn ghost sm" onclick="copyUrl('${x.id}')">Copy link</button><button class="btn ghost sm" onclick="openItemFeedback('${x.id}')">Feedback</button>${(isAdmin||(session&&x.owner_id===session.user.id))?`<button class="btn ghost sm" onclick="editItem('${x.id}')">Sửa</button><button class="btn red sm" onclick="deleteItem('${x.id}')">Xóa</button>`:""}${isAdmin?`<button class="btn ghost sm" onclick="togglePublish('${x.id}')">${x.is_published===false?"Hiện lại":"Ẩn"}</button>`:""}${x.is_published===false?`<span class="hidden-chip">Đã ẩn</span>`:""}</div><div class="url" id="url-${x.id}">${esc(x.url)}</div></div></article>`}).join("")}
+ $("cards").innerHTML=found.map(x=>{const c=categories.find(v=>v.id===x.category_id);return `<article class="card"><div class="cover">${x.image_url?`<img class="cover-image" src="${esc(x.image_url)}" alt="Ảnh ${esc(x.name)}" loading="eager" decoding="sync" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.classList.add('image-fallback');this.parentElement.textContent='🌸'">`:`🌸`}</div><div class="cardbody"><h3>${esc(x.name)}</h3><div class="desc">${esc(x.description||"Chưa có mô tả.")}</div><div class="creator">Creator: <button class="btn ghost sm" style="padding:3px 8px" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(x.creator||"")}'))">${esc(x.creator||"Chưa cập nhật")}</button></div><div class="tags"><span class="tag">${esc(sectionLabel(c?.section||"creator"))}</span><span class="tag">${esc(c?.owner_name||"")}</span><span class="tag">${esc(c?.group_name||"")}</span><span class="tag">${esc(c?.name||"Other")}</span>${x.subcategory?`<span class="tag">${esc(x.subcategory)}</span>`:""}${(x.tags||[]).map(t=>`<span class="tag">#${esc(t)}</span>`).join("")}</div><div class="actions"><button class="btn sm" onclick="toggleUrl('${x.id}')">Hiện link</button><button class="btn ghost sm" onclick="copyUrl('${x.id}')">Copy link</button><button class="btn ghost sm" onclick="openItemFeedback('${x.id}')">Feedback</button>${(isAdmin||(session&&x.owner_id===session.user.id))?`<button class="btn ghost sm" onclick="editItem('${x.id}')">Sửa</button><button class="btn red sm" onclick="deleteItem('${x.id}')">Xóa</button>`:""}${isAdmin?`<button class="btn ghost sm" onclick="togglePublish('${x.id}')">${x.is_published===false?"Hiện lại":"Ẩn"}</button>`:""}${x.is_published===false?`<span class="hidden-chip">Đã ẩn</span>`:""}</div><div class="url" id="url-${x.id}">${esc(x.url)}</div></div></article>`}).join("")}
 window.toggleUrl=id=>{let e=$("url-"+id);e.style.display=e.style.display==="block"?"none":"block"};
 window.copyUrl=async id=>{let x=items.find(a=>a.id===id);try{await navigator.clipboard.writeText(x.url);toast("Đã sao chép link ♡")}catch{toggleUrl(id);toast("Link đã hiện — hãy sao chép thủ công")}};
 $("search").oninput=render;
@@ -1926,59 +1988,8 @@ function stickerMatchesTheme(s){
  const tm=s.theme_mode||"light";
  return tm==="all"||(isDark?tm==="dark":tm==="light");
 }
-function drawStickerList(){$("stickerList").innerHTML=stickers.map(s=>{const tm=s.theme_mode||"light",tapM=s.tap_motion||"default",tapB=s.tap_burst||"default",bgM=s.bg_mode||"normal";return `<div class="category-row" style="align-items:flex-start;flex-direction:column;gap:8px"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%"><span>${s.image_url?`<img src="${esc(s.image_url)}" style="width:34px;height:34px;object-fit:contain">`:esc(s.emoji||"✨")}</span><select id="tmode-${s.id}" aria-label="Giao diện hiển thị sticker" title="Chế độ giao diện hiển thị"><option value="light" ${tm==="light"?"selected":""}>☀ Sáng</option><option value="dark" ${tm==="dark"?"selected":""}>☾ Tối</option><option value="all" ${tm==="all"?"selected":""}>☀+☾ Cả hai</option></select><select id="motion-${s.id}" aria-label="Hiệu ứng chuyển động nền"><option value="none" ${s.motion==="none"?"selected":""}>Đứng yên</option><option value="float" ${(!s.motion||s.motion==="float")?"selected":""}>Lơ lửng</option><option value="pulse" ${s.motion==="pulse"?"selected":""}>Nhịp tim</option><option value="spin" ${s.motion==="spin"?"selected":""}>Xoay vòng</option><option value="blink" ${s.motion==="blink"?"selected":""}>Nhấp nháy</option><option value="sway" ${s.motion==="sway"?"selected":""}>Đung đưa</option><option value="bounce" ${s.motion==="bounce"?"selected":""}>Nảy lên</option><option value="drift" ${s.motion==="drift"?"selected":""}>Trôi ngang</option><option value="wiggle" ${s.motion==="wiggle"?"selected":""}>Lắc nhẹ</option><option value="jelly" ${s.motion==="jelly"?"selected":""}>Dẻo kẹo (Méo hình)</option><option value="wave" ${s.motion==="wave"?"selected":""}>Uốn lượn sóng</option><option value="twist" ${s.motion==="twist"?"selected":""}>Xoắn nghiêng 3D</option><option value="melt" ${s.motion==="melt"?"selected":""}>Nhún biến dạng</option></select><label class="hint">Cỡ <input id="size-${s.id}" type="range" min="24" max="180" step="2" value="${Number(s.sticker_size)||58}" style="width:85px;vertical-align:middle"></label><input id="speed-${s.id}" type="number" min="0.5" max="10" step="0.5" value="${Number(s.motion_speed)||3.3}" title="Thời gian mỗi chu kỳ (giây)" style="width:66px;padding:6px;border:1px solid var(--line);border-radius:8px"><button class="btn ghost sm" onclick="saveStickerMotion('${s.id}')">Lưu</button><button class="btn red sm" onclick="removeSticker('${s.id}')">Xóa</button></div>${s.image_url?`<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding-left:42px"><span class="hint">🖼 Kiểu nền ảnh:</span><select id="bgmode-${s.id}" aria-label="Kiểu nền ảnh sticker" style="padding:5px 8px;font-size:12px"><option value="normal" ${bgM==="normal"?"selected":""}>Giữ nguyên (Không nền / PNG)</option><option value="remove_white" ${bgM==="remove_white"?"selected":""}>Xóa nền trắng (Multiply)</option><option value="remove_black" ${bgM==="remove_black"?"selected":""}>Xóa nền đen (Screen)</option><option value="rounded" ${bgM==="rounded"?"selected":""}>Bo góc mềm</option><option value="circle" ${bgM==="circle"?"selected":""}>Khung tròn</option></select></div>`:""}<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding-left:42px"><span class="hint">✦ Khi ấn:</span><select id="tapmotion-${s.id}" aria-label="Hiệu ứng khi ấn sticker" style="padding:5px 8px;font-size:12px"><option value="default" ${tapM==="default"?"selected":""}>Động tác: Mặc định</option><option value="pop" ${tapM==="pop"?"selected":""}>Nảy phồng (Pop)</option><option value="jelly" ${tapM==="jelly"?"selected":""}>Rung dẻo (Jelly)</option><option value="spin" ${tapM==="spin"?"selected":""}>Xoay 360° (Spin)</option><option value="wobble" ${tapM==="wobble"?"selected":""}>Lắc lư (Wobble)</option><option value="flip" ${tapM==="flip"?"selected":""}>Lật 3D (Flip)</option><option value="heartbeat" ${tapM==="heartbeat"?"selected":""}>Nhịp tim (Heartbeat)</option><option value="none" ${tapM==="none"?"selected":""}>Không nhúc nhích</option></select><select id="tapburst-${s.id}" aria-label="Hiệu ứng hạt khi ấn sticker" style="padding:5px 8px;font-size:12px"><option value="default" ${tapB==="default"?"selected":""}>Phát hạt: Mặc định</option><option value="sparkles" ${tapB==="sparkles"?"selected":""}>Sao &amp; Hoa (✦✧❀)</option><option value="hearts" ${tapB==="hearts"?"selected":""}>Mưa trái tim (♡♥💕)</option><option value="notes" ${tapB==="notes"?"selected":""}>Nốt nhạc (♪♫♬)</option><option value="petals" ${tapB==="petals"?"selected":""}>Hoa anh đào (🌸💮)</option><option value="confetti" ${tapB==="confetti"?"selected":""}>Pháo sao (★☆✨)</option><option value="bubbles" ${tapB==="bubbles"?"selected":""}>Bong bóng (○🫧)</option><option value="none" ${tapB==="none"?"selected":""}>Không phát hạt</option></select></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding-left:42px"><span class="hint">♪ Âm thanh riêng:</span><input id="soundfile-${s.id}" type="file" accept="audio/mpeg,audio/wav,audio/ogg,audio/mp4" style="max-width:210px;padding:4px 6px;font-size:11px">${s.sound_url?`<button class="btn ghost sm" type="button" onclick="playStickerPop({sound_url:'${esc(s.sound_url)}'})">Nghe thử</button><label class="hint" style="display:inline-flex;align-items:center;gap:4px"><input id="soundrm-${s.id}" type="checkbox" style="width:15px;height:15px;min-width:15px"> Gỡ âm riêng</label>`:`<span class="hint">(Đang dùng âm mặc định)</span>`}</div></div>`}).join("")||"Chưa có sticker"}
-document.addEventListener("input",e=>{if(e.target?.id?.startsWith("size-")){const id=e.target.id.slice(5),size=Math.max(24,Math.min(180,Number(e.target.value)||58)),el=document.querySelector(`.sticker[data-id="${CSS.escape(id)}"]`);if(el){el.style.fontSize=size+"px";const img=el.querySelector("img");if(img){img.style.width=size+"px";img.style.height=size+"px"}}}});
-window.saveStickerMotion=async id=>{try{let motion=$("motion-"+id).value,theme_mode=$("tmode-"+id)?.value||"light",bg_mode=$("bgmode-"+id)?.value||"normal",tap_motion=$("tapmotion-"+id)?.value||"default",tap_burst=$("tapburst-"+id)?.value||"default",speed=Math.max(.5,Math.min(10,Number($("speed-"+id).value)||3.3)),sticker_size=Math.max(24,Math.min(180,Number($("size-"+id).value)||58));const cur=stickers.find(s=>String(s.id)===String(id));let sound_url=cur?.sound_url||null;const rmEl=$("soundrm-"+id);if(rmEl?.checked)sound_url=null;const fEl=$("soundfile-"+id);if(fEl?.files?.[0])sound_url=await uploadImage(fEl.files[0],"sticker-sounds");let {error}=await client.from("stickers").update({motion,theme_mode,bg_mode,tap_motion,tap_burst,motion_speed:speed,sticker_size,sound_url}).eq("id",id);if(error)throw error;await loadAll();drawStickerList();toast("Đã lưu hiệu ứng sticker ♡")}catch(err){toast("Không lưu được sticker: "+(err.message||err)+" — hãy chạy SQL V19")}}
-async function removeImageBackgroundToPng(file){
- if(!file||file.type==="image/gif"||file.type==="image/svg+xml")return file;
- return new Promise(resolve=>{
-  const url=URL.createObjectURL(file);
-  const img=new Image();
-  img.onload=()=>{
-   try{
-    const maxDim=900;
-    const scale=Math.min(1,maxDim/Math.max(img.width||1,img.height||1));
-    const w=Math.max(1,Math.round((img.width||1)*scale));
-    const h=Math.max(1,Math.round((img.height||1)*scale));
-    const canvas=document.createElement("canvas");
-    canvas.width=w;canvas.height=h;
-    const ctx=canvas.getContext("2d");
-    ctx.drawImage(img,0,0,w,h);
-    const imgData=ctx.getImageData(0,0,w,h);
-    const d=imgData.data;
-    const corners=[[0,0],[w-1,0],[0,h-1],[w-1,h-1]].map(([cx,cy])=>{const idx=(cy*w+cx)*4;return [d[idx],d[idx+1],d[idx+2],d[idx+3]]});
-    const hasTransparentCorner=corners.some(c=>c[3]<30);
-    if(hasTransparentCorner){URL.revokeObjectURL(url);resolve(file);return}
-    const bg=corners[0];
-    const visited=new Uint8Array(w*h);
-    const stack=[[0,0],[w-1,0],[0,h-1],[w-1,h-1]];
-    const tol=46;
-    while(stack.length){
-     const [x,y]=stack.pop();
-     if(x<0||y<0||x>=w||y>=h)continue;
-     const pos=y*w+x;
-     if(visited[pos])continue;
-     visited[pos]=1;
-     const i=pos*4;
-     const dist=Math.hypot(d[i]-bg[0],d[i+1]-bg[1],d[i+2]-bg[2]);
-     if(dist<=tol){
-      d[i+3]=dist>tol*0.72?Math.round(((dist-tol*0.72)/(tol*0.28))*255):0;
-      stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
-     }
-    }
-    ctx.putImageData(imgData,0,0);
-    canvas.toBlob(blob=>{
-     URL.revokeObjectURL(url);
-     if(!blob){resolve(file);return}
-     const baseName=(file.name||"sticker").replace(/\.[^.]+$/,"");
-     resolve(new File([blob],`${baseName}_nobg.png`,{type:"image/png"}));
-    },"image/png");
-   }catch(_){URL.revokeObjectURL(url);resolve(file)}
-  };
-  img.onerror=()=>{URL.revokeObjectURL(url);resolve(file)};
-  img.src=url;
- });
-}
+function drawStickerList(){$("stickerList").innerHTML=stickers.map(s=>{const tm=s.theme_mode||"light",tapM=s.tap_motion||"default",tapB=s.tap_burst||"default";return `<div class="category-row" style="align-items:flex-start;flex-direction:column;gap:8px"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;width:100%"><span>${s.image_url?`<img src="${esc(s.image_url)}" style="width:34px;height:34px;object-fit:contain">`:esc(s.emoji||"✨")}</span><select id="tmode-${s.id}" aria-label="Giao diện hiển thị sticker" title="Chế độ giao diện hiển thị"><option value="light" ${tm==="light"?"selected":""}>☀ Sáng</option><option value="dark" ${tm==="dark"?"selected":""}>☾ Tối</option><option value="all" ${tm==="all"?"selected":""}>☀+☾ Cả hai</option></select><select id="motion-${s.id}" aria-label="Hiệu ứng chuyển động nền"><option value="none" ${s.motion==="none"?"selected":""}>Đứng yên</option><option value="float" ${(!s.motion||s.motion==="float")?"selected":""}>Lơ lửng</option><option value="pulse" ${s.motion==="pulse"?"selected":""}>Nhịp tim</option><option value="spin" ${s.motion==="spin"?"selected":""}>Xoay vòng</option><option value="blink" ${s.motion==="blink"?"selected":""}>Nhấp nháy</option><option value="sway" ${s.motion==="sway"?"selected":""}>Đung đưa</option><option value="bounce" ${s.motion==="bounce"?"selected":""}>Nảy lên</option><option value="drift" ${s.motion==="drift"?"selected":""}>Trôi ngang</option><option value="wiggle" ${s.motion==="wiggle"?"selected":""}>Lắc nhẹ</option><option value="jelly" ${s.motion==="jelly"?"selected":""}>Dẻo kẹo (Méo hình)</option><option value="wave" ${s.motion==="wave"?"selected":""}>Uốn lượn sóng</option><option value="twist" ${s.motion==="twist"?"selected":""}>Xoắn nghiêng 3D</option><option value="melt" ${s.motion==="melt"?"selected":""}>Nhún biến dạng</option></select><input id="speed-${s.id}" type="number" min="0.5" max="10" step="0.5" value="${Number(s.motion_speed)||3.3}" title="Thời gian mỗi chu kỳ (giây)" style="width:66px;padding:6px;border:1px solid var(--line);border-radius:8px"><button class="btn ghost sm" onclick="saveStickerMotion('${s.id}')">Lưu</button><button class="btn red sm" onclick="removeSticker('${s.id}')">Xóa</button></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding-left:42px"><span class="hint">✦ Khi ấn:</span><select id="tapmotion-${s.id}" aria-label="Hiệu ứng khi ấn sticker" style="padding:5px 8px;font-size:12px"><option value="default" ${tapM==="default"?"selected":""}>Động tác: Mặc định</option><option value="pop" ${tapM==="pop"?"selected":""}>Nảy phồng (Pop)</option><option value="jelly" ${tapM==="jelly"?"selected":""}>Rung dẻo (Jelly)</option><option value="spin" ${tapM==="spin"?"selected":""}>Xoay 360° (Spin)</option><option value="wobble" ${tapM==="wobble"?"selected":""}>Lắc lư (Wobble)</option><option value="flip" ${tapM==="flip"?"selected":""}>Lật 3D (Flip)</option><option value="heartbeat" ${tapM==="heartbeat"?"selected":""}>Nhịp tim (Heartbeat)</option><option value="none" ${tapM==="none"?"selected":""}>Không nhúc nhích</option></select><select id="tapburst-${s.id}" aria-label="Hiệu ứng hạt khi ấn sticker" style="padding:5px 8px;font-size:12px"><option value="default" ${tapB==="default"?"selected":""}>Phát hạt: Mặc định</option><option value="sparkles" ${tapB==="sparkles"?"selected":""}>Sao &amp; Hoa (✦✧❀)</option><option value="hearts" ${tapB==="hearts"?"selected":""}>Mưa trái tim (♡♥💕)</option><option value="notes" ${tapB==="notes"?"selected":""}>Nốt nhạc (♪♫♬)</option><option value="petals" ${tapB==="petals"?"selected":""}>Hoa anh đào (🌸💮)</option><option value="confetti" ${tapB==="confetti"?"selected":""}>Pháo sao (★☆✨)</option><option value="bubbles" ${tapB==="bubbles"?"selected":""}>Bong bóng (○🫧)</option><option value="none" ${tapB==="none"?"selected":""}>Không phát hạt</option></select></div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%;padding-left:42px"><span class="hint">♪ Âm thanh riêng:</span><input id="soundfile-${s.id}" type="file" accept="audio/mpeg,audio/wav,audio/ogg,audio/mp4" style="max-width:210px;padding:4px 6px;font-size:11px">${s.sound_url?`<button class="btn ghost sm" type="button" onclick="playStickerPop({sound_url:'${esc(s.sound_url)}'})">Nghe thử</button><label class="hint" style="display:inline-flex;align-items:center;gap:4px"><input id="soundrm-${s.id}" type="checkbox" style="width:15px;height:15px;min-width:15px"> Gỡ âm riêng</label>`:`<span class="hint">(Đang dùng âm mặc định)</span>`}</div></div>`}).join("")||"Chưa có sticker"}
+window.saveStickerMotion=async id=>{try{let motion=$("motion-"+id).value,theme_mode=$("tmode-"+id)?.value||"light",tap_motion=$("tapmotion-"+id)?.value||"default",tap_burst=$("tapburst-"+id)?.value||"default",speed=Math.max(.5,Math.min(10,Number($("speed-"+id).value)||3.3));const cur=stickers.find(s=>String(s.id)===String(id));let sound_url=cur?.sound_url||null;const rmEl=$("soundrm-"+id);if(rmEl?.checked)sound_url=null;const fEl=$("soundfile-"+id);if(fEl?.files?.[0])sound_url=await uploadImage(fEl.files[0],"sticker-sounds");let {error}=await client.from("stickers").update({motion,theme_mode,tap_motion,tap_burst,motion_speed:speed,sound_url}).eq("id",id);if(error)throw error;await loadAll();drawStickerList();toast("Đã lưu hiệu ứng sticker ♡")}catch(err){toast("Không lưu được sticker: "+(err.message||err))}}
 async function addStickerFromForm(){
  let emoji=$("stickerText").value.trim();
  let files=[...($("stickerFile").files||[])];
@@ -1988,12 +1999,10 @@ async function addStickerFromForm(){
  if(btnTxt)btnTxt.disabled=true;
  try{
   let theme_mode=$("stickerThemeMode")?.value||(document.body.dataset.theme==="dark"?"dark":"light");
-  let autoCutout=!!$("stickerAutoCutout")?.checked;
   let dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);
   if(files.length){
    for(let idx=0;idx<files.length;idx++){
     let f=files[idx];
-    if(autoCutout)f=await removeImageBackgroundToPng(f);
     let image_url=await uploadImage(f,"stickers");
     let offsetX=Math.min(92,Math.max(6,(80+(idx%4)*4)*innerWidth/dw));
     let offsetY=Math.min(92,Math.max(6,(34+Math.floor(idx/4)*6)*innerHeight/dh));
@@ -2018,7 +2027,7 @@ async function addStickerFromForm(){
 $("addSticker").onclick=addStickerFromForm;$("addStickerImage").onclick=()=>{if(!$("stickerFile").files?.length)return toast("Hãy chọn ít nhất 1 ảnh sticker trước");addStickerFromForm()};
 window.removeSticker=async id=>{let {error}=await client.from("stickers").delete().eq("id",id);if(error)return toast(error.message);await loadAll();drawStickerList()};
 async function migrateStickerPositions(){const dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);for(const sticker of stickers){if(sticker.position_mode==="page")continue;const oldX=Math.max(0,Math.min(100,Number(sticker.x)||0)),oldY=Math.max(0,Math.min(100,Number(sticker.y)||0));const x=Math.max(0,Math.min(100,oldX*innerWidth/dw)),y=Math.max(0,Math.min(100,oldY*innerHeight/dh));const {error}=await client.from("stickers").update({x,y,position_mode:"page"}).eq("id",sticker.id);if(error){console.warn("Sticker position migration failed",error);toast("Cần chạy SQL nâng cấp mới để cố định vị trí sticker");return}sticker.x=x;sticker.y=y;sticker.position_mode="page"}}
-function renderStickers(){const visibleStickers=stickers.filter(stickerMatchesTheme);$("stickers").innerHTML=visibleStickers.map(s=>`<div class="sticker ${s.motion&&s.motion!=="none"?"motion-"+s.motion:(!s.motion?"motion-float":"")} bg-${esc(s.bg_mode||"normal")}" data-id="${s.id}" style="left:${Math.max(0,Math.min(100,Number(s.x)||0))}%;top:${Math.max(0,Math.min(100,Number(s.y)||0))}%;font-size:${Math.max(24,Math.min(180,Number(s.sticker_size)||58))}px;--motion-duration:${Math.max(.5,Math.min(10,Number(s.motion_speed)||3.3))}s">${s.image_url?`<img src="${esc(s.image_url)}" alt="sticker" style="width:${Math.max(24,Math.min(180,Number(s.sticker_size)||58))}px;height:${Math.max(24,Math.min(180,Number(s.sticker_size)||58))}px">`:esc(s.emoji||"")}</div>`).join("");document.querySelectorAll(".sticker").forEach(el=>{let dragging=false,moved=false,startX=0,startY=0,grabX=0,grabY=0;el.addEventListener("click",e=>{if(moved){moved=false;return}stickerTap(el,e.clientX,e.clientY)});el.ondblclick=async()=>{if(isAdmin)removeSticker(el.dataset.id)};el.onpointerdown=e=>{if(!isAdmin)return;e.preventDefault();const r=el.getBoundingClientRect();startX=e.clientX;startY=e.clientY;grabX=e.pageX-(r.left+scrollX);grabY=e.pageY-(r.top+scrollY);dragging=true;moved=false;el.classList.add("is-dragging");el.setPointerCapture(e.pointerId)};el.onpointermove=e=>{if(!dragging)return;if(Math.abs(e.clientX-startX)>4||Math.abs(e.clientY-startY)>4)moved=true;if(!moved)return;const dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);const x=Math.max(0,Math.min(100,(e.pageX-grabX)/dw*100)),y=Math.max(0,Math.min(100,(e.pageY-grabY)/dh*100));el.style.left=x+"%";el.style.top=y+"%"};const finish=async()=>{if(!dragging)return;dragging=false;el.classList.remove("is-dragging");if(!moved)return;const dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);const r=el.getBoundingClientRect(),x=Math.max(0,Math.min(100,(r.left+scrollX)/dw*100)),y=Math.max(0,Math.min(100,(r.top+scrollY)/dh*100));const {error}=await client.from("stickers").update({x,y,position_mode:"page"}).eq("id",el.dataset.id);if(error)toast("Không lưu được vị trí sticker: "+error.message);else{const item=stickers.find(s=>s.id===el.dataset.id);if(item){item.x=x;item.y=y;item.position_mode="page"}}};el.onpointerup=finish;el.onpointercancel=finish})}
+function renderStickers(){const visibleStickers=stickers.filter(stickerMatchesTheme);$("stickers").innerHTML=visibleStickers.map(s=>`<div class="sticker ${s.motion&&s.motion!=="none"?"motion-"+s.motion:(!s.motion?"motion-float":"")}" data-id="${s.id}" style="left:${Math.max(0,Math.min(100,Number(s.x)||0))}%;top:${Math.max(0,Math.min(100,Number(s.y)||0))};--motion-duration:${Math.max(.5,Math.min(10,Number(s.motion_speed)||3.3))}s">${s.image_url?`<img src="${esc(s.image_url)}" alt="sticker">`:esc(s.emoji||"")}</div>`).join("");document.querySelectorAll(".sticker").forEach(el=>{let dragging=false,moved=false,startX=0,startY=0,grabX=0,grabY=0;el.addEventListener("click",e=>{if(moved){moved=false;return}stickerTap(el,e.clientX,e.clientY)});el.ondblclick=async()=>{if(isAdmin)removeSticker(el.dataset.id)};el.onpointerdown=e=>{if(!isAdmin)return;e.preventDefault();const r=el.getBoundingClientRect();startX=e.clientX;startY=e.clientY;grabX=e.pageX-(r.left+scrollX);grabY=e.pageY-(r.top+scrollY);dragging=true;moved=false;el.classList.add("is-dragging");el.setPointerCapture(e.pointerId)};el.onpointermove=e=>{if(!dragging)return;if(Math.abs(e.clientX-startX)>4||Math.abs(e.clientY-startY)>4)moved=true;if(!moved)return;const dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);const x=Math.max(0,Math.min(100,(e.pageX-grabX)/dw*100)),y=Math.max(0,Math.min(100,(e.pageY-grabY)/dh*100));el.style.left=x+"%";el.style.top=y+"%"};const finish=async()=>{if(!dragging)return;dragging=false;el.classList.remove("is-dragging");if(!moved)return;const dw=Math.max(document.documentElement.scrollWidth,innerWidth),dh=Math.max(document.documentElement.scrollHeight,innerHeight);const r=el.getBoundingClientRect(),x=Math.max(0,Math.min(100,(r.left+scrollX)/dw*100)),y=Math.max(0,Math.min(100,(r.top+scrollY)/dh*100));const {error}=await client.from("stickers").update({x,y,position_mode:"page"}).eq("id",el.dataset.id);if(error)toast("Không lưu được vị trí sticker: "+error.message);else{const item=stickers.find(s=>s.id===el.dataset.id);if(item){item.x=x;item.y=y;item.position_mode="page"}}};el.onpointerup=finish;el.onpointercancel=finish})}
 $("catsBtn").onclick=()=>{drawCategories();modal("catsModal")};
 function drawCategories(){const sections=["creator","commission"];$("catList").innerHTML=sections.map(sec=>{const rows=categories.filter(c=>c.section===sec);let owners=uniqueValues("owner_name",{section:sec});return `<h3 style="font-size:15px;margin:14px 0 5px">${sectionLabel(sec)}</h3>${owners.map(o=>{let groups=uniqueValues("group_name",{section:sec,owner_name:o});return `<div style="padding:8px 0"><strong>${esc(o)}</strong> <button class="btn ghost sm" onclick="renameOwner('${sec}','${encodeURIComponent(o)}')">Đổi tên</button> <button class="btn red sm" onclick="deleteOwner('${sec}','${encodeURIComponent(o)}')">Xóa</button>${groups.map(g=>`<div style="margin:6px 0 6px 14px"><strong>${esc(g)}</strong> <button class="btn ghost sm" onclick="renameGroup('${sec}','${encodeURIComponent(o)}','${encodeURIComponent(g)}')">Đổi tên</button> <button class="btn red sm" onclick="deleteGroup('${sec}','${encodeURIComponent(o)}','${encodeURIComponent(g)}')">Xóa</button><div style="margin-left:16px">${rows.filter(c=>c.owner_name===o&&c.group_name===g).map(c=>`<div class="category-row"><span>${esc(c.name)}</span><span><button class="btn ghost sm" onclick="renameCategory('${c.id}')">Đổi tên</button> <button class="btn red sm" onclick="removeCategory('${c.id}')">Xóa</button> <button class="btn ghost sm" onclick="manageSubcategories('${c.id}')">Mục con (${(c.subcategories||[]).length})</button></span></div>`).join("")}</div></div>`).join("")}</div>`}).join("")||'<p class="hint">Chưa có creator/người đặt comm nào.</p>'}`}).join("")}
 window.renameOwner=async(sec,encoded)=>{let old=decodeURIComponent(encoded),val=prompt("Tên mới:",old);if(!val?.trim()||val.trim()===old)return;let {error}=await client.from("categories").update({owner_name:val.trim()}).eq("section",sec).eq("owner_name",old);if(error)return toast(error.message);await loadAll();drawCategories()};
@@ -2039,5 +2048,14 @@ document.addEventListener("keydown",e=>{
 });
 async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{await refreshAdmin();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{currentProfile=null;refreshRoleUI()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)}}
 window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)});
+function kickGifPlayback(){
+ document.querySelectorAll("img").forEach(img=>{
+  if(img.loading==="lazy")img.loading="eager";
+  if(typeof img.decode==="function"&&img.complete){img.decode().catch(()=>{});}
+ });
+}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)kickGifPlayback()});
+window.addEventListener("pageshow",kickGifPlayback);
+setTimeout(kickGifPlayback,300);
 init();
 </script></body></html>
