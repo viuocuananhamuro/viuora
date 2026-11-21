@@ -609,29 +609,4 @@ BEGIN
 END
 $$;
 
-
--- 19. V39 Allow public/authenticated read on creator_profiles so Admin & approved roles are visible across accounts
-ALTER TABLE IF EXISTS public.creator_profiles ENABLE ROW LEVEL SECURITY;
-GRANT SELECT ON public.creator_profiles TO anon, authenticated;
-
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_policies
-    WHERE schemaname = 'public'
-      AND tablename = 'creator_profiles'
-      AND policyname = 'creator_profiles_public_read'
-  ) THEN
-    CREATE POLICY creator_profiles_public_read
-    ON public.creator_profiles FOR SELECT
-    TO anon, authenticated
-    USING (true);
-  END IF;
-END
-$$;
-
-
--- 20. V41 Helper: inspect or remove non-admin user_ids from public.app_admins if needed
--- Example: DELETE FROM public.app_admins WHERE user_id = '<user_id_cua_acc_khong_phai_admin>';
-
 NOTIFY pgrst, 'reload schema';
