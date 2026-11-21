@@ -630,4 +630,8 @@ BEGIN
 END
 $$;
 
+
+-- 20. V41 Helper: inspect or remove non-admin user_ids from public.app_admins if needed
+-- Example: DELETE FROM public.app_admins WHERE user_id = '<user_id_cua_acc_khong_phai_admin>';
+
 NOTIFY pgrst, 'reload schema';
