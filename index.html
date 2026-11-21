@@ -437,9 +437,9 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 .outside-admin-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.72);font-size:12px}.outside-admin-label{color:#765d85}body[data-theme="dark"] .outside-admin-bar{background:rgba(43,34,51,.85);border-color:#51415b}body[data-theme="dark"] .outside-admin-label{color:#e8c9f0}
 .admin-profile-pill,body[data-theme="dark"] .admin-profile-pill{display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--pill-border,var(--accent))!important;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700;line-height:1.3;background:var(--pill-bg,#fff7fc)!important;color:var(--pill-ink,#51425e)!important;box-shadow:0 3px 10px color-mix(in srgb,var(--pill-glow,var(--accent2)) 35%,transparent)!important;transition:transform .16s ease,box-shadow .16s ease}.admin-profile-pill:hover,body[data-theme="dark"] .admin-profile-pill:hover{transform:translateY(-1px)}
 
-.site-intro-box{margin:0 0 14px;padding:13px 16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px)}
-.site-intro-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.site-intro-text{font-size:13.5px;line-height:1.55;color:var(--ink);white-space:pre-wrap;word-break:break-word;flex:1}
+.site-intro-box{margin:0 0 18px;padding:24px 26px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px);position:relative}
+.site-intro-top{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+.site-intro-text{font-size:15.5px;line-height:1.68;color:var(--ink);white-space:pre-wrap;word-break:break-word;max-width:780px;margin:0 auto;text-align:center}
 .site-intro-editor{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .site-intro-editor textarea{width:100%;min-height:66px;padding:9px 11px;border-radius:11px;border:1px solid var(--line);background:var(--surface,#fff);color:var(--ink);resize:vertical}
 body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-color:#51445e}
@@ -503,7 +503,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  <button type="button" class="subtab" data-jump="l_sec6">6. Chuyển động</button>
 </div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
-  <span id="l_sec1" style="scroll-margin-top:46px"></span><span id="d_sec1" style="scroll-margin-top:46px"></span><strong>1. Chữ &amp; Ảnh bìa Header (Sáng)</strong>
+  <span id="l_sec1"></span><strong>1. Chữ &amp; Ảnh bìa Header (Sáng)</strong>
   <div class="field"><label>Tiêu đề</label><input id="dTitle"></div>
   <div class="field"><label>Tiêu đề phụ</label><input id="dSubtitle"></div>
   <div class="field"><label>Dòng chữ nhỏ trên Header (Eyebrow)</label><input id="dEyebrow" placeholder="✧ YOUR PERSONAL CHARACTER UNIVERSE ✧"></div>
@@ -512,7 +512,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <span id="l_sec2" style="scroll-margin-top:46px"></span><span id="d_sec2" style="scroll-margin-top:46px"></span><strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Sáng)</strong>
+  <span id="l_sec2"></span><strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Sáng)</strong>
   <div class="field"><label>Kiểu chuyển màu Header</label><select id="dHeroMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Header màu 1</label><input id="dHero1" type="color"></div><div class="field"><label>Header màu 2</label><input id="dHero2" type="color"></div></div>
   <div class="cols"><div class="field"><label>Header màu 3</label><input id="dHero3" type="color"></div><div class="field"><label>Góc chuyển màu</label><input id="dHeroAngle" type="number" min="0" max="360" value="120"></div></div>
@@ -521,10 +521,10 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <span id="l_sec3" style="scroll-margin-top:46px"></span><span id="d_sec3" style="scroll-margin-top:46px"></span><strong>3. Font chữ &amp; Kiểu chữ Header (Sáng)</strong>
+  <span id="l_sec3"></span><strong>3. Font chữ &amp; Kiểu chữ Header (Sáng)</strong>
   <div class="cols">
-   <div class="field"><label>Font nội dung</label><select id="dBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Nunito">Nunito – mềm mại</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – hỗ trợ tiếng Việt tốt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Roboto">Roboto – đơn giản</option><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
-   <div class="field"><label>Font Header</label><select id="dHeaderFont"><option value="Playfair Display">Playfair Display – sang trọng</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – dễ thương</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
+   <div class="field"><label>Font nội dung</label><select id="dBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – hỗ trợ tiếng Việt tốt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
+   <div class="field"><label>Font Header</label><select id="dHeaderFont"><option value="Playfair Display">Playfair Display – sang trọng</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
   </div>
   <div class="cols"><div class="field"><label>Màu chữ tiêu đề</label><input id="dHeroTextColor" type="color"></div><div class="field"><label>Màu chữ phụ</label><input id="dHeroSubColor" type="color"></div></div>
   <div class="field"><label class="check-row"><input id="dHeroShadowOn" type="checkbox"> Bật đổ bóng chữ</label></div>
@@ -537,7 +537,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <span id="l_sec4" style="scroll-margin-top:46px"></span><span id="d_sec4" style="scroll-margin-top:46px"></span><strong>4. Khung viền Header &amp; Khung chữ (Sáng)</strong>
+  <span id="l_sec4"></span><strong>4. Khung viền Header &amp; Khung chữ (Sáng)</strong>
   <div class="field"><label>Kiểu khung Header</label><select id="dHeroFrameStyle"><option value="none">Không khung</option><option value="soft">Viền đơn mảnh</option><option value="double">Viền đôi thanh lịch</option><option value="dotted">Viền chấm ngọc trai</option><option value="dashed">Viền nét đứt</option><option value="ribbon">Viền ruy-băng kép</option><option value="lace">Viền ren hoa góc (Classic)</option><option value="lace_crochet">Viền ren móc đăng ten (Crochet Lace)</option><option value="royal_filigree">Viền hoa văn cổ điển 4 góc (Filigree)</option><option value="starlight_vine">Viền dây sao &amp; ngọc (Starlight)</option></select></div>
   <div class="cols"><div class="field"><label>Màu viền</label><input id="dHeroFrameColor" type="color"></div><div class="field"><label>Độ mờ (%)</label><input id="dHeroFrameOpacity" type="range" min="0" max="100"><span id="dHeroFrameOpacityValue">45%</span></div></div>
   <div class="cols"><div class="field"><label>Độ dày (px)</label><input id="dHeroFrameWidth" type="range" min="1" max="8"><span id="dHeroFrameWidthValue">2px</span></div><div class="field"><label>Cách mép ảnh (px)</label><input id="dHeroFrameInset" type="range" min="3" max="36"><span id="dHeroFrameInsetValue">12px</span></div></div>
@@ -549,7 +549,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <span id="l_sec5" style="scroll-margin-top:46px"></span><span id="d_sec5" style="scroll-margin-top:46px"></span><strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Sáng)</strong>
+  <span id="l_sec5"></span><strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Sáng)</strong>
   <div class="cols"><div class="field"><label>Màu nền dự phòng</label><input id="dBg" type="color"></div><div class="field"><label>Màu nhấn</label><input id="dAccent" type="color"></div></div>
   <div class="field"><label>Kiểu chuyển màu nền</label><select id="dGradientMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Màu chuyển 1</label><input id="dGradient1" type="color"></div><div class="field"><label>Màu chuyển 2</label><input id="dGradient2" type="color"></div></div>
@@ -562,7 +562,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <span id="l_sec6" style="scroll-margin-top:46px"></span><span id="d_sec6" style="scroll-margin-top:46px"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Sáng)</strong>
+  <span id="l_sec6"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Sáng)</strong>
   <div class="cols">
    <div class="field"><label>Hiệu ứng chuyển động nền 1</label><select id="dBgAmbient"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
    <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp)</label><select id="dBgAmbient2"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
@@ -583,14 +583,14 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  <button type="button" class="subtab" data-jump="d_sec6">6. Chuyển động</button>
 </div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
-  <strong>1. Tổng quan &amp; Ảnh bìa Header (Tối)</strong>
+  <span id="d_sec1"></span><strong>1. Tổng quan &amp; Ảnh bìa Header (Tối)</strong>
   <div class="field"><label class="check-row"><input id="dDarkCustomEnabled" type="checkbox"> Bật cấu hình giao diện tối tùy chỉnh</label></div>
   <div class="field"><label>Ảnh bìa Header chế độ tối</label><input id="dDarkCoverFile" type="file" accept="image/*"><label class="check-row" style="margin-top:6px"><input id="dDarkCoverRemove" type="checkbox"> Gỡ ảnh bìa chế độ tối hiện tại</label></div>
   <div class="cols"><div class="field"><label>Màu nhấn chính (Tối)</label><input id="dDarkAccent" type="color"></div><div class="field"><label>Màu chữ Footer (Tối)</label><input id="dDarkFooterColor" type="color"></div></div>
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Tối)</strong>
+  <span id="d_sec2"></span><strong>2. Màu nền Header &amp; Chuyển tiếp xuống trang (Tối)</strong>
   <div class="field"><label>Kiểu chuyển màu Header (Tối)</label><select id="dDarkHeroMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Header màu 1 (Tối)</label><input id="dDarkHero1" type="color"></div><div class="field"><label>Header màu 2 (Tối)</label><input id="dDarkHero2" type="color"></div></div>
   <div class="cols"><div class="field"><label>Header màu 3 (Tối)</label><input id="dDarkHero3" type="color"></div><div class="field"><label>Góc chuyển màu Header</label><input id="dDarkHeroAngle" type="number" min="0" max="360" value="120"></div></div>
@@ -599,10 +599,10 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>3. Font chữ &amp; Kiểu chữ Header (Tối)</strong>
+  <span id="d_sec3"></span><strong>3. Font chữ &amp; Kiểu chữ Header (Tối)</strong>
   <div class="cols">
-   <div class="field"><label>Font nội dung (Tối)</label><select id="dDarkBodyFont"><option value="">Dùng chung giao diện sáng</option><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Nunito">Nunito – mềm mại</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – hỗ trợ tiếng Việt tốt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Roboto">Roboto – đơn giản</option><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
-   <div class="field"><label>Font Header (Tối)</label><select id="dDarkHeaderFont"><option value="">Dùng chung giao diện sáng</option><option value="Playfair Display">Playfair Display – sang trọng</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – dễ thương</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ cổ điển</option><option value="JetBrains Mono">JetBrains Mono – đánh máy hiện đại</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
+   <div class="field"><label>Font nội dung (Tối)</label><select id="dDarkBodyFont"><option value="">Dùng chung giao diện sáng</option><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – hỗ trợ tiếng Việt tốt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
+   <div class="field"><label>Font Header (Tối)</label><select id="dDarkHeaderFont"><option value="">Dùng chung giao diện sáng</option><option value="Playfair Display">Playfair Display – sang trọng</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
   </div>
   <div class="cols"><div class="field"><label>Màu chữ tiêu đề (Tối)</label><input id="dDarkHeroTextColor" type="color"></div><div class="field"><label>Màu chữ phụ (Tối)</label><input id="dDarkHeroSubColor" type="color"></div></div>
   <div class="field"><label class="check-row"><input id="dDarkHeroShadowOn" type="checkbox"> Bật đổ bóng chữ (Tối)</label></div>
@@ -615,7 +615,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>4. Khung viền Header &amp; Khung chữ (Tối)</strong>
+  <span id="d_sec4"></span><strong>4. Khung viền Header &amp; Khung chữ (Tối)</strong>
   <div class="field"><label>Kiểu khung Header (Tối)</label><select id="dDarkHeroFrameStyle"><option value="none">Không khung</option><option value="soft">Viền đơn mảnh</option><option value="double">Viền đôi thanh lịch</option><option value="dotted">Viền chấm ngọc trai</option><option value="dashed">Viền nét đứt</option><option value="ribbon">Viền ruy-băng kép</option><option value="lace">Viền ren hoa góc (Classic)</option><option value="lace_crochet">Viền ren móc đăng ten (Crochet Lace)</option><option value="royal_filigree">Viền hoa văn cổ điển 4 góc (Filigree)</option><option value="starlight_vine">Viền dây sao &amp; ngọc (Starlight)</option></select></div>
   <div class="cols"><div class="field"><label>Màu viền (Tối)</label><input id="dDarkHeroFrameColor" type="color"></div><div class="field"><label>Độ mờ (%)</label><input id="dDarkHeroFrameOpacity" type="range" min="0" max="100"><span id="dDarkHeroFrameOpacityValue">45%</span></div></div>
   <div class="cols"><div class="field"><label>Độ dày (px)</label><input id="dDarkHeroFrameWidth" type="range" min="1" max="8"><span id="dDarkHeroFrameWidthValue">2px</span></div><div class="field"><label>Cách mép ảnh (px)</label><input id="dDarkHeroFrameInset" type="range" min="3" max="36"><span id="dDarkHeroFrameInsetValue">12px</span></div></div>
@@ -627,7 +627,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Tối)</strong>
+  <span id="d_sec5"></span><strong>5. Màu nền, Họa tiết &amp; Ảnh nền trang (Tối)</strong>
   <div class="field"><label>Kiểu chuyển màu nền (Tối)</label><select id="dDarkGradientMode"><option value="linear">Chuyển màu tuyến tính</option><option value="radial">Chuyển màu tỏa tròn</option><option value="conic">Chuyển màu xoay góc (Conic)</option><option value="soft_mesh">Chuyển màu loang 3 điểm (Mesh)</option><option value="diagonal_silk">Chuyển màu lụa mượt (Silk)</option></select></div>
   <div class="cols"><div class="field"><label>Màu nền tối 1</label><input id="dDarkGrad1" type="color"></div><div class="field"><label>Màu nền tối 2</label><input id="dDarkGrad2" type="color"></div></div>
   <div class="cols"><div class="field"><label>Màu nền tối 3</label><input id="dDarkGrad3" type="color"></div><div class="field"><label>Góc chuyển màu nền</label><input id="dDarkGradientAngle" type="number" min="0" max="360" value="135"></div></div>
@@ -639,7 +639,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
-  <strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Tối)</strong>
+  <span id="d_sec6"></span><strong>6. Chuyển động nền (Kết hợp 2 hiệu ứng) &amp; Ánh sáng (Tối)</strong>
   <div class="cols">
    <div class="field"><label>Hiệu ứng chuyển động nền 1 (Tối)</label><select id="dDarkBgAmbient"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
    <div class="field"><label>Hiệu ứng chuyển động nền 2 (Kết hợp - Tối)</label><select id="dDarkBgAmbient2"><option value="none">Không chuyển động</option><option value="shooting_stars">Sao băng &amp; Bầu trời sao (Shooting Stars)</option><option value="starfield">Nền ngôi sao lấp lánh (Starfield)</option><option value="rain">Mưa rơi dịu nhẹ (Gentle Rain)</option><option value="snow">Tuyết rơi êm ái (Soft Snowfall)</option><option value="sakura">Cánh hoa anh đào rơi (Sakura Petals)</option><option value="fireflies">Đom đóm phát sáng (Glowing Fireflies)</option><option value="hearts">Trái tim bay nhẹ (Floating Hearts)</option><option value="bubbles">Bong bóng ánh sáng (Bokeh Bubbles)</option><option value="aurora">Dải cực quang mượt mà (Aurora Waves)</option><option value="feathers">Lông vũ bay nhẹ (Angel Feathers)</option><option value="galaxy_constellation">Chòm sao &amp; Bụi tinh vân (Constellation)</option><option value="prism_butterflies">Bướm ánh sáng &amp; Phép thuật (Luminous Butterflies)</option><option value="lantern_drift">Đèn sao bay dịu dàng (Floating Lanterns)</option><option value="comet_shower">Mưa sao băng lướt dài (Comet Shower)</option></select></div>
@@ -669,7 +669,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 <div class="modal-actions"><button class="btn ghost" data-close="designModal">Đóng</button><button class="btn" id="saveDesign">Lưu giao diện</button></div></div></div>
 <div class="modal" id="catsModal"><div class="dialog"><h2>☷ Quản lý danh mục</h2><div id="catList"></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="field"><label>Khu vực</label><select id="newCatSection"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Tên creator / người đặt comm</label><input id="newCatOwner" placeholder="Ví dụ: Creator A"></div><div class="field"><label>Tên nhóm</label><input id="newCatGroup" placeholder="Ví dụ: CHAR, OPW"></div></div><div class="field"><label>Tên phân loại nhỏ (Anime, Khác...)</label><input id="newCatName" placeholder="Ví dụ: Anime, Khác"></div><div class="hint">Mỗi dòng danh mục lưu theo đường dẫn Khu vực → Creator/người đặt comm → Nhóm → Phân loại nhỏ. Có thể tạo nhiều phân loại trong cùng một nhóm.</div><div class="modal-actions"><button class="btn ghost" data-close="catsModal">Đóng</button><button class="btn" id="createCat">＋ Thêm phân loại</button></div></div></div>
 
-<div class="modal" id="creatorDirectoryModal"><div class="dialog"><h2>♡ Danh sách cục dàng của web</h2><div class="subtabs" id="creatorDirectoryTabs" style="margin:8px 0 10px"><button type="button" class="subtab active" data-dir-role="all">Tất cả</button><button type="button" class="subtab" data-dir-role="creator">Creator</button><button type="button" class="subtab" data-dir-role="commission">Bbi share comm</button></div><div class="search" style="max-width:100%;margin:8px 0 12px"><b>⌕</b><input id="creatorDirectorySearch" placeholder="Tìm theo tên hiển thị hoặc @handle..."></div><div id="creatorDirectoryList" style="max-height:56vh;overflow:auto;display:flex;flex-direction:column;gap:14px"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorDirectoryModal">Đóng</button></div></div></div>
+<div class="modal" id="creatorDirectoryModal"><div class="dialog"><h2>♡ Danh sách cục dàng của web</h2><div class="subtabs" id="creatorDirectoryTabs" style="margin:8px 0 10px"><button type="button" class="subtab active" data-dir-role="all">Tất cả</button><button type="button" class="subtab" data-dir-role="admin">Admin</button><button type="button" class="subtab" data-dir-role="creator">Creator</button><button type="button" class="subtab" data-dir-role="commission">Bbi share comm</button></div><div class="search" style="max-width:100%;margin:8px 0 12px"><b>⌕</b><input id="creatorDirectorySearch" placeholder="Tìm theo tên hiển thị hoặc @handle..."></div><div id="creatorDirectoryList" style="max-height:56vh;overflow:auto;display:flex;flex-direction:column;gap:14px"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorDirectoryModal">Đóng</button></div></div></div>
 <div class="modal" id="creatorAuthModal"><div class="dialog"><h2>♡ Tài khoản Creator &amp; Bbi share comm</h2><p class="hint">Đăng ký trực tiếp bằng email, tên hiển thị và mật khẩu (không cần xác minh link). Bạn có thể chọn đăng ký làm <strong>Creator</strong>, <strong>Bbi share comm</strong> hoặc <strong>cả hai</strong>.</p><div id="creatorStatusNotice" style="display:none;padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:13px"></div><div class="field"><label>Địa chỉ Email</label><input id="creatorUsername" type="email" autocomplete="email" placeholder="vd: tenban@gmail.com"></div><div class="field" id="creatorDisplayNameField"><label>Tên hiển thị</label><input id="creatorDisplayName" placeholder="Tên hiển thị trên thư viện"></div><div class="field" id="creatorRoleChoiceField"><label>Chọn vai trò đăng ký (1 trong 2)</label><div class="cols"><label class="check-row" style="margin:0"><input id="roleRadioCreator" name="creatorRoleChoice" type="radio" value="creator" checked> Creator</label><label class="check-row" style="margin:0"><input id="roleRadioCommission" name="creatorRoleChoice" type="radio" value="commission"> Người đẹp tốt bụng share</label></div></div><div class="field"><label>Mật khẩu</label><input id="creatorPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div style="display:flex;justify-content:flex-end;margin-top:-3px"><button class="btn ghost sm" id="creatorForgotPassword" type="button">Quên mật khẩu?</button></div><div class="modal-actions" style="flex-wrap:wrap"><button class="btn ghost" data-close="creatorAuthModal">Đóng</button><button class="btn red sm" id="revokeCreatorRequestBtn" type="button" style="display:none">Thu hồi yêu cầu &amp; đăng ký lại</button><button class="btn ghost" id="creatorSignIn">Đăng nhập</button><button class="btn" id="creatorSignUp">Đăng ký tài khoản</button></div></div></div>
 <div class="modal" id="creatorPasswordRecoveryModal"><div class="dialog"><h2>♡ Đặt lại mật khẩu</h2><p class="hint">Nhập mật khẩu mới cho tài khoản của bạn.</p><div class="field"><label>Mật khẩu mới</label><input id="creatorNewPassword" type="password" autocomplete="new-password" placeholder="Tối thiểu 8 ký tự"></div><div class="field"><label>Nhập lại mật khẩu mới</label><input id="creatorNewPasswordConfirm" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorPasswordRecoveryModal">Đóng</button><button class="btn" id="creatorSaveNewPassword">Lưu mật khẩu mới</button></div></div></div>
 <div class="modal" id="creatorRejectedModal"><div class="dialog"><h2>♡ Yêu cầu Creator bị từ chối</h2><div id="creatorRejectedMessage" style="padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:14px">Yêu cầu đăng ký tài khoản Creator của bạn đã bị Admin từ chối. Bạn có thể thu hồi yêu cầu này để gửi đăng ký lại từ đầu.</div><div class="modal-actions"><button class="btn ghost" data-close="creatorRejectedModal">Đóng</button><button class="btn red" id="modalRevokeCreatorBtn" type="button">Thu hồi yêu cầu &amp; đăng ký lại</button></div></div></div>
@@ -677,8 +677,8 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 <div class="modal" id="profileModal"><div class="dialog"><h2 id="profileModalTitle">Hồ sơ Creator</h2><div id="profileContent"></div><div id="profileEditor" style="display:none"><div class="cols"><div class="field"><label>Tên hiển thị</label><input id="profileName"></div><div class="field"><label>Danh xưng (hiện kế bên tên)</label><input id="profileTitleBadge" maxlength="40" placeholder="Ví dụ: Công chúa bánh bèo, Bbi mơ mộng..."></div></div><div class="field"><label>Username (không dấu, chữ thường)</label><input id="profileHandle" placeholder="my-creator"></div><div class="cols"><div class="field"><label>Ảnh đại diện</label><input id="profileAvatarFile" type="file" accept="image/*"><div class="hint" id="profileAvatarCurrent">Chọn ảnh từ thiết bị của bạn</div></div><div class="field"><label>Ảnh bìa trang cá nhân</label><input id="profileBannerFile" type="file" accept="image/*"><div class="hint" id="profileBannerCurrent">Chọn ảnh từ thiết bị của bạn</div></div></div><div class="field"><label>Giới thiệu</label><textarea id="profileBio" maxlength="600" placeholder="Một chút về bạn..."></textarea></div><div class="field"><label>Link mạng xã hội / portfolio (mỗi dòng một URL)</label><textarea id="profileLinks" placeholder="https://..."></textarea></div><div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
 <strong>✎ Font chữ hồ sơ</strong>
 <div class="cols">
- <div class="field"><label>Font nội dung &amp; giới thiệu</label><select id="profileBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Nunito">Nunito – mềm mại</option><option value="Poppins">Poppins – hiện đại</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt rõ nét</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Fredoka">Fredoka – playful</option><option value="Courier Prime">Courier Prime – máy đánh chữ</option><option value="JetBrains Mono">JetBrains Mono – hiện đại</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Lora">Lora – thanh lịch, dễ đọc</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option><option value="Cinzel">Cinzel – hoàng gia sang trọng</option><option value="Space Grotesk">Space Grotesk – hiện đại cá tính</option></select></div>
- <div class="field"><label>Font tiêu đề &amp; tên hồ sơ</label><select id="profileHeaderFont"><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Dancing Script">Dancing Script – viết tay</option><option value="Quicksand">Quicksand – đồng bộ</option><option value="Nunito">Nunito – mềm mại</option><option value="Poppins">Poppins – hiện đại</option><option value="Fredoka">Fredoka – playful</option></select></div>
+ <div class="field"><label>Font nội dung &amp; giới thiệu</label><select id="profileBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt rõ nét</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
+ <div class="field"><label>Font tiêu đề &amp; tên hồ sơ</label><select id="profileHeaderFont"><option value="Playfair Display">Playfair Display – thanh lịch</option><option value="Cormorant Garamond">Cormorant Garamond – cổ điển</option><option value="Quicksand">Quicksand – đồng bộ</option></select></div>
 </div>
 </div>
 <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
@@ -788,9 +788,9 @@ function applySettings(){
  root.style.setProperty("--panel-opacity",Math.max(20,Math.min(100,Number(pick("panel_opacity","dark_panel_opacity",88))))/100);
  root.style.setProperty("--footer-color",isDark?(settings.dark_footer_color||"#e2d4ec"):(settings.footer_color||"#806c8c"));
 
- const fontChoices=["Quicksand","Nunito","Poppins","Be Vietnam Pro","Comfortaa","Fredoka","Courier Prime","JetBrains Mono","Roboto","Playfair Display","Cormorant Garamond","Dancing Script","Lora","Merriweather","Pacifico","Great Vibes","Cinzel","Space Grotesk"];
- const chosenBody=isDark&&fontChoices.includes(settings.dark_body_font)?settings.dark_body_font:settings.body_font;
- const chosenHeader=isDark&&fontChoices.includes(settings.dark_header_font)?settings.dark_header_font:settings.header_font;
+ const fontChoices=["Quicksand","Be Vietnam Pro","Comfortaa","Playfair Display","Cormorant Garamond","Merriweather","Pacifico","Great Vibes"];
+ const chosenBody=(isDark&&settings.dark_body_font&&fontChoices.includes(settings.dark_body_font))?settings.dark_body_font:settings.body_font;
+ const chosenHeader=(isDark&&settings.dark_header_font&&fontChoices.includes(settings.dark_header_font))?settings.dark_header_font:settings.header_font;
  const bodyFont=fontChoices.includes(chosenBody)?chosenBody:"Quicksand",headerFont=fontChoices.includes(chosenHeader)?chosenHeader:"Playfair Display";
  root.style.setProperty("--font-body",`'${bodyFont}'`);root.style.setProperty("--font-header",`'${headerFont}'`);
  const fontFamilies=[...new Set([bodyFont,headerFont])].map(f=>`family=${encodeURIComponent(f).replace(/%20/g,"+")}:wght@400;500;600;700`).join("&");
@@ -1528,7 +1528,7 @@ async function fetchCreatorProfiles(){
 }
 function validColor(v,fallback){return /^#[0-9a-f]{6}$/i.test(String(v||""))?v:fallback}
 function safeWebUrl(v){try{const u=new URL(String(v||""));return ["http:","https:"].includes(u.protocol)?u.href:""}catch{return ""}}
-const CREATOR_FONTS=["Quicksand","Nunito","Poppins","Be Vietnam Pro","Comfortaa","Fredoka","Courier Prime","JetBrains Mono","Playfair Display","Cormorant Garamond","Dancing Script","Lora","Merriweather","Pacifico","Great Vibes","Cinzel","Space Grotesk"];
+const CREATOR_FONTS=["Quicksand","Be Vietnam Pro","Comfortaa","Playfair Display","Cormorant Garamond","Merriweather","Pacifico","Great Vibes"];
 function ensureProfileFontsLoaded(bodyF,headF){
  const base=[settings.body_font||"Quicksand",settings.header_font||"Playfair Display"];
  const all=[...new Set([...base,bodyF,headF].filter(f=>CREATOR_FONTS.includes(f)))];
@@ -1642,10 +1642,15 @@ function renderCreatorDirectory(){
   const rolesStr=[...(isAdmProfile(p)?["Admin"]:[]),...roleLabelsForProfile(p)].join(" ");
   return [p.display_name,p.handle,p.bio||"",rolesStr].join(" ").toLowerCase().includes(q);
  });
- const isCreatorMember=p=>!!(p.can_creator||p.is_approved||p.pending_creator||(isAdmProfile(p)&&!p.can_commission));
+ const isCreatorMember=p=>!!(p.can_creator||p.is_approved||p.pending_creator);
  const isCommMember=p=>!!(p.can_commission||p.pending_commission);
+ const admins=activeMembers.filter(isAdmProfile);
  const creators=activeMembers.filter(isCreatorMember);
  const comms=activeMembers.filter(isCommMember);
+ if(creatorDirRoleFilter==="admin"){
+  box.innerHTML=admins.length?`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${admins.map(renderDirMemberCard).join("")}</div>`:'<div class="empty">Chưa có Admin nào trong danh sách.</div>';
+  return;
+ }
  if(creatorDirRoleFilter==="creator"){
   box.innerHTML=creators.length?`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${creators.map(renderDirMemberCard).join("")}</div>`:'<div class="empty">Chưa có Creator nào trong danh sách.</div>';
   return;
@@ -1659,8 +1664,11 @@ function renderCreatorDirectory(){
   return;
  }
  let html="";
+ if(admins.length){
+  html+=`<div><h3 style="margin:0 0 8px;font-size:15px;color:var(--ink)">✦ Admin (${admins.length})</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${admins.map(renderDirMemberCard).join("")}</div></div>`;
+ }
  if(creators.length){
-  html+=`<div><h3 style="margin:0 0 8px;font-size:15px;color:var(--ink)">✦ Creator (${creators.length})</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${creators.map(renderDirMemberCard).join("")}</div></div>`;
+  html+=`<div><h3 style="margin:4px 0 8px;font-size:15px;color:var(--ink)">✦ Creator (${creators.length})</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${creators.map(renderDirMemberCard).join("")}</div></div>`;
  }
  if(comms.length){
   html+=`<div><h3 style="margin:4px 0 8px;font-size:15px;color:var(--ink)">♡ Bbi share comm (${comms.length})</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">${comms.map(renderDirMemberCard).join("")}</div></div>`;
@@ -2558,9 +2566,14 @@ document.querySelectorAll("#lightSubJump [data-jump], #darkSubJump [data-jump]")
  btn.addEventListener("click",()=>{
   const targetId=btn.dataset.jump;
   const targetEl=$(targetId);
+  const panel=btn.closest(".design-panel");
   const group=btn.closest(".subtabs");
   if(group)group.querySelectorAll(".subtab").forEach(b=>b.classList.toggle("active",b===btn));
-  if(targetEl)targetEl.scrollIntoView({behavior:"smooth",block:"start"});
+  if(targetEl&&panel){
+   const box=targetEl.parentElement||targetEl;
+   const topPos=Math.max(0,box.offsetTop-panel.offsetTop-52);
+   panel.scrollTo({top:topPos,behavior:"smooth"});
+  }
  });
 });
 
