@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#fff5fc"><title>♡ Anime GGAI Library V35</title>
+<meta name="theme-color" content="#fff5fc"><title>VIUORA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="dynamicGoogleFonts" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -34,7 +34,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}.hero{font-famil
 .toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.search{position:relative;flex:1 1 230px;max-width:340px;min-width:190px}.search input{width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);outline-color:var(--accent)}.search b{position:absolute;left:13px;top:8px;font-size:18px;color:var(--muted)}
 .btn{border:0;border-radius:13px;padding:10px 15px;background:linear-gradient(120deg,var(--accent),var(--accent2));color:white;font-weight:700;box-shadow:0 5px 12px #c9a4d233}.btn.ghost{background:#fff;color:#80688b;border:1px solid var(--line);box-shadow:none}.btn.red{background:#d77d98}.btn.sm{font-size:12px;padding:7px 10px;border-radius:10px}
 .tabs,.subtabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tabs{margin:17px 0 10px}.tab,.subtab{display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:white;color:#806c8c;padding:9px 16px;border-radius:999px;line-height:1.25;white-space:nowrap;max-width:100%;overflow:hidden}.tab.active,.subtab.active{background:linear-gradient(120deg,var(--accent),var(--accent2));background-origin:border-box;color:white;border:1.5px solid transparent;box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 35%,transparent)}.subtabs{margin-bottom:2px}.subtab{font-size:12px;padding:7px 13px}
-.heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:19px 0 13px}.heading h2{font:26px var(--font-header,'Playfair Display'),Georgia,serif;margin:0;color:#765d85}.muted,.hint{font-size:12px;color:var(--muted)}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:19px 0 13px;flex-wrap:wrap}.heading h2,.heading h3{margin:0;color:#765d85;white-space:nowrap}.heading h2{font:26px var(--font-header,'Playfair Display'),Georgia,serif}.heading h3{font:700 18px/1.25 var(--font-header,'Playfair Display'),Georgia,serif}#profileModal .heading{flex-wrap:nowrap;align-items:center}#profileModal .heading h3{font-size:15px;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1 1 auto}#profileModal .heading .btn{flex:0 0 auto;white-space:nowrap}#creatorOwnedChars .hint{grid-column:1/-1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.muted,.hint{font-size:12px;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px}.card{background:rgba(255,255,255,var(--panel-opacity,.88));border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:var(--shadow);transition:.2s}.card:hover{transform:translateY(-4px)}.cover{height:145px;background:linear-gradient(135deg,#f6d9ed,#e7defa);background-size:cover;background-position:center;display:grid;place-items:center;font-size:36px;color:#a58db3}.cardbody{padding:14px}.card h3{margin:0 0 5px;font-size:17px}.desc{font-size:13px;color:var(--muted);min-height:38px}.creator{font-size:12px;color:#a08da8;margin:8px 0}.tags{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0}.tag{font-size:11px;background:#f8edf8;color:#916f9c;padding:4px 8px;border-radius:99px}.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1}.url{display:none;overflow-wrap:anywhere;background:#fff6fc;border:1px dashed #e6c8e5;padding:9px;border-radius:10px;font-size:12px;margin-top:8px}.empty{text-align:center;padding:38px;border:1px dashed #dfc9e8;border-radius:18px;color:var(--muted);background:#fff9}
 .adminbar{display:none;background:#fff4d9;border:1px solid #f1dfae;padding:10px 14px;border-radius:13px;margin:0 0 14px;color:#80632d;font-size:13px}.admin .adminbar{display:block}.admin-only{display:none!important}.admin .admin-only{display:inline-flex!important}
 #stickers{position:absolute;inset:0;z-index:8;pointer-events:none;overflow:hidden}.sticker{position:absolute;pointer-events:auto;z-index:8;font-size:34px;cursor:grab;touch-action:none;user-select:none;filter:drop-shadow(0 4px 5px #ad80ad55);transform-origin:center center;will-change:transform}.sticker.is-dragging{animation:none!important;cursor:grabbing;filter:drop-shadow(0 8px 14px #ad80ad88)}.sticker.motion-float{animation:stickerFloat var(--motion-duration,3.3s) ease-in-out infinite}.sticker.motion-pulse{animation:stickerPulse var(--motion-duration,1.5s) ease-in-out infinite}.sticker.motion-spin{animation:stickerSpin var(--motion-duration,3s) linear infinite}.sticker.motion-blink{animation:stickerBlink var(--motion-duration,1.5s) ease-in-out infinite}.sticker.motion-sway{animation:stickerSway var(--motion-duration,2.8s) ease-in-out infinite}.sticker.motion-bounce{animation:stickerBounce var(--motion-duration,1.4s) ease-in-out infinite}.sticker.motion-drift{animation:stickerDrift var(--motion-duration,4s) ease-in-out infinite}.sticker.motion-wiggle{animation:stickerWiggle var(--motion-duration,1.8s) ease-in-out infinite}.sticker.motion-jelly{animation:stickerJelly var(--motion-duration,2.2s) ease-in-out infinite}.sticker.motion-wave{animation:stickerWave var(--motion-duration,2.8s) ease-in-out infinite}.sticker.motion-twist{animation:stickerTwist var(--motion-duration,2.6s) ease-in-out infinite}.sticker.motion-melt{animation:stickerMelt var(--motion-duration,3s) ease-in-out infinite}@keyframes stickerSway{50%{transform:rotate(12deg)}}@keyframes stickerBounce{50%{transform:translateY(-16px)}}@keyframes stickerDrift{50%{transform:translateX(14px) translateY(-5px)}}@keyframes stickerWiggle{25%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}}@keyframes stickerFloat{50%{transform:translateY(-12px) rotate(7deg)}}@keyframes stickerPulse{50%{transform:scale(1.22)}}@keyframes stickerSpin{to{transform:rotate(360deg)}}@keyframes stickerBlink{50%{opacity:.25;filter:drop-shadow(0 0 12px #e6a6ed)}}@keyframes stickerJelly{0%,100%{transform:scale(1,1) skew(0deg,0deg)}25%{transform:scale(1.22,.82) skew(-7deg,4deg)}50%{transform:scale(.84,1.2) skew(6deg,-4deg)}75%{transform:scale(1.12,.9) skew(-3deg,2deg)}}@keyframes stickerWave{0%,100%{transform:translateY(0) skewX(0deg) scaleY(1)}25%{transform:translateY(-8px) skewX(12deg) scaleY(1.08)}50%{transform:translateY(0) skewX(0deg) scaleY(.92)}75%{transform:translateY(-8px) skewX(-12deg) scaleY(1.08)}}@keyframes stickerTwist{0%,100%{transform:perspective(220px) rotateY(0deg) rotateX(0deg) skewY(0deg)}25%{transform:perspective(220px) rotateY(26deg) rotateX(12deg) skewY(8deg) scale(1.06)}50%{transform:perspective(220px) rotateY(0deg) rotateX(-14deg) skewY(0deg) scale(.95)}75%{transform:perspective(220px) rotateY(-26deg) rotateX(10deg) skewY(-8deg) scale(1.06)}}@keyframes stickerMelt{0%,100%{transform:scale(1,1) translateY(0) skewX(0deg)}35%{transform:scale(1.26,.76) translateY(7px) skewX(10deg)}70%{transform:scale(.86,1.18) translateY(-5px) skewX(-8deg)}}
@@ -2038,7 +2038,7 @@ window.deleteGroup=async(sec,encodedOwner,encodedGroup)=>{let own=decodeURICompo
 window.renameCategory=async id=>{let c=categories.find(x=>x.id===id),name=prompt("Tên phân loại nhỏ mới:",c.name);if(!name?.trim())return;let {error}=await client.from("categories").update({name:name.trim()}).eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
 window.removeCategory=async id=>{if(items.some(x=>x.category_id===id))return toast("Phân loại đang có link. Hãy chuyển link trước.");if(!confirm("Xóa phân loại nhỏ này?"))return;let {error}=await client.from("categories").delete().eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
 window.manageSubcategories=async id=>{let c=categories.find(x=>x.id===id);if(!c)return;let current=(c.subcategories||[]).join("\n");let value=prompt("Các mục con của "+c.name+" (mỗi dòng một mục). Để trống nếu muốn xóa hết:",current);if(value===null)return;let list=[...new Set(value.split(/\r?\n|,/).map(x=>x.trim()).filter(Boolean))];let {error}=await client.from("categories").update({subcategories:list}).eq("id",id);if(error)return toast("Không lưu được mục con: "+error.message+" — hãy chạy SQL nâng cấp mới");await loadAll();drawCategories();toast("Đã cập nhật mục con")};
-$("createCat").onclick=async()=>{let sec=$("newCatSection").value,own=$("newCatOwner").value.trim(),grp=$("newCatGroup").value.trim(),name=$("newCatName").value.trim();if(!own||!grp||!name)return toast("Hãy nhập đủ tên creator/người đặt comm, nhóm và phân loại nhỏ");let slug="custom-"+crypto.randomUUID().slice(0,8),{error}=await client.from("categories").insert({main:sec,section:sec,owner_name:own,group_name:grp,name,slug,sort_order:99});if(error)return toast(error.message);$("newCatName").value="";await loadAll();drawCategories();toast("Đã thêm phân loại")};
+$("createCat").onclick=async()=>{let sec=$("newCatSection").value,own=$("newCatOwner").value.trim()||"Chung",grp=$("newCatGroup").value.trim()||"CHAR",name=$("newCatName").value.trim()||"Chung";if(!$("newCatOwner").value.trim()&&!$("newCatGroup").value.trim()&&!$("newCatName").value.trim())return toast("Hãy nhập ít nhất 1 ô danh mục trước nhé");let slug="custom-"+crypto.randomUUID().slice(0,8),{error}=await client.from("categories").insert({main:sec,section:sec,owner_name:own,group_name:grp,name,slug,sort_order:99});if(error)return toast(error.message);$("newCatName").value="";await loadAll();drawCategories();toast("Đã thêm phân loại")};
 
 document.addEventListener("keydown",e=>{
  if(e.key!=="Escape")return;
@@ -2049,36 +2049,20 @@ document.addEventListener("keydown",e=>{
 });
 async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{await refreshAdmin();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{currentProfile=null;refreshRoleUI()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)}}
 window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)});
-function kickGifPlayback(){
- document.querySelectorAll("img").forEach(img=>{
-  if(img.loading==="lazy")img.loading="eager";
-  if(typeof img.decode==="function"&&img.complete){img.decode().catch(()=>{});}
- });
-}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)kickGifPlayback()});
-window.addEventListener("pageshow",kickGifPlayback);
-setTimeout(kickGifPlayback,300);
-function forceMobileAnimationsAndGifs(){
+function kickGifPlayback(forceReloadGif=false){
  document.querySelectorAll("img").forEach(img=>{
   if(img.loading==="lazy")img.loading="eager";
   img.decoding="sync";
-  if(typeof img.decode==="function"&&img.complete){img.decode().catch(()=>{});}
+  img.style.transform="translateZ(0)";
+  const src=img.getAttribute("src")||"";
+  if(forceReloadGif&&src&&/\.gif(\?|$)/i.test(src)){
+   const base=src.split("?")[0];
+   img.setAttribute("src",base+"?gif_kick="+Date.now()+"_"+Math.random().toString(36).slice(2,6));
+  }
  });
- if(typeof syncBgAmbient==="function"&&typeof settings==="object"&&settings){
-  const isDark=document.body.dataset.theme==="dark"&&settings.dark_custom_enabled!==false;
-  const pick=(lk,dk,fb)=>isDark?(settings[dk]!==undefined&&settings[dk]!==null&&settings[dk]!==""?settings[dk]:(settings[lk]??fb)):(settings[lk]??fb);
-  syncBgAmbient({
-   mode:pick("bg_ambient","dark_bg_ambient","none"),
-   color:pick("bg_ambient_color","dark_bg_ambient_color",isDark?"#e9d5ff":"#ffffff"),
-   density:Number(pick("bg_ambient_density","dark_bg_ambient_density",isDark?60:55)),
-   speed:Number(pick("bg_ambient_speed","dark_bg_ambient_speed",1)),
-   lightFx:pick("bg_light_fx","dark_bg_light_fx","none"),
-   lightIntensity:Number(pick("bg_light_intensity","dark_bg_light_intensity",isDark?50:45)),
-   isDark
-  });
- }
 }
-document.addEventListener("touchstart",forceMobileAnimationsAndGifs,{passive:true,once:true});
-setTimeout(forceMobileAnimationsAndGifs,600);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)kickGifPlayback(true)});
+window.addEventListener("pageshow",e=>kickGifPlayback(!!e.persisted));
+setTimeout(()=>kickGifPlayback(false),250);
 init();
 </script></body></html>
