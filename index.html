@@ -1273,9 +1273,9 @@ async function syncRoleCategoryEntries(sectionKey, ownerDisplayName){
    templates.push({group_name:g,name:n,subcategories:Array.isArray(r.subcategories)?r.subcategories:[]});
   }
  }
- if(!templates.length)templates.push({group_name:"CHAR",name:"Chung",subcategories:[]});
+ if(!templates.length)return;
  for(const tpl of templates){
-  const already=existingForOwner.some(c=>(c.group_name||"CHAR")===tpl.group_name&&(c.name||"Chung")===tpl.name);
+  const already=existingForOwner.some(c=>(c.group_name||"CHAR")===tpl.group_name&&(c.name||"")===tpl.name);
   if(!already){
    const slug="role-"+crypto.randomUUID().slice(0,8);
    await client.from("categories").insert({
@@ -1325,7 +1325,7 @@ async function renameCategoryOwnerForProfile(oldName, newName){
 async function propagateTemplateToSection(sectionKey, groupName, catName, subcats=[]){
  if(!configured)return;
  const g=(groupName||"CHAR").trim()||"CHAR";
- const n=(catName||"Chung").trim()||"Chung";
+ const n=(catName||"").trim();
  const owners=new Set();
  (creatorProfiles||[]).forEach(p=>{
   if(sectionKey==="creator"&&(p.can_creator||p.is_approved)&&p.display_name)owners.add(p.display_name.trim());
@@ -1334,7 +1334,7 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
  categories.filter(c=>c.section===sectionKey&&c.owner_name).forEach(c=>owners.add(c.owner_name.trim()));
  for(const own of owners){
   if(!own)continue;
-  const exists=categories.some(c=>c.section===sectionKey&&String(c.owner_name||"").toLowerCase()===own.toLowerCase()&&(c.group_name||"CHAR")===g&&(c.name||"Chung")===n);
+  const exists=categories.some(c=>c.section===sectionKey&&String(c.owner_name||"").toLowerCase()===own.toLowerCase()&&(c.group_name||"CHAR")===g&&(c.name||"")===n);
   if(!exists){
    await client.from("categories").insert({
     main:sectionKey,
@@ -2039,11 +2039,10 @@ const knownCreators=[...new Set([
 ])].sort((a,b)=>a.localeCompare(b,"vi"));
 if(dl)dl.innerHTML=knownCreators.map(n=>`<option value="${esc(n)}"></option>`).join("");
 const canEditCreatorField=!!isAdmin||!!currentProfile?.can_commission;
-if(creatorItemMode){
- f.elements.creator.value=currentProfile?.display_name||"";
- f.elements.creator.readOnly=!canEditCreatorField;
-}else{
- f.elements.creator.readOnly=!canEditCreatorField;
+f.elements.creator.disabled=!canEditCreatorField;
+f.elements.creator.readOnly=!canEditCreatorField;
+if(creatorItemMode||!canEditCreatorField){
+ f.elements.creator.value=currentProfile?.display_name||f.elements.creator.value||"";
 }if(x){for(let k of ["name","url","creator","description"])f.elements[k].value=x[k]||"";f.elements.tags.value=(x.tags||[]).join(", ")}if($("reqSubcatBtnRow"))$("reqSubcatBtnRow").style.display=(!isAdmin&&!!session)?"block":"none";modal("itemModal")}
 $("addBtn").onclick=()=>openItem(null,false);$("creatorAddCharBtn").onclick=()=>openItem(null,true);window.editItem=id=>{let x=items.find(a=>a.id===id);if(!x)return;modal("profileModal",false);openItem(x,!isAdmin)};
 async function uploadImage(file,folderOverride=null){if(!file)throw new Error("Chưa chọn file");const maxBytes=100*1024*1024;if(file.size>maxBytes)throw new Error("File vượt quá 100 MB");const ext=(file.name.split(".").pop()||"jpg").toLowerCase(),baseFolder=folderOverride||(creatorItemMode&&session&&!isAdmin?`creator/${session.user.id}`:""),path=`${baseFolder?baseFolder.replace(/\/$/,"")+"/":""}${crypto.randomUUID()}.${ext}`,mime=file.type||"application/octet-stream";if(file.size<=6*1024*1024){const {error}=await client.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:mime,cacheControl:"3600"});if(error)throw error;}else{if(!window.tus?.Upload)throw new Error("Không tải được thư viện upload resumable; hãy tải lại trang");const {data,error}=await client.auth.getSession();if(error||!data.session)throw new Error("Phiên đăng nhập hết hạn, vui lòng đăng nhập lại");await new Promise((resolve,reject)=>{const upload=new tus.Upload(file,{endpoint:`${SUPABASE_URL}/storage/v1/upload/resumable`,retryDelays:[0,1000,3000,5000],chunkSize:6*1024*1024,headers:{authorization:`Bearer ${data.session.access_token}`,apikey:SUPABASE_ANON_KEY},metadata:{bucketName:BUCKET,objectName:path,contentType:mime,cacheControl:"3600"},onError:reject,onSuccess:resolve});upload.start()})}return client.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
@@ -2185,7 +2184,7 @@ window.deleteGroup=async(sec,encodedOwner,encodedGroup)=>{let own=decodeURICompo
 window.renameCategory=async id=>{let c=categories.find(x=>x.id===id),name=prompt("Tên phân loại nhỏ mới:",c.name);if(!name?.trim())return;let {error}=await client.from("categories").update({name:name.trim()}).eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
 window.removeCategory=async id=>{if(items.some(x=>x.category_id===id))return toast("Phân loại đang có link. Hãy chuyển link trước.");if(!confirm("Xóa phân loại nhỏ này?"))return;let {error}=await client.from("categories").delete().eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
 window.manageSubcategories=async id=>{let c=categories.find(x=>x.id===id);if(!c)return;let current=(c.subcategories||[]).join("\n");let value=prompt("Các mục con của "+c.name+" (mỗi dòng một mục). Để trống nếu muốn xóa hết:",current);if(value===null)return;let list=[...new Set(value.split(/\r?\n|,/).map(x=>x.trim()).filter(Boolean))];let {error}=await client.from("categories").update({subcategories:list}).eq("id",id);if(error)return toast("Không lưu được mục con: "+error.message+" — hãy chạy SQL nâng cấp mới");await loadAll();drawCategories();toast("Đã cập nhật mục con")};
-$("createCat").onclick=async()=>{let sec=$("newCatSection").value,rawOwn=$("newCatOwner").value.trim(),grp=$("newCatGroup").value.trim()||"CHAR",name=$("newCatName").value.trim()||"Chung";if(!rawOwn&&!grp&&!name)return toast("Hãy nhập ít nhất 1 ô danh mục trước nhé");if(!rawOwn){await propagateTemplateToSection(sec,grp,name,[]);$("newCatName").value="";await loadAll();drawCategories();return toast("Đã tạo nhóm & phân loại sẵn cho thành viên khu vực này ♡")}let slug="custom-"+crypto.randomUUID().slice(0,8),{error}=await client.from("categories").insert({main:sec,section:sec,owner_name:rawOwn,group_name:grp,name,slug,sort_order:99});if(error)return toast(error.message);$("newCatName").value="";await loadAll();drawCategories();toast("Đã thêm phân loại")};
+$("createCat").onclick=async()=>{let sec=$("newCatSection").value,rawOwn=$("newCatOwner").value.trim(),grp=$("newCatGroup").value.trim()||"CHAR",name=$("newCatName").value.trim();if(!rawOwn&&!grp&&!name)return toast("Hãy nhập ít nhất 1 ô danh mục trước nhé");if(!rawOwn){await propagateTemplateToSection(sec,grp,name,[]);$("newCatName").value="";await loadAll();drawCategories();return toast("Đã tạo nhóm & phân loại sẵn cho thành viên khu vực này ♡")}let slug="custom-"+crypto.randomUUID().slice(0,8),{error}=await client.from("categories").insert({main:sec,section:sec,owner_name:rawOwn,group_name:grp,name,slug,sort_order:99});if(error)return toast(error.message);$("newCatName").value="";await loadAll();drawCategories();toast("Đã thêm phân loại")};
 
 document.addEventListener("keydown",e=>{
  if(e.key!=="Escape")return;
