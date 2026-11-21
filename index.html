@@ -341,6 +341,9 @@ body[data-theme="dark"] .field label.check-row{background:#2d253a!important;bord
 body[data-theme="dark"] .field label.check-row:hover{background:#362c45!important;border-color:#746088!important}
 .request-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border:1px solid var(--line);border-radius:13px;margin:9px 0;background:var(--surface-soft,rgba(255,255,255,.05))}.request-actions{display:flex;gap:7px;flex-wrap:wrap}.request-status{display:inline-block;margin-top:5px;font-size:12px;color:#b58a42}.request-list{max-height:55vh;overflow:auto}body[data-theme="dark"] .request-row{background:#30283d;color:#f4edf8;border-color:#62536e}body[data-theme="dark"] .request-row .hint{color:#c9bad4}
 /* V9.4: Public Creator/Admin Announcement Bar + Guest Activity Feed */
+.intro-box{margin:0 0 12px;border:1px solid var(--line);border-radius:18px;padding:13px 16px;background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.intro-box-inner{white-space:pre-wrap;word-break:break-word;font-size:13.5px;color:var(--ink);line-height:1.55}
+body[data-theme="dark"] .intro-box{background:rgba(36,31,49,.9);border-color:#51445e;box-shadow:none!important}
 .announce-drawer{margin:12px 0 0;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(10px);transition:border-color .2s ease}
 .announce-bar-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 16px;border:0;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 16%,transparent),color-mix(in srgb,var(--accent2) 14%,transparent));color:var(--ink);text-align:left;font-weight:700;font-size:13px}
 .announce-bar-head:hover{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 24%,transparent),color-mix(in srgb,var(--accent2) 20%,transparent))}
@@ -441,7 +444,20 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
 <header class="hero" id="hero"><div class="hero-lace-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div><div class="hero-actions"><div class="visitor-tools"><button class="icon-btn notify-btn" id="notifyBtn" title="Cập nhật mới &amp; Thông báo" aria-label="Cập nhật mới &amp; Thông báo">♧ Cập nhật</button><button class="icon-btn" id="creatorAccountBtn" title="Tài khoản Creator &amp; Share Comm">♡ Creator / Comm</button><button class="btn ghost" id="loginBtn">Admin Login</button><button class="btn ghost" id="logoutBtn" style="display:none">Đăng xuất Admin</button></div></div><div class="hero-inner" id="heroTextFrames"><div class="eyebrow" id="heroEyebrow">✧ YOUR PERSONAL CHARACTER UNIVERSE ✧</div><div id="heroTitleGroup"><h1 id="siteTitle">♡ Anime GGAI Library ♡</h1><p id="siteSubtitle">Collect your favorite characters & explore new worlds</p></div></div></header>
 <main class="wrap"><div class="adminbar" id="adminBarText">✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.</div>
-<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng CHAR</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ Danh sách Creator &amp; Comm</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn sm" id="addBtn">＋ Thêm link</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
+<section class="intro-box" id="webIntroSection" aria-label="Lời giới thiệu website">
+ <div class="intro-box-inner" id="webIntroDisplay">Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.</div>
+ <div class="admin-only" style="margin-top:8px;justify-content:flex-end;width:100%">
+  <button type="button" class="btn ghost sm" id="editIntroBtn">✎ Sửa lời giới thiệu</button>
+ </div>
+ <div class="intro-editor" id="webIntroEditor" style="display:none;margin-top:10px">
+  <div class="field" style="margin:0 0 8px"><label>Lời giới thiệu website (Admin)</label><textarea id="webIntroInput" style="min-height:68px" placeholder="Nhập lời giới thiệu cho website..."></textarea></div>
+  <div style="display:flex;gap:7px;justify-content:flex-end">
+   <button type="button" class="btn ghost sm" id="cancelIntroBtn">Hủy</button>
+   <button type="button" class="btn sm" id="saveIntroBtn">Lưu lời giới thiệu</button>
+  </div>
+ </div>
+</section>
+<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn" id="addBtn">＋ Đăng tải</button><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng CHAR</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ Danh sách Creator &amp; Comm</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
 <nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="outsideAdminBar" class="outside-admin-bar"><strong class="outside-admin-label">✦ Admin:</strong><span id="outsideAdminList" class="hint" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">Đang tải...</span></div></div>
 <section class="announce-drawer" id="announceDrawer" aria-label="Bảng thông báo từ Creator">
  <button type="button" class="announce-bar-head" id="announceToggle" aria-expanded="false">
@@ -464,7 +480,7 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 </section>
 <div class="heading"><div><h2 id="sectionTitle">Khám phá thư viện</h2><div class="muted" id="count">Đang tải...</div></div><div class="muted" id="magicTagline">♡ Save a little magic every day ♡</div></div><section class="grid" id="cards"><div class="empty">Đang kết nối thư viện... ✧</div></section></main>
 <footer id="siteFooter">Made with love ♡ Anime GGAI Library</footer><div id="stickers"></div><div class="bottom-theme-dock" id="bottomThemeDock"><div class="music-player" id="musicPlayer" style="display:none"><button id="musicToggle" type="button" aria-label="Phát nhạc">▶</button><span class="music-name" id="musicName">Music</span><audio id="siteAudio" loop></audio></div><button class="theme-toggle-btn" id="themeToggle" type="button" title="Chuyển giao diện sáng/tối" aria-label="Chuyển giao diện">☾</button></div><div class="notice" id="notice"></div>
-<div class="modal" id="loginModal"><div class="dialog"><h2>♡ Admin Login</h2><p class="hint">Đăng nhập bằng tài khoản Admin đã được cấp quyền trong Supabase.</p><div class="field"><label>Tên đăng nhập</label><input id="username" type="text" autocomplete="username"></div><div class="field"><label>Mật khẩu</label><input id="password" type="password" autocomplete="current-password"></div><div class="modal-actions"><button class="btn ghost" data-close="loginModal">Hủy</button><button class="btn" id="loginSubmit">Đăng nhập</button></div></div></div>
+<div class="modal" id="loginModal"><div class="dialog"><h2>♡ Admin Login</h2><div class="field"><label>Tên đăng nhập</label><input id="username" type="text" autocomplete="username"></div><div class="field"><label>Mật khẩu</label><input id="password" type="password" autocomplete="current-password"></div><div class="modal-actions"><button class="btn ghost" data-close="loginModal">Hủy</button><button class="btn" id="loginSubmit">Đăng nhập</button></div></div></div>
 <div class="modal" id="subcatRequestModal"><div class="dialog"><h2>♡ Yêu cầu tạo nhóm nhỏ mới</h2><p class="hint">Đề xuất thêm phân loại / nhóm nhỏ ngoài các nhóm có sẵn mà Admin đã tạo.</p><div class="field"><label>Khu vực</label><select id="reqSubcatSection"><option value="creator">Creator</option><option value="commission">Người đẹp tốt bụng share</option></select></div><div class="field"><label>Tên nhóm lớn (vd: CHAR, OPW...)</label><input id="reqSubcatGroup" placeholder="Ví dụ: CHAR"></div><div class="field"><label>Tên nhóm nhỏ / phân loại nhỏ muốn yêu cầu *</label><input id="reqSubcatName" required placeholder="Ví dụ: Sci-fi, Slice of life..."></div><div class="field"><label>Ghi chú thêm cho Admin</label><textarea id="reqSubcatNote" maxlength="300" style="min-height:60px" placeholder="Lý do hoặc gợi ý thêm (tùy chọn)..."></textarea></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="subcatRequestModal">Đóng</button><button type="button" class="btn" id="submitSubcatRequestBtn">Gửi yêu cầu</button></div></div></div>
 <div class="modal" id="itemModal"><div class="dialog"><h2 id="itemHeading">Thêm link mới</h2><form id="itemForm"><div class="field"><label>Tên nhân vật / thế giới *</label><input name="name" required></div><div class="field"><label>Khu vực</label><select name="section"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Creator / người đặt comm</label><select name="owner_name"></select></div><div class="field"><label>Nhóm (CHAR, OPW...)</label><select name="group_name"></select></div></div><div class="cols"><div class="field"><label>Phân loại nhỏ</label><select name="category_id"></select></div><div class="field"><label>Mục con</label><select name="subcategory"><option value="">-- Không chọn --</option></select></div></div><div id="reqSubcatBtnRow" style="display:none;margin:-4px 0 10px"><button type="button" class="btn ghost sm" id="openSubcatRequestBtn">＋ Yêu cầu tạo nhóm nhỏ mới</button></div><div class="field"><label>Link GGAI *</label><input name="url" type="url" required placeholder="https://..."></div><div class="cols"><div class="field"><label>Creator</label><input name="creator" list="creatorOptionsList" placeholder="Chọn hoặc nhập tên creator..."><datalist id="creatorOptionsList"></datalist></div><div class="field"><label>Tags (tối đa 10 tags, cách nhau bằng dấu phẩy)</label><input name="tags" placeholder="romance, fantasy, fluff, angst, slowburn..."></div></div><div class="field"><label>Mô tả</label><textarea name="description" spellcheck="false" placeholder="Nhập mô tả..."></textarea></div><div class="field"><label>Ảnh bìa CHAR</label><input name="image_file" type="file" accept="image/*"><div class="hint">Tải ảnh hoặc GIF trực tiếp từ thiết bị (tối đa 100 MB mỗi file).</div></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="itemModal">Hủy</button><button class="btn">Lưu link</button></div></form></div></div>
 <div class="modal" id="designModal"><div class="dialog"><h2>✧ Customize your library</h2><div class="design-intro">Nhớ bấm <strong>Lưu giao diện</strong> trước khi thoát ra để áp dụng thay đổi nhé.</div>
@@ -475,6 +491,14 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 <button type="button" class="design-tab" data-tab="media_footer">♫ Nhạc &amp; Footer</button>
 </nav>
 <div class="design-panel active" data-panel="light_mode">
+<div class="subtabs" style="margin:6px 0 10px" aria-label="Mục nhanh Chế độ Sáng">
+ <button type="button" class="subtab active" onclick="scrollDesignSub(this,'light_mode',0)">1. Header &amp; Ảnh</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',1)">2. Màu &amp; Chuyển tiếp</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',2)">3. Font &amp; Chữ</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',3)">4. Khung viền</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',4)">5. Nền &amp; Họa tiết</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'light_mode',5)">6. Chuyển động</button>
+</div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
   <strong>1. Chữ &amp; Ảnh bìa Header (Sáng)</strong>
   <div class="field"><label>Tiêu đề</label><input id="dTitle"></div>
@@ -548,6 +572,14 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
 </div>
 
 <div class="design-panel" data-panel="dark_mode">
+<div class="subtabs" style="margin:6px 0 10px" aria-label="Mục nhanh Chế độ Tối">
+ <button type="button" class="subtab active" onclick="scrollDesignSub(this,'dark_mode',0)">1. Tổng quan</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',1)">2. Màu &amp; Chuyển tiếp</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',2)">3. Font &amp; Chữ</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',3)">4. Khung viền</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',4)">5. Nền &amp; Họa tiết</button>
+ <button type="button" class="subtab" onclick="scrollDesignSub(this,'dark_mode',5)">6. Chuyển động</button>
+</div>
  <div style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0">
   <strong>1. Tổng quan &amp; Ảnh bìa Header (Tối)</strong>
   <div class="field"><label class="check-row"><input id="dDarkCustomEnabled" type="checkbox"> Bật cấu hình giao diện tối tùy chỉnh</label></div>
@@ -684,6 +716,17 @@ const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,
 function toast(t){$("notice").textContent=t;$("notice").classList.add("show");setTimeout(()=>$("notice").classList.remove("show"),2600)}
 function modal(id,on=true){$(id).classList.toggle("show",on)}
 // Chuyển tab trong bảng chỉnh giao diện, không làm mất giá trị các trường.
+
+window.scrollDesignSub=(btn,panelName,idx)=>{
+ const panel=document.querySelector(`#designModal .design-panel[data-panel="${panelName}"]`);
+ if(!panel)return;
+ const subtabsWrap=btn.parentElement;
+ if(subtabsWrap)subtabsWrap.querySelectorAll(".subtab").forEach(b=>b.classList.toggle("active",b===btn));
+ const cards=[...panel.querySelectorAll(":scope > div[style*='border:1px solid']")];
+ const target=cards[idx];
+ if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+};
+
 function activateDesignTab(name){
  document.querySelectorAll("#designModal .design-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
  document.querySelectorAll("#designModal .design-panel").forEach(p=>p.classList.toggle("active",p.dataset.panel===name));
@@ -820,6 +863,7 @@ function applySettings(){
  $("siteSubtitle").textContent=settings.subtitle??"";
  if($("heroEyebrow")){const eb=settings.eyebrow_text??"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧";$("heroEyebrow").textContent=eb;$("heroEyebrow").style.display=eb===""?"none":""}
  if($("magicTagline")){const mt=settings.magic_tagline??"♡ Save a little magic every day ♡";$("magicTagline").textContent=mt;$("magicTagline").style.display=mt===""?"none":""}
+if(typeof renderWebIntro==="function")renderWebIntro();
   $("siteFooter").textContent=settings.footer_text??"Made with love ♡ Anime GGAI Library";
  $("siteFooter").style.display=(settings.footer_text??"Made with love ♡ Anime GGAI Library")===""?"none":"block";
 
@@ -1780,6 +1824,49 @@ function syncAnnouncementComposer(){
  $("announcePinWrap").style.display=isAdmin?"inline-flex":"none";
  if(!canPost){editingAnnouncementId=null;$("announceInput").value="";$("announceCancelEdit").style.display="none"}
 }
+
+const WEB_INTRO_STORAGE_KEY="animeggai-web-intro";
+function getWebIntroText(){
+ if(settings.intro_text!==undefined&&settings.intro_text!==null)return String(settings.intro_text);
+ const saved=localStorage.getItem(WEB_INTRO_STORAGE_KEY);
+ return saved!==null?saved:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.";
+}
+function renderWebIntro(){
+ const el=$("webIntroDisplay");if(!el)return;
+ const txt=getWebIntroText();
+ el.textContent=txt;
+ el.style.display=txt.trim()===""&&!isAdmin?"none":"block";
+}
+$("editIntroBtn")?.addEventListener("click",()=>{
+ if(!isAdmin)return toast("Chỉ Admin mới sửa được lời giới thiệu.");
+ if($("webIntroInput"))$("webIntroInput").value=getWebIntroText();
+ if($("webIntroEditor"))$("webIntroEditor").style.display="block";
+ $("webIntroInput")?.focus();
+});
+$("cancelIntroBtn")?.addEventListener("click",()=>{
+ if($("webIntroEditor"))$("webIntroEditor").style.display="none";
+});
+$("saveIntroBtn")?.addEventListener("click",async()=>{
+ if(!isAdmin)return toast("Chỉ Admin mới lưu được lời giới thiệu.");
+ const val=($("webIntroInput")?.value??"").trim();
+ const btn=$("saveIntroBtn");if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}
+ try{
+  localStorage.setItem(WEB_INTRO_STORAGE_KEY,val);
+  settings={...settings,intro_text:val};
+  if(configured&&client){
+   const {error}=await client.from("site_settings").upsert({id:1,intro_text:val});
+   if(error&&!/column "intro_text"|'intro_text' column/i.test(String(error.message||"")))throw error;
+  }
+  renderWebIntro();
+  if($("webIntroEditor"))$("webIntroEditor").style.display="none";
+  toast("Đã lưu lời giới thiệu website ♡");
+ }catch(err){
+  toast("Đã lưu tạm trên trình duyệt ("+(err.message||err)+")");
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent="Lưu lời giới thiệu"}
+ }
+});
+
 function renderAnnouncements(){
  const listEl=$("announceList"),prevEl=$("announcePreviewText");
  if(!listEl||!prevEl)return;
