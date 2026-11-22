@@ -556,6 +556,25 @@ body[data-theme="dark"] .mgr-chip{background:#30283d;color:#e9dff0}
 .mgr-chip button{border:0;background:transparent;color:inherit;font-size:14px;line-height:1;cursor:pointer;padding:2px 6px;box-shadow:none}
 .mgr-add{display:flex;gap:6px;margin-top:6px}
 .mgr-add input{flex:1;min-width:0;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface,#fff);color:var(--ink);font-size:13px}
+
+/* v56: bố cục nút "Tạo thêm nhóm" gọn, tách riêng */
+.subcat-cta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:20px 0 18px;padding:12px 14px;border:1.5px dashed color-mix(in srgb,var(--accent) 55%,var(--line));border-radius:16px;background:color-mix(in srgb,var(--accent) 7%,transparent)}
+.subcat-cta span{font-size:13px;color:var(--muted)}
+.subcat-cta .btn{white-space:nowrap}
+.mgr-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:rgba(255,255,255,.55)}
+body[data-theme="dark"] .mgr-card{background:rgba(255,255,255,.04)}
+.mgr-create{margin:14px 0 6px}
+.mgr-title{font-weight:700;font-size:14px;margin-bottom:6px}
+.mgr-cta{width:100%;margin-top:16px;padding:11px 14px}
+.mgr-sep{display:flex;align-items:center;gap:10px;margin:22px 0 4px;color:var(--muted);font-size:12.5px;font-weight:700;letter-spacing:.4px}
+.mgr-sep::before,.mgr-sep::after{content:"";flex:1;border-top:1px solid var(--line)}
+.mgr-group{margin:14px 0}
+.mgr-gname{font-size:16px}
+.mgr-cat{margin:14px 0 0;padding:12px;border:1px solid var(--line);border-radius:12px}
+.mgr-cname{font-weight:700;font-size:14px}
+.mgr-add{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);align-items:center}
+.mgr-add .btn{white-space:nowrap;flex:none}
+.mgr-add-cat{margin-top:18px}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
@@ -599,8 +618,8 @@ body[data-theme="dark"] .mgr-chip{background:#30283d;color:#e9dff0}
 <div class="heading"><div><h2 id="sectionTitle">Khám phá thư viện</h2><div class="muted" id="count">Đang tải...</div></div><div class="muted" id="magicTagline">♡ Save a little magic every day ♡</div></div><section class="grid" id="cards"><div class="empty">Đang kết nối thư viện... ✧</div></section></main>
 <footer id="siteFooter">Made with love ♡ Anime GGAI Library</footer><div id="stickers"></div><div class="bottom-theme-dock" id="bottomThemeDock"><div class="music-player" id="musicPlayer" style="display:none"><button id="musicToggle" type="button" aria-label="Phát nhạc">▶</button><span class="music-name" id="musicName">Music</span><audio id="siteAudio" loop></audio></div><button class="theme-toggle-btn" id="themeToggle" type="button" title="Chuyển giao diện sáng/tối" aria-label="Chuyển giao diện">☾</button></div><div class="notice" id="notice"></div>
 <div class="modal" id="loginModal"><div class="dialog"><h2>♡ Admin Login</h2><div class="field"><label>Tên đăng nhập</label><input id="username" type="text" autocomplete="username"></div><div class="field"><label>Mật khẩu</label><input id="password" type="password" autocomplete="current-password"></div><div class="modal-actions"><button class="btn ghost" data-close="loginModal">Hủy</button><button class="btn" id="loginSubmit">Đăng nhập</button></div></div></div>
-<div class="modal" id="itemModal"><div class="dialog"><h2 id="itemHeading">Thêm link mới</h2><form id="itemForm"><div class="field"><label>Tên nhân vật / thế giới *</label><input name="name" required></div><div class="field"><label>Khu vực</label><select name="section"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Người đăng tải</label><select name="owner_name"></select></div><div class="field"><label>Nhóm (CHAR, OPW...)</label><select name="group_name"></select></div></div><div class="cols"><div class="field"><label>Phân loại nhỏ</label><select name="category_id"></select></div><div class="field"><label>Mục con</label><select name="subcategory"><option value="">-- Không chọn --</option></select></div></div><div id="reqSubcatBtnRow" style="display:none;margin:-4px 0 10px"><button type="button" class="btn ghost sm" id="openSubcatRequestBtn">＋ Tạo thêm nhóm</button></div><div class="field"><label>Link GGAI *</label><input name="url" type="url" required placeholder="https://..."></div><div class="cols"><div class="field"><label>Creator</label><input name="creator" list="creatorOptionsList" placeholder="Chọn hoặc nhập tên creator..."><datalist id="creatorOptionsList"></datalist></div><div class="field"><label>Tags (tối đa 10 tags, cách nhau bằng dấu phẩy)</label><input name="tags" placeholder="romance, fantasy, fluff, angst, slowburn..."></div></div><div class="field"><label>Mô tả</label><textarea name="description" spellcheck="false" placeholder="Nhập mô tả..."></textarea></div><div class="field"><label>Ảnh bìa CHAR</label><input name="image_file" type="file" accept="image/*"><div class="hint">Tải ảnh hoặc GIF trực tiếp từ thiết bị (tối đa 100 MB mỗi file).</div></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="itemModal">Hủy</button><button class="btn">Lưu link</button></div></form></div></div>
-<div class="modal" id="subcatManagerModal"><div class="dialog"><h2>♡ Tạo thêm nhóm</h2><p class="hint">Tự tạo, đổi tên hoặc xóa nhóm / phân loại nhỏ / mục con của riêng bạn để phân loại link. Bạn chỉ chỉnh được những nhóm do mình tạo.</p><div class="field" id="mgrSecField"><label>Khu vực</label><select id="mgrSection"></select></div><div class="mgr-new"><div class="cols"><div class="field"><label>Tên nhóm mới (vd: CHAR, OPW...)</label><input id="mgrNewGroup" maxlength="40" placeholder="Ví dụ: OPW"></div><div class="field"><label>Phân loại nhỏ đầu tiên</label><input id="mgrNewCat" maxlength="40" placeholder="Mặc định: Chung"></div></div><button type="button" class="btn sm" id="mgrCreateGroup">＋ Tạo nhóm</button></div><div id="mgrList"></div><div class="modal-actions"><button type="button" class="btn" data-close="subcatManagerModal">Xong</button></div></div></div>
+<div class="modal" id="itemModal"><div class="dialog"><h2 id="itemHeading">Thêm link mới</h2><form id="itemForm"><div class="field"><label>Tên nhân vật / thế giới *</label><input name="name" required></div><div class="field"><label>Khu vực</label><select name="section"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Người đăng tải</label><select name="owner_name"></select></div><div class="field"><label>Nhóm (CHAR, OPW...)</label><select name="group_name"></select></div></div><div class="cols"><div class="field"><label>Phân loại nhỏ</label><select name="category_id"></select></div><div class="field"><label>Mục con</label><select name="subcategory"><option value="">-- Không chọn --</option></select></div></div><div id="reqSubcatBtnRow" style="display:none"><div class="subcat-cta"><span>Chưa có nhóm phù hợp?</span><button type="button" class="btn ghost sm" id="openSubcatRequestBtn">＋ Tạo thêm nhóm</button></div></div><div class="field"><label>Link GGAI *</label><input name="url" type="url" required placeholder="https://..."></div><div class="cols"><div class="field"><label>Creator</label><input name="creator" list="creatorOptionsList" placeholder="Chọn hoặc nhập tên creator..."><datalist id="creatorOptionsList"></datalist></div><div class="field"><label>Tags (tối đa 10 tags, cách nhau bằng dấu phẩy)</label><input name="tags" placeholder="romance, fantasy, fluff, angst, slowburn..."></div></div><div class="field"><label>Mô tả</label><textarea name="description" spellcheck="false" placeholder="Nhập mô tả..."></textarea></div><div class="field"><label>Ảnh bìa CHAR</label><input name="image_file" type="file" accept="image/*"><div class="hint">Tải ảnh hoặc GIF trực tiếp từ thiết bị (tối đa 100 MB mỗi file).</div></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="itemModal">Hủy</button><button class="btn">Lưu link</button></div></form></div></div>
+<div class="modal" id="subcatManagerModal"><div class="dialog"><h2>♡ Tạo thêm nhóm</h2><p class="hint">Tự tạo, đổi tên hoặc xóa nhóm / phân loại nhỏ / mục con của riêng bạn để phân loại link. Bạn chỉ chỉnh được những nhóm do mình tạo.</p><div class="field" id="mgrSecField"><label>Khu vực</label><select id="mgrSection"></select></div><section class="mgr-card mgr-create"><div class="mgr-title">✦ Tạo nhóm mới</div><div class="cols"><div class="field"><label>Tên nhóm (vd: CHAR, OPW...)</label><input id="mgrNewGroup" maxlength="40" placeholder="Ví dụ: OPW"></div><div class="field"><label>Phân loại nhỏ đầu tiên</label><input id="mgrNewCat" maxlength="40" placeholder="Mặc định: Chung"></div></div><button type="button" class="btn mgr-cta" id="mgrCreateGroup">＋ Tạo nhóm</button></section><div class="mgr-sep"><span>Nhóm của bạn</span></div><div id="mgrList"></div><div class="modal-actions"><button type="button" class="btn" data-close="subcatManagerModal">Xong</button></div></div></div>
 <div class="modal" id="designModal"><div class="dialog"><h2>✧ Customize your library</h2><div class="design-intro">Nhớ bấm <strong>Lưu giao diện</strong> trước khi thoát ra để áp dụng thay đổi nhé.</div>
 <nav class="design-tabs" role="tablist" aria-label="Nhóm tùy chỉnh">
 <button type="button" class="design-tab active" data-tab="light_mode">☀ Chế độ Sáng</button>
@@ -863,7 +882,7 @@ const SUPABASE_ANON_KEY="sb_publishable_kCWMASYWHpHdFrD80kqytw_T_9qGcYF";
 const BUCKET="library-images";
 const configured=!SUPABASE_URL.startsWith("YOUR_")&&!SUPABASE_ANON_KEY.startsWith("YOUR_");
 const client=configured?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
-let session=null,isAdmin=false,isFounderAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],adminRoleByUserId={},items=[],categories=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",intro_text:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
+let session=null,isAdmin=false,isFounderAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],adminRoleByUserId={},items=[],categories=[],catPlaceholders=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",intro_text:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function toast(t){$("notice").textContent=t;$("notice").classList.add("show");setTimeout(()=>$("notice").classList.remove("show"),2600)}
 function modal(id,on=true){$(id).classList.toggle("show",on)}
@@ -1602,7 +1621,7 @@ async function syncRoleCategoryEntries(sectionKey, ownerDisplayName){
  if(!configured||!ownerDisplayName)return;
  const cleanOwner=String(ownerDisplayName).trim();
  if(!cleanOwner)return;
- const existingForOwner=categories.filter(c=>c.section===sectionKey&&String(c.owner_name||"").toLowerCase()===cleanOwner.toLowerCase());
+ const existingForOwner=allCatRows().filter(c=>c.section===sectionKey&&String(c.owner_name||"").toLowerCase()===cleanOwner.toLowerCase());
  const secRows=categories.filter(c=>c.section===sectionKey);
  const templates=[];
  const seenTpl=new Set();
@@ -1643,18 +1662,18 @@ async function backfillApprovedRoleCategories(){
   if(!dname)continue;
   if(p.can_creator){
    const skipCrt=deletedCats.includes("creator::"+dname.toLowerCase());
-   const hasCrt=categories.some(c=>c.section==="creator"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
+   const hasCrt=allCatRows().some(c=>c.section==="creator"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
    if(!hasCrt&&!skipCrt){await syncRoleCategoryEntries("creator",dname);changed=true;}
   }
   if(p.can_commission){
    const skipComm=deletedCats.includes("commission::"+dname.toLowerCase());
-   const hasComm=categories.some(c=>c.section==="commission"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
+   const hasComm=allCatRows().some(c=>c.section==="commission"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
    if(!hasComm&&!skipComm){await syncRoleCategoryEntries("commission",dname);changed=true;}
   }
  }
  if(changed){
   const {data:cData}=await client.from("categories").select("*").order("sort_order");
-  if(cData)categories=cData;
+  if(cData)setCats(cData);
  }
 }
 async function renameCategoryOwnerForProfile(oldName, newName){
@@ -2413,7 +2432,11 @@ $("sendItemFeedbackBtn")?.addEventListener("click",async()=>{
 });
 function categoryName(id){return categories.find(c=>c.id===id)?.name||"Other"}
 function sectionLabel(v){return v==="commission"?"Bbi share commission":"Creator"}
-function uniqueValues(key,filters={}){return [...new Set(categories.filter(c=>Object.entries(filters).every(([k,v])=>!v||c[k]===v)).map(c=>c[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"))}
+const PH_NAME="__empty__";
+const isPhCat=c=>{const n=String(c?.name||"").trim();return !n||n===PH_NAME};
+function setCats(rows){rows=rows||[];categories=rows.filter(c=>!isPhCat(c));catPlaceholders=rows.filter(isPhCat)}
+function allCatRows(){return categories.concat(catPlaceholders)}
+function uniqueValues(key,filters={}){return [...new Set(allCatRows().filter(c=>Object.entries(filters).every(([k,v])=>!v||c[k]===v)).map(c=>c[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"))}
 async function loadCreatorRequests(){if(!isAdmin)return toast("Chỉ Admin mới có quyền duyệt.");$("creatorRequestsList").innerHTML='<p class="hint">Đang tải...</p>';const {data,error}=await client.from("creator_profiles").select("user_id,username,display_name,handle,is_approved,can_creator,can_commission,pending_creator,pending_commission,requested_role,approval_status,created_at").eq("approval_status","pending").order("created_at",{ascending:false});if(error){$("creatorRequestsList").textContent="Không tải được danh sách: "+error.message;return}const rows=data||[];$("creatorRequestsList").innerHTML=rows.map(p=>{const reqRoles=[];if(p.pending_creator)reqRoles.push("Creator");if(p.pending_commission)reqRoles.push("Bbi share comm");if(!reqRoles.length&&!p.is_approved&&!p.can_creator&&!p.can_commission)reqRoles.push(p.requested_role==="commission"?"Bbi share comm":"Creator");return `<div class="request-row"><div><strong>${esc(p.display_name||"Creator")}</strong><div class="hint">@${esc(p.username||p.handle||"unknown")} · ${new Date(p.created_at).toLocaleString("vi-VN")}</div><span class="request-status">Đăng ký: <strong>${esc(reqRoles.join(" + "))}</strong></span></div><div class="request-actions"><button class="btn sm" data-approve-creator="${p.user_id}">Duyệt</button><button class="btn ghost sm" data-reject-creator="${p.user_id}">Từ chối</button></div></div>`}).join("")||'<p class="hint">Không có yêu cầu đang chờ.</p>'}
 $("creatorRequestsBtn").onclick=async()=>{await loadCreatorRequests();modal("creatorRequestsModal")};
 $("refreshCreatorRequests").onclick=loadCreatorRequests;
@@ -2513,7 +2536,7 @@ async function refreshAdmin(){if(!session){isAdmin=false;isFounderAdmin=false;re
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
 if(c.error||i.error){toast("Không tải được dữ liệu. Kiểm tra cấu hình và SQL.");console.error(c.error,i.error);return}
-categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
+setCats(c.data||[]);items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
 }
 function itemMatchesFilter(x, opts={}){
  const c=categories.find(v=>v.id===x.category_id);
@@ -2565,7 +2588,7 @@ let {data,error}=await client.auth.signInWithPassword({
   password: $("password").value
 });if(error)return toast(error.message);session=data.session;await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();modal("loginModal",false);render();toast("Đã đăng nhập Admin ♡");await loadNotifications(true)};
 $("logoutBtn").onclick=async()=>{await client.auth.signOut();session=null;isAdmin=false;isFounderAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];lastAnnouncedUnreadCount=0;$("notifyBtn").classList.remove("has-unread");$("notifyBtn").innerHTML="♧ Thông báo";refreshRoleUI();render();if(configured){await fetchCreatorProfiles();await loadAnnouncements();await loadPublicActivityLogs(false)}else{renderAdminShowcase()}toast("Đã đăng xuất")};
-function setItemCategoryOptions(selected){let f=$("itemForm"),sec=f.elements.section.value;let owners=uniqueValues("owner_name",{section:sec});const myName=(currentProfile?.display_name||"").trim();if(!isAdmin&&myName){owners=[myName];f.elements.owner_name.disabled=true;f.elements.owner_name.innerHTML=`<option value="${esc(myName)}" selected>${esc(myName)}</option>`;}else{f.elements.owner_name.disabled=false;if(!owners.length)owners=["Chung"];f.elements.owner_name.innerHTML=owners.map(v=>`<option ${v===(f.dataset.owner||owners[0])?"selected":""}>${esc(v)}</option>`).join("");}let own=f.elements.owner_name.value;let groups=uniqueValues("group_name",{section:sec,owner_name:own});if(!groups.length)groups=uniqueValues("group_name",{section:sec});if(!groups.length)groups=["CHAR"];f.elements.group_name.innerHTML=groups.map((v,i)=>`<option ${v===(f.dataset.group||groups[0])?"selected":""}>${esc(v)}</option>`).join("");let gr=f.elements.group_name.value;let leaves=categories.filter(c=>c.section===sec&&c.owner_name===own&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec);f.elements.category_id.innerHTML=leaves.map(c=>`<option value="${c.id}" ${c.id===selected?"selected":""}>${esc(c.name)}</option>`).join("");setItemSubcategoryOptions(f.dataset.subcategory||"") }
+function setItemCategoryOptions(selected){let f=$("itemForm"),sec=f.elements.section.value;let owners=uniqueValues("owner_name",{section:sec});const myName=(currentProfile?.display_name||"").trim();if(!isAdmin&&myName){owners=[myName];f.elements.owner_name.disabled=true;f.elements.owner_name.innerHTML=`<option value="${esc(myName)}" selected>${esc(myName)}</option>`;}else{f.elements.owner_name.disabled=false;if(!owners.length)owners=["Chung"];f.elements.owner_name.innerHTML=owners.map(v=>`<option ${v===(f.dataset.owner||owners[0])?"selected":""}>${esc(v)}</option>`).join("");}let own=f.elements.owner_name.value;let groups=uniqueValues("group_name",{section:sec,owner_name:own});if(!groups.length)groups=uniqueValues("group_name",{section:sec});if(!groups.length)groups=["CHAR"];f.elements.group_name.innerHTML=groups.map((v,i)=>`<option ${v===(f.dataset.group||groups[0])?"selected":""}>${esc(v)}</option>`).join("");let gr=f.elements.group_name.value;let leaves=categories.filter(c=>c.section===sec&&c.owner_name===own&&c.group_name===gr);const emptyGrp=catPlaceholders.some(c=>c.section===sec&&c.owner_name===own&&c.group_name===gr);if(!leaves.length&&!emptyGrp)leaves=categories.filter(c=>c.section===sec&&c.group_name===gr);if(!leaves.length&&!emptyGrp)leaves=categories.filter(c=>c.section===sec);f.elements.category_id.innerHTML=leaves.length?leaves.map(c=>`<option value="${c.id}" ${c.id===selected?"selected":""}>${esc(c.name)}</option>`).join(""):`<option value="">— Nhóm này chưa có phân loại nhỏ —</option>`;setItemSubcategoryOptions(f.dataset.subcategory||"") }
 function setItemSubcategoryOptions(selected=""){let f=$("itemForm"),c=categories.find(v=>v.id===f.elements.category_id.value),opts=c?.subcategories||[];f.elements.subcategory.innerHTML=`<option value="">-- Không chọn --</option>`+opts.map(v=>`<option ${v===selected?"selected":""}>${esc(v)}</option>`).join("") }
 $("itemForm").elements.section.onchange=()=>{ $("itemForm").dataset.owner="";$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.owner_name.onchange=()=>{ $("itemForm").dataset.owner=$("itemForm").elements.owner_name.value;$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.group_name.onchange=()=>{$("itemForm").dataset.group=$("itemForm").elements.group_name.value;setItemCategoryOptions()};$("itemForm").elements.category_id.onchange=()=>setItemSubcategoryOptions();
 let creatorItemMode=false;
@@ -2772,7 +2795,7 @@ window.deleteOwner=async(sec,encoded)=>{
 };
 window.deleteGroup=async(sec,encodedOwner,encodedGroup)=>{let own=decodeURIComponent(encodedOwner),grp=decodeURIComponent(encodedGroup),ids=categories.filter(c=>c.section===sec&&c.owner_name===own&&c.group_name===grp).map(c=>c.id);if(items.some(x=>ids.includes(x.category_id)))return toast("Nhóm này vẫn có link. Hãy chuyển hoặc xóa link trước.");if(!confirm("Xóa nhóm "+grp+"?"))return;let {error}=await client.from("categories").delete().eq("section",sec).eq("owner_name",own).eq("group_name",grp);if(error)return toast(error.message);await loadAll();drawCategories()};
 window.renameCategory=async id=>{let c=categories.find(x=>x.id===id),name=prompt("Tên phân loại nhỏ mới:",c.name);if(!name?.trim())return;let {error}=await client.from("categories").update({name:name.trim()}).eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
-window.removeCategory=async id=>{if(items.some(x=>x.category_id===id))return toast("Phân loại đang có link. Hãy chuyển link trước.");if(!confirm("Xóa phân loại nhỏ này?"))return;let {error}=await client.from("categories").delete().eq("id",id);if(error)return toast(error.message);await loadAll();drawCategories()};
+window.removeCategory=async id=>{const c=categories.find(x=>x.id===id);if(!c)return;if(items.some(x=>x.category_id===id))return toast("Phân loại đang có link. Hãy chuyển link trước.");if(!confirm("Xóa phân loại nhỏ này? (Nhóm lớn vẫn được giữ lại)"))return;const same=x=>x.section===c.section&&x.owner_name===c.owner_name&&(x.group_name||"CHAR")===(c.group_name||"CHAR");const keepGroup=!categories.some(x=>x.id!==id&&same(x))&&!catPlaceholders.some(same);let r=keepGroup?await client.from("categories").update({name:PH_NAME,subcategories:[]}).eq("id",id):await client.from("categories").delete().eq("id",id);if(r.error)return toast(r.error.message);await loadAll();drawCategories()};
 window.manageSubcategories=async id=>{let c=categories.find(x=>x.id===id);if(!c)return;let current=(c.subcategories||[]).join("\n");let value=prompt("Các mục con của "+c.name+" (mỗi dòng một mục). Để trống nếu muốn xóa hết:",current);if(value===null)return;let list=[...new Set(value.split(/\r?\n|,/).map(x=>x.trim()).filter(Boolean))];let {error}=await client.from("categories").update({subcategories:list}).eq("id",id);if(error)return toast("Không lưu được mục con: "+error.message+" — hãy chạy SQL nâng cấp mới");await loadAll();drawCategories();toast("Đã cập nhật mục con")};
 $("createCat").onclick=async()=>{let sec=$("newCatSection").value,rawOwn=$("newCatOwner").value.trim(),grp=$("newCatGroup").value.trim()||"CHAR",name=$("newCatName").value.trim();if(!rawOwn&&!grp&&!name)return toast("Hãy nhập ít nhất 1 ô danh mục trước nhé");if(!rawOwn){await propagateTemplateToSection(sec,grp,name,[]);$("newCatName").value="";await loadAll();drawCategories();return toast("Đã tạo nhóm & phân loại sẵn cho thành viên khu vực này ♡")}clearDeletedOwnerCat(sec,rawOwn);let slug="custom-"+crypto.randomUUID().slice(0,8),{error}=await client.from("categories").insert({main:sec,section:sec,owner_name:rawOwn,group_name:grp,name,slug,sort_order:99});if(error)return toast(error.message);$("newCatName").value="";await loadAll();drawCategories();toast("Đã thêm phân loại")};
 
@@ -2783,40 +2806,43 @@ document.addEventListener("keydown",e=>{
  // Không đóng nhiều cửa sổ cùng lúc; ưu tiên modal trên cùng.
  closeModalSafely(opened[opened.length-1].id);
 });
-/* v55: Creator tự tạo / sửa / xóa nhóm của mình (không cần gửi yêu cầu cho Admin) */
+/* v56: Creator tự tạo / sửa / xóa nhóm của mình (không cần gửi yêu cầu cho Admin) */
 let mgrSec="creator";
 const mgrMyName=()=>(currentProfile?.display_name||"").trim();
 const mgrIsMine=c=>String(c.owner_name||"").trim().toLowerCase()===mgrMyName().toLowerCase();
-function mgrMyCats(){return categories.filter(c=>c.section===mgrSec&&mgrIsMine(c))}
+function mgrMyRows(){return allCatRows().filter(c=>c.section===mgrSec&&mgrIsMine(c))}
+const mgrErr=err=>{const m=String(err?.message||err||"");return /row-level security|policy|permission/i.test(m)?"Bạn chưa có quyền chỉnh nhóm này. Nhờ Admin chạy file SQL supabase_fix_v56.sql trong Supabase nhé.":"Lỗi: "+m};
 function mgrRefreshItemForm(pick={}){
  const f=$("itemForm");if(!f)return;
  f.dataset.owner=mgrMyName();
- f.dataset.group=pick.group||f.elements.group_name.value||"";
+ f.dataset.group=pick.group??(f.elements.group_name.value||"");
  f.dataset.subcategory=pick.subcategory??(f.elements.subcategory.value||"");
  setItemCategoryOptions(pick.categoryId||f.elements.category_id.value);
 }
 async function mgrReload(pick){
  const {data,error}=await client.from("categories").select("*").order("sort_order");
  if(error)return toast("Không tải lại được danh mục: "+error.message);
- categories=data||[];drawSubcatManager();mgrRefreshItemForm(pick||{});
+ setCats(data);drawSubcatManager();mgrRefreshItemForm(pick||{});
  try{render()}catch(e){}
 }
 function drawSubcatManager(){
  const box=$("mgrList");if(!box)return;
- const rows=mgrMyCats();
+ const rows=mgrMyRows();
  const groups=[...new Set(rows.map(c=>c.group_name||"CHAR"))];
- if(!groups.length){box.innerHTML='<p class="hint">Bạn chưa có nhóm nào trong khu vực này. Hãy tạo nhóm đầu tiên ở trên nhé ♡</p>';return}
+ if(!groups.length){box.innerHTML='<p class="hint" style="text-align:center;padding:10px 0">Bạn chưa có nhóm nào trong khu vực này. Hãy tạo nhóm đầu tiên ở trên nhé ♡</p>';return}
  box.innerHTML=groups.map(g=>{
-  const cats=rows.filter(c=>(c.group_name||"CHAR")===g);
-  return `<div class="mgr-group" data-group="${esc(g)}"><div class="mgr-head"><strong>${esc(g)}</strong><div class="mgr-btns"><button type="button" class="btn ghost sm" data-act="rename-group">Đổi tên</button><button type="button" class="btn red sm" data-act="del-group">Xóa nhóm</button></div></div>`
-  +cats.map(c=>`<div class="mgr-cat" data-cat="${esc(c.id)}"><div class="mgr-head"><span>${esc(c.name)}</span><div class="mgr-btns"><button type="button" class="btn ghost sm" data-act="rename-cat">Đổi tên</button><button type="button" class="btn red sm" data-act="del-cat">Xóa</button></div></div><div class="mgr-chips">${(c.subcategories||[]).map((m,i)=>`<span class="mgr-chip">${esc(m)}<button type="button" data-act="del-sub" data-i="${i}" aria-label="Xóa mục con">×</button></span>`).join("")||'<span class="hint">Chưa có mục con</span>'}</div><div class="mgr-add"><input data-sub-input maxlength="40" placeholder="Thêm mục con..."><button type="button" class="btn ghost sm" data-act="add-sub">＋</button></div></div>`).join("")
-  +`<div class="mgr-add"><input data-cat-input maxlength="40" placeholder="Thêm phân loại nhỏ trong nhóm ${esc(g)}..."><button type="button" class="btn ghost sm" data-act="add-cat">＋</button></div></div>`;
+  const cats=rows.filter(c=>(c.group_name||"CHAR")===g&&!isPhCat(c));
+  return `<section class="mgr-card mgr-group" data-group="${esc(g)}"><div class="mgr-head"><strong class="mgr-gname">${esc(g)}</strong><div class="mgr-btns"><button type="button" class="btn ghost sm" data-act="rename-group">Đổi tên</button><button type="button" class="btn red sm" data-act="del-group">Xóa nhóm</button></div></div>`
+  +(cats.length?cats.map(c=>`<div class="mgr-cat" data-cat="${esc(c.id)}"><div class="mgr-head"><span class="mgr-cname">${esc(c.name)}</span><div class="mgr-btns"><button type="button" class="btn ghost sm" data-act="rename-cat">Đổi tên</button><button type="button" class="btn red sm" data-act="del-cat">Xóa</button></div></div><div class="mgr-chips">${(c.subcategories||[]).map((m,i)=>`<span class="mgr-chip">${esc(m)}<button type="button" data-act="del-sub" data-i="${i}" aria-label="Xóa mục con">×</button></span>`).join("")||'<span class="hint">Chưa có mục con</span>'}</div><div class="mgr-add"><input data-sub-input maxlength="40" placeholder="Tên mục con mới..."><button type="button" class="btn ghost sm" data-act="add-sub">＋ Thêm mục con</button></div></div>`).join(""):'<p class="hint" style="margin:10px 0 0">Nhóm này chưa có phân loại nhỏ.</p>')
+  +`<div class="mgr-add mgr-add-cat"><input data-cat-input maxlength="40" placeholder="Tên phân loại nhỏ mới trong ${esc(g)}..."><button type="button" class="btn ghost sm" data-act="add-cat">＋ Thêm phân loại</button></div></section>`;
  }).join("");
 }
-async function mgrInsertCat(group,name){
+async function mgrAddCat(group,name){
+ const ph=mgrMyRows().find(c=>(c.group_name||"CHAR")===group&&isPhCat(c));
+ if(ph){const r=await client.from("categories").update({name}).eq("id",ph.id).select().single();return r}
  const row={main:mgrSec,section:mgrSec,owner_name:mgrMyName(),group_name:group,name,subcategories:[],slug:"u-"+crypto.randomUUID().slice(0,8),sort_order:60};
  let r=await client.from("categories").insert({...row,owner_id:session.user.id}).select().single();
- if(r.error&&/owner_id/i.test(r.error.message||""))r=await client.from("categories").insert(row).select().single();
+ if(r.error&&/owner_id/i.test(r.error.message||"")&&!/row-level/i.test(r.error.message||""))r=await client.from("categories").insert(row).select().single();
  return r;
 }
 $("openSubcatRequestBtn")?.addEventListener("click",()=>{
@@ -2835,12 +2861,12 @@ $("mgrCreateGroup")?.addEventListener("click",async()=>{
  if(!session)return toast("Đăng nhập trước nhé");
  const g=$("mgrNewGroup").value.trim(),n=$("mgrNewCat").value.trim()||"Chung";
  if(!g)return toast("Hãy nhập tên nhóm");
- if(mgrMyCats().some(c=>(c.group_name||"").toLowerCase()===g.toLowerCase()))return toast("Bạn đã có nhóm tên này rồi");
+ if(mgrMyRows().some(c=>(c.group_name||"").toLowerCase()===g.toLowerCase()))return toast("Bạn đã có nhóm tên này rồi");
  const btn=$("mgrCreateGroup");btn.disabled=true;
- const {data,error}=await mgrInsertCat(g,n);btn.disabled=false;
- if(error)return toast("Không tạo được nhóm: "+error.message);
+ const {data,error}=await mgrAddCat(g,n);btn.disabled=false;
+ if(error)return toast(mgrErr(error));
  $("mgrNewGroup").value="";$("mgrNewCat").value="";
- const f=$("itemForm");if(f&&f.elements.section.value!==mgrSec){f.elements.section.value=mgrSec;}
+ const f=$("itemForm");if(f&&f.elements.section.value!==mgrSec){f.elements.section.value=mgrSec;f.dataset.owner="";}
  await mgrReload({group:g,categoryId:data?.id,subcategory:""});toast("Đã tạo nhóm ♡");
 });
 $("mgrList")?.addEventListener("click",async e=>{
@@ -2848,41 +2874,42 @@ $("mgrList")?.addEventListener("click",async e=>{
  const grpEl=btn.closest(".mgr-group"),catEl=btn.closest(".mgr-cat");
  const group=grpEl?.dataset.group,cat=catEl?categories.find(c=>String(c.id)===catEl.dataset.cat):null;
  const act=btn.dataset.act;
- const fail=err=>toast("Lỗi: "+(err.message||err));
  if(act==="rename-group"){
   const val=prompt("Tên nhóm mới:",group);if(!val?.trim()||val.trim()===group)return;
-  const ids=mgrMyCats().filter(c=>(c.group_name||"CHAR")===group).map(c=>c.id);
+  const ids=mgrMyRows().filter(c=>(c.group_name||"CHAR")===group).map(c=>c.id);
   const {error}=await client.from("categories").update({group_name:val.trim()}).in("id",ids);
-  if(error)return fail(error);await mgrReload({group:val.trim()});
+  if(error)return toast(mgrErr(error));await mgrReload({group:val.trim()});
  }else if(act==="del-group"){
-  const mine=mgrMyCats().filter(c=>(c.group_name||"CHAR")===group),ids=mine.map(c=>c.id);
+  const ids=mgrMyRows().filter(c=>(c.group_name||"CHAR")===group).map(c=>c.id);
   if(items.some(x=>ids.includes(x.category_id)))return toast("Nhóm này vẫn có link. Hãy chuyển hoặc xóa link trước.");
   if(!confirm("Xóa nhóm "+group+" cùng các phân loại nhỏ bên trong?"))return;
   const {error}=await client.from("categories").delete().in("id",ids);
-  if(error)return fail(error);await mgrReload({group:""});
+  if(error)return toast(mgrErr(error));await mgrReload({group:""});
  }else if(act==="add-cat"){
   const inp=grpEl.querySelector("[data-cat-input]"),n=inp.value.trim();if(!n)return toast("Hãy nhập tên phân loại nhỏ");
-  if(mgrMyCats().some(c=>(c.group_name||"CHAR")===group&&c.name.toLowerCase()===n.toLowerCase()))return toast("Phân loại này đã có rồi");
-  const {data,error}=await mgrInsertCat(group,n);if(error)return fail(error);
+  if(mgrMyRows().some(c=>(c.group_name||"CHAR")===group&&!isPhCat(c)&&c.name.toLowerCase()===n.toLowerCase()))return toast("Phân loại này đã có rồi");
+  const {data,error}=await mgrAddCat(group,n);if(error)return toast(mgrErr(error));
   await mgrReload({group,categoryId:data?.id,subcategory:""});
  }else if(act==="rename-cat"&&cat){
   const val=prompt("Tên phân loại nhỏ mới:",cat.name);if(!val?.trim()||val.trim()===cat.name)return;
   const {error}=await client.from("categories").update({name:val.trim()}).eq("id",cat.id);
-  if(error)return fail(error);await mgrReload({});
+  if(error)return toast(mgrErr(error));await mgrReload({});
  }else if(act==="del-cat"&&cat){
   if(items.some(x=>x.category_id===cat.id))return toast("Phân loại đang có link. Hãy chuyển link trước.");
-  if(!confirm("Xóa phân loại nhỏ \""+cat.name+"\"?"))return;
-  const {error}=await client.from("categories").delete().eq("id",cat.id);
-  if(error)return fail(error);await mgrReload({});
+  if(!confirm("Xóa phân loại nhỏ \""+cat.name+"\"? (Nhóm vẫn được giữ lại)"))return;
+  const same=x=>x.section===cat.section&&x.owner_name===cat.owner_name&&(x.group_name||"CHAR")===(cat.group_name||"CHAR");
+  const keepGroup=!categories.some(x=>x.id!==cat.id&&same(x))&&!catPlaceholders.some(same);
+  const r=keepGroup?await client.from("categories").update({name:PH_NAME,subcategories:[]}).eq("id",cat.id):await client.from("categories").delete().eq("id",cat.id);
+  if(r.error)return toast(mgrErr(r.error));await mgrReload({});
  }else if(act==="add-sub"&&cat){
   const inp=catEl.querySelector("[data-sub-input]"),v=inp.value.trim();if(!v)return toast("Hãy nhập tên mục con");
   const list=[...new Set([...(cat.subcategories||[]),v])];
   const {error}=await client.from("categories").update({subcategories:list}).eq("id",cat.id);
-  if(error)return fail(error);await mgrReload({categoryId:cat.id,subcategory:v});
+  if(error)return toast(mgrErr(error));await mgrReload({categoryId:cat.id,subcategory:v});
  }else if(act==="del-sub"&&cat){
   const list=(cat.subcategories||[]).filter((_,i)=>i!==Number(btn.dataset.i));
   const {error}=await client.from("categories").update({subcategories:list}).eq("id",cat.id);
-  if(error)return fail(error);await mgrReload({});
+  if(error)return toast(mgrErr(error));await mgrReload({});
  }
 });
 $("mgrList")?.addEventListener("keydown",e=>{
