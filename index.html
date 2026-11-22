@@ -1422,7 +1422,7 @@ async function backfillApprovedRoleCategories(){
  for(const p of (creatorProfiles||[])){
   const dname=(p.display_name||p.username||"").trim();
   if(!dname)continue;
-  if(p.can_creator||p.is_approved){
+  if(p.can_creator||(!isAdminProfileRecord(p)&&p.is_approved)){
    const skipCrt=deletedCats.includes("creator::"+dname.toLowerCase());
    const hasCrt=categories.some(c=>c.section==="creator"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
    if(!hasCrt&&!skipCrt){await syncRoleCategoryEntries("creator",dname);changed=true;}
@@ -1525,7 +1525,7 @@ async function openMyProfile(){
   if(!confirm("Tài khoản Admin này chưa có hồ sơ Creator / Bbi share comm. Bạn có muốn tạo hồ sơ công khai cho Admin không?"))return;
   const rawName=session.user.user_metadata?.display_name||session.user.user_metadata?.username||"Admin";
   const handle=(rawName.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"admin")+"-"+session.user.id.slice(0,5);
-  const {data,error}=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:rawName,handle,is_approved:true,can_creator:true,can_commission:true,approval_status:"approved",theme:{isAdmin:true}}).select().single();
+  const {data,error}=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:rawName,handle,is_approved:true,can_creator:false,can_commission:false,approval_status:"approved",theme:{isAdmin:true}}).select().single();
   if(error)return toast("Không tạo được hồ sơ: "+error.message);
   currentProfile=data;await fetchCreatorProfiles();
  }
@@ -1625,7 +1625,7 @@ function renderDirMemberCard(p){
   ${p.bio?`<div class="desc" style="min-height:auto;font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(p.bio)}</div>`:""}
   <div style="display:flex;gap:6px">
    <button type="button" class="btn sm" style="flex:1" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
-   ${isAdmin&&((p.can_creator||p.is_approved)||p.can_commission)?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
+   ${isAdmin&&(p.can_creator||p.can_commission||(!isAdm&&p.is_approved))?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
   </div>
  </div>`;
 }
@@ -1649,7 +1649,7 @@ function renderCreatorDirectory(){
   const rolesStr=[...(isAdmProfile(p)?["Admin"]:[]),...roleLabelsForProfile(p)].join(" ");
   return [p.display_name,p.handle,p.bio||"",rolesStr].join(" ").toLowerCase().includes(q);
  });
- const isCreatorMember=p=>!!(p.can_creator||p.is_approved||p.pending_creator);
+ const isCreatorMember=p=>!!(p.can_creator||p.pending_creator||(!isAdmProfile(p)&&p.is_approved));
  const isCommMember=p=>!!(p.can_commission||p.pending_commission);
  const admins=activeMembers.filter(isAdmProfile);
  const creators=activeMembers.filter(isCreatorMember);
@@ -2560,8 +2560,8 @@ async function ensureLoggedInAdminProfileSynced(){
   banner_url:existing?.banner_url||null,
   theme:nextTheme,
   is_approved:true,
-  can_creator:existing?.can_creator!==false,
-  can_commission:existing?.can_commission!==false,
+  can_creator:!!existing?.can_creator,
+  can_commission:!!existing?.can_commission,
   approval_status:"approved"
  };
  let {data,error}=await client.from("creator_profiles").upsert(payload,{onConflict:"user_id"}).select().maybeSingle();

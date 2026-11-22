@@ -854,4 +854,69 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.get_public_admin_profiles() TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.get_public_profiles() TO anon, authenticated;
+-- 21. V41 Keep pure Admin accounts out of Creator / Bbi share comm roles unless explicitly granted
+UPDATE public.creator_profiles p
+SET can_creator = false,
+    can_commission = false
+FROM public.app_admins a
+WHERE p.user_id = a.user_id;
+
+CREATE OR REPLACE FUNCTION public.handle_new_creator_signup()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  creator_name text;
+  creator_handle text;
+  is_admin_user boolean;
+  want_comm boolean;
+  want_crt boolean;
+BEGIN
+  SELECT EXISTS(SELECT 1 FROM public.app_admins WHERE user_id = NEW.id) INTO is_admin_user;
+
+  IF NEW.raw_user_meta_data->>'account_type' = 'creator' OR is_admin_user THEN
+    creator_name := COALESCE(
+      NULLIF(trim(NEW.raw_user_meta_data->>'display_name'), ''),
+      NULLIF(trim(NEW.raw_user_meta_data->>'username'), ''),
+      split_part(COALESCE(NEW.email, 'creator'), '@', 1),
+      'Creator'
+    );
+    creator_handle := trim(both '-' from regexp_replace(lower(creator_name), '[^a-z0-9]+', '-', 'g'));
+    creator_handle := COALESCE(NULLIF(creator_handle, ''), 'creator') || '-' || left(replace(NEW.id::text, '-', ''), 5);
+
+    want_comm := COALESCE((NEW.raw_user_meta_data->>'want_commission')::boolean, false)
+                 OR COALESCE(NEW.raw_user_meta_data->>'selected_role', '') = 'commission';
+    want_crt := CASE
+      WHEN want_comm AND COALESCE((NEW.raw_user_meta_data->>'want_creator')::boolean, false) = false THEN false
+      ELSE COALESCE((NEW.raw_user_meta_data->>'want_creator')::boolean, NOT want_comm)
+    END;
+
+    INSERT INTO public.creator_profiles (
+      user_id, display_name, handle, username,
+      is_approved, can_creator, can_commission,
+      pending_creator, pending_commission, approval_status
+    )
+    VALUES (
+      NEW.id,
+      creator_name,
+      creator_handle,
+      NULLIF(trim(NEW.raw_user_meta_data->>'username'), ''),
+      is_admin_user,
+      false,
+      false,
+      CASE WHEN is_admin_user THEN false ELSE want_crt END,
+      CASE WHEN is_admin_user THEN false ELSE want_comm END,
+      CASE WHEN is_admin_user THEN 'approved' ELSE 'pending' END
+    )
+    ON CONFLICT (user_id) DO UPDATE
+      SET display_name = EXCLUDED.display_name,
+          is_approved = CASE WHEN is_admin_user THEN true ELSE creator_profiles.is_approved END,
+          approval_status = CASE WHEN is_admin_user THEN 'approved' ELSE creator_profiles.approval_status END;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
 NOTIFY pgrst, 'reload schema';
