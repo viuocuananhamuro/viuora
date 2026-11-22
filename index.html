@@ -516,6 +516,15 @@ body[data-theme="dark"] .dir-actions .dir-btn.dir-danger:hover{background:#4a2d3
  .bottom-theme-dock .theme-toggle-btn{width:36px;height:36px;font-size:15px}
  footer{padding:16px;font-size:11.5px}
 }
+
+/* Hide empty sub-tab rows so the filter panel has no blank gap */
+.panel .subtabs:empty{display:none!important;margin:0!important;padding:0!important}
+.panel>.tabs:last-child{margin-bottom:0}
+
+/* Soft focus style instead of the default black outline */
+button,.btn,.tab,.subtab,.icon-btn,a{-webkit-tap-highlight-color:transparent}
+button:focus,.btn:focus,.tab:focus,.subtab:focus,.icon-btn:focus{outline:none}
+button:focus-visible,.btn:focus-visible,.tab:focus-visible,.subtab:focus-visible,.icon-btn:focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 75%,#fff);outline-offset:2px}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
