@@ -800,6 +800,21 @@ BEGIN
 END
 $$;
 
+DO $$
+DECLARE
+  fn_rec record;
+BEGIN
+  FOR fn_rec IN
+    SELECT n.nspname AS schema_name, p.proname, pg_get_function_identity_arguments(p.oid) AS args
+    FROM pg_proc p
+    JOIN pg_namespace n ON n.oid = p.pronamespace
+    WHERE p.proname IN ('get_public_profiles', 'get_public_admin_profiles')
+  LOOP
+    EXECUTE format('DROP FUNCTION IF EXISTS %I.%I(%s) CASCADE', fn_rec.schema_name, fn_rec.proname, fn_rec.args);
+  END LOOP;
+END
+$$;
+
 CREATE OR REPLACE FUNCTION public.get_public_admin_profiles()
 RETURNS jsonb
 LANGUAGE sql
