@@ -460,7 +460,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
-<header class="hero" id="hero"><div class="hero-lace-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div><div class="hero-actions"><div class="visitor-tools"><button class="icon-btn notify-btn" id="notifyBtn" title="Cập nhật mới &amp; Thông báo" aria-label="Cập nhật mới &amp; Thông báo">♧ Cập nhật</button><button class="icon-btn" id="creatorAccountBtn" title="Tài khoản Creator &amp; Share Comm">♡ Creator / Comm</button><button class="btn ghost" id="loginBtn">Admin Login</button><button class="btn ghost" id="logoutBtn" style="display:none">Đăng xuất Admin</button></div></div><div class="hero-inner" id="heroTextFrames"><div class="eyebrow" id="heroEyebrow">✧ YOUR PERSONAL CHARACTER UNIVERSE ✧</div><div id="heroTitleGroup"><h1 id="siteTitle">♡ Anime GGAI Library ♡</h1><p id="siteSubtitle">Collect your favorite characters & explore new worlds</p></div></div></header>
+<header class="hero" id="hero"><div class="hero-lace-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div><div class="hero-actions"><div class="visitor-tools"><button class="icon-btn notify-btn" id="notifyBtn" title="Cập nhật mới &amp; Thông báo" aria-label="Cập nhật mới &amp; Thông báo">♧ Cập nhật</button><button class="icon-btn" id="creatorAccountBtn" title="Đăng nhập / Đăng ký Creator &amp; Share Comm">Đăng nhập</button><button class="btn ghost" id="loginBtn">Admin Login</button><button class="btn ghost" id="logoutBtn" style="display:none">Đăng xuất Admin</button></div></div><div class="hero-inner" id="heroTextFrames"><div class="eyebrow" id="heroEyebrow">✧ YOUR PERSONAL CHARACTER UNIVERSE ✧</div><div id="heroTitleGroup"><h1 id="siteTitle">♡ Anime GGAI Library ♡</h1><p id="siteSubtitle">Collect your favorite characters & explore new worlds</p></div></div></header>
 <main class="wrap"><div class="adminbar" id="adminBarText">✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.</div>
 <section class="site-intro-box" id="siteIntroBox">
  <div class="site-intro-top">
@@ -682,7 +682,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 <div class="modal" id="catsModal"><div class="dialog"><h2>☷ Quản lý danh mục</h2><div id="catList"></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="field"><label>Khu vực</label><select id="newCatSection"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Tên creator / người đặt comm</label><input id="newCatOwner" placeholder="Ví dụ: Creator A"></div><div class="field"><label>Tên nhóm</label><input id="newCatGroup" placeholder="Ví dụ: CHAR, OPW"></div></div><div class="field"><label>Tên phân loại nhỏ (Anime, Khác...)</label><input id="newCatName" placeholder="Ví dụ: Anime, Khác"></div><div class="hint">Mỗi dòng danh mục lưu theo đường dẫn Khu vực → Creator/người đặt comm → Nhóm → Phân loại nhỏ. Có thể tạo nhiều phân loại trong cùng một nhóm.</div><div class="modal-actions"><button class="btn ghost" data-close="catsModal">Đóng</button><button class="btn" id="createCat">＋ Thêm phân loại</button></div></div></div>
 
 <div class="modal" id="creatorDirectoryModal"><div class="dialog"><h2>♡ CÁC CỤC DÀNG CỦA VIUORA ♡</h2><div class="subtabs" id="creatorDirectoryTabs" style="margin:8px 0 10px"><button type="button" class="subtab active" data-dir-role="all">Tất cả</button><button type="button" class="subtab" data-dir-role="admin">Admin</button><button type="button" class="subtab" data-dir-role="creator">Creator</button><button type="button" class="subtab" data-dir-role="commission">Bbi share comm</button></div><div class="search" style="max-width:100%;margin:8px 0 12px"><b>⌕</b><input id="creatorDirectorySearch" placeholder="Tìm theo tên hiển thị hoặc @handle..."></div><div id="creatorDirectoryList" style="max-height:56vh;overflow:auto;display:flex;flex-direction:column;gap:14px"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorDirectoryModal">Đóng</button></div></div></div>
-<div class="modal" id="creatorAuthModal"><div class="dialog"><h2>♡ Tài khoản Creator &amp; Bbi share comm</h2><div id="creatorStatusNotice" style="display:none;padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:13px"></div><div class="field"><label>Địa chỉ Email</label><input id="creatorUsername" type="email" autocomplete="email" placeholder="vd: tenban@gmail.com"></div><div class="field" id="creatorDisplayNameField"><label>Tên hiển thị</label><input id="creatorDisplayName" placeholder="Tên hiển thị trên thư viện"></div><div class="field" id="creatorRoleChoiceField"><label>Chọn vai trò đăng ký (1 trong 2)</label><div class="cols"><label class="check-row" style="margin:0"><input id="roleRadioCreator" name="creatorRoleChoice" type="radio" value="creator" checked> Creator</label><label class="check-row" style="margin:0"><input id="roleRadioCommission" name="creatorRoleChoice" type="radio" value="commission"> Bbi share comm</label></div></div><div class="field"><label>Mật khẩu</label><input id="creatorPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div style="display:flex;justify-content:flex-end;margin-top:-3px"><button class="btn ghost sm" id="creatorForgotPassword" type="button">Quên mật khẩu?</button></div><div class="modal-actions" style="flex-wrap:wrap"><button class="btn ghost" data-close="creatorAuthModal">Đóng</button><button class="btn red sm" id="revokeCreatorRequestBtn" type="button" style="display:none">Thu hồi yêu cầu &amp; đăng ký lại</button><button class="btn ghost" id="creatorSignIn">Đăng nhập</button><button class="btn" id="creatorSignUp">Đăng ký tài khoản</button></div></div></div>
+<div class="modal" id="creatorAuthModal"><div class="dialog"><h2>♡ Tài khoản Creator &amp; Bbi share comm</h2><div id="creatorStatusNotice" style="display:none;padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:13px"></div><div class="field"><label>Địa chỉ Email</label><input id="creatorUsername" type="email" autocomplete="email" placeholder="vd: tenban@gmail.com"></div><div class="field" id="creatorDisplayNameField"><label>Tên hiển thị</label><input id="creatorDisplayName" placeholder="Tên hiển thị trên thư viện"></div><div class="field" id="creatorRoleChoiceField"><label for="creatorRoleSelect">Chọn vai trò đăng ký</label><select id="creatorRoleSelect"><option value="creator">Bbi muốn làm creator của web</option><option value="commission">Bbi muốn share comm của mình</option></select></div><div class="field"><label>Mật khẩu</label><input id="creatorPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div style="display:flex;justify-content:flex-end;margin-top:-3px"><button class="btn ghost sm" id="creatorForgotPassword" type="button">Quên mật khẩu?</button></div><div class="modal-actions" style="flex-wrap:wrap"><button class="btn ghost" data-close="creatorAuthModal">Đóng</button><button class="btn red sm" id="revokeCreatorRequestBtn" type="button" style="display:none">Thu hồi yêu cầu &amp; đăng ký lại</button><button class="btn ghost" id="creatorSignIn">Đăng nhập</button><button class="btn" id="creatorSignUp">Đăng ký tài khoản</button></div></div></div>
 <div class="modal" id="creatorPasswordRecoveryModal"><div class="dialog"><h2>♡ Đặt lại mật khẩu</h2><p class="hint">Nhập mật khẩu mới cho tài khoản của bạn.</p><div class="field"><label>Mật khẩu mới</label><input id="creatorNewPassword" type="password" autocomplete="new-password" placeholder="Tối thiểu 8 ký tự"></div><div class="field"><label>Nhập lại mật khẩu mới</label><input id="creatorNewPasswordConfirm" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorPasswordRecoveryModal">Đóng</button><button class="btn" id="creatorSaveNewPassword">Lưu mật khẩu mới</button></div></div></div>
 <div class="modal" id="creatorRejectedModal"><div class="dialog"><h2>♡ Yêu cầu Creator bị từ chối</h2><div id="creatorRejectedMessage" style="padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:14px">Yêu cầu đăng ký tài khoản Creator của bạn đã bị Admin từ chối. Bạn có thể thu hồi yêu cầu này để gửi đăng ký lại từ đầu.</div><div class="modal-actions"><button class="btn ghost" data-close="creatorRejectedModal">Đóng</button><button class="btn red" id="modalRevokeCreatorBtn" type="button">Thu hồi yêu cầu &amp; đăng ký lại</button></div></div></div>
 <div class="modal" id="creatorRequestsModal"><div class="dialog"><h2>♙ Yêu cầu Creator</h2><p class="hint">Chỉ Admin mới xem và duyệt được danh sách này.</p><div id="creatorRequestsList" class="request-list"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorRequestsModal">Đóng</button><button class="btn" id="refreshCreatorRequests">Làm mới</button></div></div></div>
@@ -1278,6 +1278,16 @@ async function openCreatorAuth(){
    modal("creatorRejectedModal",true);
    return;
   }
+  if(!isAdmin&&!hasAnyApprovedRole(currentProfile)){
+   const roleText=currentProfile?.pending_commission?"Bbi share comm":"Creator";
+   const noticeEl=$("creatorStatusNotice");
+   if(noticeEl){
+    noticeEl.style.display="block";
+    noticeEl.innerHTML=`<strong>Tài khoản của bạn đang chờ Admin duyệt quyền (${roleText}).</strong><br>Sau khi được Admin duyệt, nút <strong>Đăng nhập</strong> sẽ tự chuyển thành <strong>Your Profile</strong> nhé ♡`;
+   }
+   modal("creatorAuthModal",true);
+   return;
+  }
   openMyProfile();
   return;
  }
@@ -1302,14 +1312,13 @@ $("creatorSignUp").onclick=async()=>{
  $("creatorDisplayNameField").style.display="block";
  if($("creatorRoleChoiceField"))$("creatorRoleChoiceField").style.display="block";
  const email=$("creatorUsername").value.trim().toLowerCase(),password=$("creatorPassword").value,name=$("creatorDisplayName").value.trim();
- const roleRadio=document.querySelector('input[name="creatorRoleChoice"]:checked');
- const selectedRole=roleRadio?roleRadio.value:"creator";
+ const selectedRole=($("creatorRoleSelect")?.value||"creator").trim();
  const wantCreator=selectedRole==="creator";
  const wantCommission=selectedRole==="commission";
  if(!validCreatorEmail(email))return toast("Vui lòng nhập đúng định dạng email (vd: tenban@gmail.com).");
  if(password.length<8||!name)return toast("Nhập tên hiển thị và mật khẩu tối thiểu 8 ký tự nhé.");
  if(!wantCreator&&!wantCommission)return toast("Hãy chọn ít nhất 1 vai trò: Creator hoặc Bbi share comm.");
- const btn=$("creatorSignUp");btn.disabled=true;btn.textContent="Đang đăng ký...";
+ const btn=$("creatorSignUp");btn.disabled=true;btn.textContent="Đang đăng ký...";window._isSigningUpCreator=true;
  try{
   const {data,error}=await client.auth.signUp({email,password,options:{data:{display_name:name,account_type:"creator",selected_role:selectedRole,want_creator:wantCreator,want_commission:wantCommission}}});
   if(error)throw error;
@@ -1358,6 +1367,17 @@ $("creatorSignUp").onclick=async()=>{
     }
    }
    await loadCreatorProfile();
+   if(!isAdmin&&currentProfile&&((wantCommission&&!currentProfile.pending_commission)||(wantCreator&&!currentProfile.pending_creator))){
+    const {data:forcedRow}=await client.from("creator_profiles").update({
+     pending_creator:wantCreator,
+     pending_commission:wantCommission,
+     is_approved:false,
+     can_creator:false,
+     can_commission:false,
+     approval_status:"pending"
+    }).eq("user_id",session.user.id).select().maybeSingle();
+    if(forcedRow)currentProfile=forcedRow;
+   }
    await fetchCreatorProfiles();
    if(isAdmin||hasAnyApprovedRole(currentProfile)){
     if(wantCreator)await syncRoleCategoryEntries("creator",name);
@@ -1372,7 +1392,7 @@ $("creatorSignUp").onclick=async()=>{
    toast("Tài khoản đã được tạo! Hãy tắt 'Confirm email' trong Supabase Auth → Providers → Email để đăng nhập ngay.");
   }
  }catch(err){toast("Không đăng ký được: "+(err.message||err))}
- finally{btn.disabled=false;btn.textContent="Đăng ký tài khoản"}
+ finally{window._isSigningUpCreator=false;btn.disabled=false;btn.textContent="Đăng ký tài khoản"}
 };
 $("creatorSignIn").onclick=async()=>{
  $("creatorDisplayNameField").style.display="none";
@@ -2306,7 +2326,7 @@ function getAdminRoleForUser(uid, p=null){
 function adminRoleBadgeLabel(uid, p=null){
  return getAdminRoleForUser(uid, p)==="founder"?"Admin lập page":"Admin";
 }
-function refreshRoleUI(){document.body.classList.toggle("admin",isAdmin);document.body.classList.toggle("founder-admin",isFounderAdmin);$("creatorRequestsBtn").style.display=isAdmin?"inline-flex":"none";if($("manageAdminsBtn"))$("manageAdminsBtn").style.display=isFounderAdmin?"inline-flex":"none";if($("adminBarText")&&isAdmin){$("adminBarText").textContent=isFounderAdmin?"♛ Đang đăng nhập Admin lập page · Bạn có toàn quyền chỉnh sửa và cấp/gỡ quyền Admin cho tài khoản khác.":"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập."}$("loginBtn").style.display=session?"none":"inline-flex";$("logoutBtn").style.display=session?"inline-flex":"none";$("logoutBtn").textContent=isAdmin?(isFounderAdmin?"Đăng xuất Admin lập page":"Đăng xuất Admin"):"Đăng xuất Creator";if($("creatorAccountBtn"))$("creatorAccountBtn").textContent=session?"Your Profile":"♡ Creator / Comm";$("creatorAddCharBtn").classList.toggle("visible",!!session&&(isAdmin||hasAnyApprovedRole(currentProfile)));if(typeof syncAnnouncementComposer==="function")syncAnnouncementComposer()}
+function refreshRoleUI(){document.body.classList.toggle("admin",isAdmin);document.body.classList.toggle("founder-admin",isFounderAdmin);$("creatorRequestsBtn").style.display=isAdmin?"inline-flex":"none";if($("manageAdminsBtn"))$("manageAdminsBtn").style.display=isFounderAdmin?"inline-flex":"none";if($("adminBarText")&&isAdmin){$("adminBarText").textContent=isFounderAdmin?"♛ Đang đăng nhập Admin lập page · Bạn có toàn quyền chỉnh sửa và cấp/gỡ quyền Admin cho tài khoản khác.":"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập."}$("loginBtn").style.display=session?"none":"inline-flex";$("logoutBtn").style.display=session?"inline-flex":"none";$("logoutBtn").textContent=isAdmin?(isFounderAdmin?"Đăng xuất Admin lập page":"Đăng xuất Admin"):"Đăng xuất Creator";if($("creatorAccountBtn"))$("creatorAccountBtn").textContent=(session&&(isAdmin||hasAnyApprovedRole(currentProfile)))?"Your Profile":"Đăng nhập";$("creatorAddCharBtn").classList.toggle("visible",!!session&&(isAdmin||hasAnyApprovedRole(currentProfile)));if(typeof syncAnnouncementComposer==="function")syncAnnouncementComposer()}
 async function refreshAdmin(){if(!session){isAdmin=false;isFounderAdmin=false;refreshRoleUI();return}let {data,error}=await client.from("app_admins").select("user_id,admin_role").eq("user_id",session.user.id).maybeSingle();if(error&&/admin_role/i.test(String(error.message||""))){const fb=await client.from("app_admins").select("user_id").eq("user_id",session.user.id).maybeSingle();data=fb.data?{...fb.data,admin_role:"founder"}:null;error=fb.error;}isAdmin=!!data&&!error;isFounderAdmin=isAdmin&&(data?.admin_role==="founder");if(isAdmin&&session?.user?.id)adminRoleByUserId[session.user.id]=isFounderAdmin?"founder":"admin";refreshRoleUI()}
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
@@ -2767,7 +2787,7 @@ function findProfileByRoute(route){
  });
  return [...map.values()].find(p=>String(p.handle||"").trim().toLowerCase()===needle||String(p.user_id||"").trim().toLowerCase()===needle)||null;
 }
-async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{if(session){await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{isAdmin=false;isFounderAdmin=false;currentProfile=null;adminUserIds=[];adminRoleByUserId={};publicAdminProfiles=[];refreshRoleUI();await fetchCreatorProfiles()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=findProfileByRoute(route);if(found)openProfile(found)}}
+async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{if(window._isSigningUpCreator)return;if(session){await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{isAdmin=false;isFounderAdmin=false;currentProfile=null;adminUserIds=[];adminRoleByUserId={};publicAdminProfiles=[];refreshRoleUI();await fetchCreatorProfiles()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=findProfileByRoute(route);if(found)openProfile(found)}}
 window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=findProfileByRoute(route);if(found)openProfile(found)});
 function kickGifPlayback(forceReloadGif=false){
  document.querySelectorAll("img").forEach(img=>{
