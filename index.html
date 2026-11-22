@@ -1477,26 +1477,30 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
 }
 async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantComm=meta.want_commission===true||meta.want_commission==="true"||meta.selected_role==="commission";const wantCrt=!wantComm&&(meta.want_creator===true||meta.want_creator==="true"||meta.selected_role==="creator"||meta.want_creator!==false);if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
 async function fetchCreatorProfiles(){
- const [pRes,aRes,rpcRes]=await Promise.all([
+ const [pRes,aRes,rpcAll,rpcAdm]=await Promise.all([
   client.from("creator_profiles").select("*").order("display_name"),
   client.from("app_admins").select("user_id"),
-  client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true}))
+  client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true})),
+  client.rpc("get_public_admin_profiles").then(r=>r,()=>({data:null,error:true}))
  ]);
+ const normalizeRpcList=raw=>Array.isArray(raw)?raw:(typeof raw==="string"?(()=>{try{return JSON.parse(raw)}catch{return []}})():(raw&&typeof raw==="object"&&Array.isArray(raw.rows)?raw.rows:[]));
+ const allRpcRows=normalizeRpcList(rpcAll.error?null:rpcAll.data);
+ const admRpcRows=normalizeRpcList(rpcAdm.error?null:rpcAdm.data);
  const mergedMap=new Map();
- if(!rpcRes.error&&Array.isArray(rpcRes.data)){
-  rpcRes.data.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,p)});
- }
+ allRpcRows.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,{...mergedMap.get(p.user_id),...p})});
+ admRpcRows.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,{...mergedMap.get(p.user_id),...p,is_admin_user:true})});
  if(!pRes.error&&Array.isArray(pRes.data)){
   pRes.data.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,{...mergedMap.get(p.user_id),...p})});
  }
- if(mergedMap.size||(!pRes.error||!rpcRes.error)){
+ if(mergedMap.size||(!pRes.error||!rpcAll.error||!rpcAdm.error)){
   creatorProfiles=[...mergedMap.values()].sort((a,b)=>String(a.display_name||"").localeCompare(String(b.display_name||""),"vi"));
  }
  const ids=new Set((!aRes.error&&aRes.data)?aRes.data.map(r=>r.user_id):[]);
+ admRpcRows.forEach(p=>{if(p?.user_id)ids.add(p.user_id)});
  if(isAdmin&&session?.user?.id)ids.add(session.user.id);
- if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||isAdmin))ids.add(currentProfile.user_id);
+ if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||isAdmin||currentProfile.theme?.isAdmin===true))ids.add(currentProfile.user_id);
  (creatorProfiles||[]).forEach(p=>{
-  if(p?.user_id&&(p.is_admin_user||String(p.handle||"").startsWith("admin-")))ids.add(p.user_id);
+  if(p?.user_id&&(p.is_admin_user===true||p.theme?.isAdmin===true||String(p.handle||"").toLowerCase().startsWith("admin-")))ids.add(p.user_id);
  });
  adminUserIds=[...ids];
  await syncAdminShowcase();
@@ -1521,7 +1525,7 @@ async function openMyProfile(){
   if(!confirm("Tài khoản Admin này chưa có hồ sơ Creator / Bbi share comm. Bạn có muốn tạo hồ sơ công khai cho Admin không?"))return;
   const rawName=session.user.user_metadata?.display_name||session.user.user_metadata?.username||"Admin";
   const handle=(rawName.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"admin")+"-"+session.user.id.slice(0,5);
-  const {data,error}=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:rawName,handle,is_approved:true,can_creator:true,can_commission:true,approval_status:"approved"}).select().single();
+  const {data,error}=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:rawName,handle,is_approved:true,can_creator:true,can_commission:true,approval_status:"approved",theme:{isAdmin:true}}).select().single();
   if(error)return toast("Không tạo được hồ sơ: "+error.message);
   currentProfile=data;await fetchCreatorProfiles();
  }
@@ -1532,14 +1536,30 @@ async function openMyProfile(){
  else openProfile(currentProfile);
 }
 async function openCreatorByName(name){
- if(!creatorProfiles.length&&configured)await fetchCreatorProfiles();
+ if(configured&&(!creatorProfiles.length&&!publicAdminProfiles.length))await fetchCreatorProfiles();
  const needle=String(name||"").trim().toLowerCase();
- const pool=[...(creatorProfiles||[]),...(currentProfile?[currentProfile]:[])];
+ const map=new Map();
+ [...(publicAdminProfiles||[]),...(creatorProfiles||[]),...(currentProfile?[currentProfile]:[])].forEach(x=>{
+  if(x?.user_id)map.set(x.user_id,{...map.get(x.user_id),...x});
+ });
+ const pool=[...map.values()];
  let p=pool.find(x=>
   String(x.display_name||"").trim().toLowerCase()===needle
   ||String(x.handle||"").trim().toLowerCase()===needle
   ||String(x.user_id||"").trim().toLowerCase()===needle
  );
+ if(!p&&configured){
+  await fetchCreatorProfiles();
+  const map2=new Map();
+  [...(publicAdminProfiles||[]),...(creatorProfiles||[]),...(currentProfile?[currentProfile]:[])].forEach(x=>{
+   if(x?.user_id)map2.set(x.user_id,{...map2.get(x.user_id),...x});
+  });
+  p=[...map2.values()].find(x=>
+   String(x.display_name||"").trim().toLowerCase()===needle
+   ||String(x.handle||"").trim().toLowerCase()===needle
+   ||String(x.user_id||"").trim().toLowerCase()===needle
+  );
+ }
  if(!p){toast("Thành viên này chưa tạo hồ sơ công khai.");return}
  modal("creatorDirectoryModal",false);
  openProfile(p);
@@ -1613,7 +1633,7 @@ function renderCreatorDirectory(){
  const box=$("creatorDirectoryList");if(!box)return;
  const q=($("creatorDirectorySearch")?.value||"").toLowerCase().trim();
  const combinedMap=new Map();
- (creatorProfiles||[]).forEach(p=>{if(p?.user_id)combinedMap.set(p.user_id,p)});
+ [...(publicAdminProfiles||[]),...(creatorProfiles||[])].forEach(p=>{if(p?.user_id)combinedMap.set(p.user_id,{...combinedMap.get(p.user_id),...p})});
  if(currentProfile&&currentProfile.user_id){
   combinedMap.set(currentProfile.user_id,{...combinedMap.get(currentProfile.user_id),...currentProfile});
  }
@@ -1621,7 +1641,7 @@ function renderCreatorDirectory(){
   if(p?.user_id)combinedMap.set(p.user_id,{...combinedMap.get(p.user_id),...p});
  });
  const combined=[...combinedMap.values()];
- const isAdmProfile=p=>!!p.is_admin_user||adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&!!session&&p.user_id===session.user.id);
+ const isAdmProfile=p=>isAdminProfileRecord(p);
  const activeMembers=combined.filter(p=>{
   const hasChars=(items||[]).some(x=>x.owner_id===p.user_id);
   if(!hasAnyApprovedRole(p)&&!hasChars&&!isAdmProfile(p))return false;
@@ -1728,7 +1748,11 @@ async function openProfile(p){
 }
 $("editMyProfile").onclick=()=>{renderProfileEditor(currentProfile);$("profileEditor").style.display="block";if($("saveProfile"))$("saveProfile").style.display="inline-flex"};
 $("saveProfile").onclick=async()=>{if(!currentProfile||!session)return;const btn=$("saveProfile");if(btn){btn.disabled=true;btn.textContent="Đang lưu..."}try{const name=$("profileName").value.trim(),handle=$("profileHandle").value.trim().toLowerCase(),bio=$("profileBio").value.trim(),links=$("profileLinks").value.split(/\r?\n/).map(x=>safeWebUrl(x.trim())).filter(Boolean),theme={titleBadge:($("profileTitleBadge")?.value||"").trim(),accent:validColor($("profileAccent").value,"#d99ac6"),accent2:validColor($("profileAccent2").value,"#b8a5e5"),background:validColor($("profileBackground").value,"#fff7fc"),surface:validColor($("profileSurface").value,"#ffffff"),textColor:validColor($("profileTextColor").value,"#51425e"),bodyFont:CREATOR_FONTS.includes($("profileBodyFont").value)?$("profileBodyFont").value:"Quicksand",headerFont:CREATOR_FONTS.includes($("profileHeaderFont").value)?$("profileHeaderFont").value:"Playfair Display",borderStyle:$("profileBorderStyle").value||"solid",glowColor:validColor($("profileGlowColor").value,"#e89ad4"),glowSize:Math.max(0,Math.min(32,Number($("profileGlowSize").value)||0)),effect:$("profileEffect").value||"none",bannerFx:$("profileBannerFx").value||"none"};if(!name||! /^[a-z0-9-]{3,30}$/.test(handle))return toast("Tên hiển thị và username chưa hợp lệ");let avatar_url=currentProfile.avatar_url||null,banner_url=currentProfile.banner_url||null;const avatarFile=$("profileAvatarFile").files[0],bannerFile=$("profileBannerFile").files[0];if(avatarFile)avatar_url=await uploadImage(avatarFile,`creator/${session.user.id}/profile`);if(bannerFile)banner_url=await uploadImage(bannerFile,`creator/${session.user.id}/profile`);const prevDisplayName=currentProfile.display_name||"";
-let {data,error}=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links,theme}).eq("user_id",session.user.id).select().single();
+const nextTheme=isAdmin?{...theme,isAdmin:true}:theme;
+const profilePayload=isAdmin
+ ?{display_name:name,handle,avatar_url,banner_url,bio,links,theme:nextTheme,is_approved:true,approval_status:"approved"}
+ :{display_name:name,handle,avatar_url,banner_url,bio,links,theme:nextTheme};
+let {data,error}=await client.from("creator_profiles").update(profilePayload).eq("user_id",session.user.id).select().single();
 if(!error&&data){await renameCategoryOwnerForProfile(prevDisplayName,name);if(data.can_creator||data.is_approved)await syncRoleCategoryEntries("creator",name);if(data.can_commission)await syncRoleCategoryEntries("commission",name);await loadAll();}if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){const retry=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links}).eq("user_id",session.user.id).select().single();data=retry.data;error=retry.error;}if(error)throw error;currentProfile=data;await fetchCreatorProfiles();toast("Đã lưu hồ sơ Creator ♡");openProfile(data)}catch(err){toast("Không lưu được hồ sơ: "+(err.message||err))}finally{if(btn){btn.disabled=false;btn.textContent="Lưu hồ sơ"}}};
 let lastAnnouncedUnreadCount=0;
 function formatVnDayMonth(iso){
@@ -2181,7 +2205,7 @@ async function refreshAdmin(){if(!session){isAdmin=false;refreshRoleUI();return}
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
 if(c.error||i.error){toast("Không tải được dữ liệu. Kiểm tra cấu hình và SQL.");console.error(c.error,i.error);return}
-categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();if(typeof renderAdminShowcase==="function")renderAdminShowcase();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
+categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
 }
 function itemMatchesFilter(x, opts={}){
  const c=categories.find(v=>v.id===x.category_id);
@@ -2232,7 +2256,7 @@ let {data,error}=await client.auth.signInWithPassword({
   email: username + "@login.animeggai.test",
   password: $("password").value
 });if(error)return toast(error.message);session=data.session;await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();modal("loginModal",false);render();toast("Đã đăng nhập Admin ♡");await loadNotifications(true)};
-$("logoutBtn").onclick=async()=>{await client.auth.signOut();session=null;isAdmin=false;currentProfile=null;lastAnnouncedUnreadCount=0;$("notifyBtn").classList.remove("has-unread");$("notifyBtn").innerHTML="♧ Thông báo";refreshRoleUI();render();toast("Đã đăng xuất")};
+$("logoutBtn").onclick=async()=>{await client.auth.signOut();session=null;isAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];lastAnnouncedUnreadCount=0;$("notifyBtn").classList.remove("has-unread");$("notifyBtn").innerHTML="♧ Thông báo";refreshRoleUI();render();if(configured){await fetchCreatorProfiles();await loadAnnouncements();await loadPublicActivityLogs(false)}else{renderAdminShowcase()}toast("Đã đăng xuất")};
 function setItemCategoryOptions(selected){let f=$("itemForm"),sec=f.elements.section.value;let owners=uniqueValues("owner_name",{section:sec});const myName=(currentProfile?.display_name||"").trim();if(!isAdmin&&myName){owners=[myName];f.elements.owner_name.disabled=true;f.elements.owner_name.innerHTML=`<option value="${esc(myName)}" selected>${esc(myName)}</option>`;}else{f.elements.owner_name.disabled=false;if(!owners.length)owners=["Chung"];f.elements.owner_name.innerHTML=owners.map(v=>`<option ${v===(f.dataset.owner||owners[0])?"selected":""}>${esc(v)}</option>`).join("");}let own=f.elements.owner_name.value;let groups=uniqueValues("group_name",{section:sec,owner_name:own});if(!groups.length)groups=uniqueValues("group_name",{section:sec});if(!groups.length)groups=["CHAR"];f.elements.group_name.innerHTML=groups.map((v,i)=>`<option ${v===(f.dataset.group||groups[0])?"selected":""}>${esc(v)}</option>`).join("");let gr=f.elements.group_name.value;let leaves=categories.filter(c=>c.section===sec&&c.owner_name===own&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec);f.elements.category_id.innerHTML=leaves.map(c=>`<option value="${c.id}" ${c.id===selected?"selected":""}>${esc(c.name)}</option>`).join("");setItemSubcategoryOptions(f.dataset.subcategory||"") }
 function setItemSubcategoryOptions(selected=""){let f=$("itemForm"),c=categories.find(v=>v.id===f.elements.category_id.value),opts=c?.subcategories||[];f.elements.subcategory.innerHTML=`<option value="">-- Không chọn --</option>`+opts.map(v=>`<option ${v===selected?"selected":""}>${esc(v)}</option>`).join("") }
 $("itemForm").elements.section.onchange=()=>{ $("itemForm").dataset.owner="";$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.owner_name.onchange=()=>{ $("itemForm").dataset.owner=$("itemForm").elements.owner_name.value;$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.group_name.onchange=()=>{$("itemForm").dataset.group=$("itemForm").elements.group_name.value;setItemCategoryOptions()};$("itemForm").elements.category_id.onchange=()=>setItemSubcategoryOptions();
@@ -2510,25 +2534,46 @@ function collectAdminProfiles(){
  });
  return [...byId.values()];
 }
+function isAdminProfileRecord(p){
+ if(!p)return false;
+ if(p.is_admin_user===true||p.theme?.isAdmin===true)return true;
+ if(p.user_id&&Array.isArray(adminUserIds)&&adminUserIds.includes(p.user_id))return true;
+ if(String(p.handle||"").toLowerCase().startsWith("admin-"))return true;
+ if(!!isAdmin&&!!session&&p.user_id&&p.user_id===session.user.id)return true;
+ return false;
+}
 async function ensureLoggedInAdminProfileSynced(){
  if(!configured||!isAdmin||!session?.user?.id)return;
  const existing=(creatorProfiles||[]).find(p=>p.user_id===session.user.id)||currentProfile;
- if(existing?.user_id)return;
  const meta=session.user.user_metadata||{};
- const rawName=String(meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Admin")).trim()||"Admin";
- const handle="admin-"+session.user.id.replace(/-/g,"").slice(0,6);
- const {data,error}=await client.from("creator_profiles").upsert({
+ const rawName=String(existing?.display_name||meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Admin")).trim()||"Admin";
+ const handle=String(existing?.handle||("admin-"+session.user.id.replace(/-/g,"").slice(0,6))).trim()||("admin-"+session.user.id.replace(/-/g,"").slice(0,6));
+ const nextTheme={...(existing?.theme&&typeof existing.theme==="object"?existing.theme:{}),isAdmin:true};
+ const payload={
   user_id:session.user.id,
   display_name:rawName,
   handle,
-  username:meta.username||null,
+  username:existing?.username||meta.username||null,
+  bio:existing?.bio??"",
+  links:Array.isArray(existing?.links)?existing.links:[],
+  avatar_url:existing?.avatar_url||null,
+  banner_url:existing?.banner_url||null,
+  theme:nextTheme,
   is_approved:true,
-  can_creator:true,
-  can_commission:true,
+  can_creator:existing?.can_creator!==false,
+  can_commission:existing?.can_commission!==false,
   approval_status:"approved"
- },{onConflict:"user_id"}).select().maybeSingle();
+ };
+ let {data,error}=await client.from("creator_profiles").upsert(payload,{onConflict:"user_id"}).select().maybeSingle();
+ if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){
+  const fallbackPayload={...payload};delete fallbackPayload.theme;
+  const retry=await client.from("creator_profiles").upsert(fallbackPayload,{onConflict:"user_id"}).select().maybeSingle();
+  data=retry.data;error=retry.error;
+ }
  if(!error&&data){
-  currentProfile=data;
+  currentProfile={...data,theme:{...(data.theme&&typeof data.theme==="object"?data.theme:{}),isAdmin:true}};
+ }else if(existing){
+  currentProfile={...existing,is_approved:true,approval_status:"approved",theme:nextTheme};
  }
 }
 async function syncAdminShowcase(){
@@ -2538,18 +2583,21 @@ async function syncAdminShowcase(){
   client.rpc("get_public_admin_profiles").then(r=>r,()=>({data:null,error:true})),
   client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true}))
  ]);
+ const parseRows=raw=>Array.isArray(raw)?raw:(typeof raw==="string"?(()=>{try{return JSON.parse(raw)}catch{return []}})():(raw&&typeof raw==="object"&&Array.isArray(raw.rows)?raw.rows:[]));
  const found=new Map();
- if(!rpcAll.error&&Array.isArray(rpcAll.data)){
-  rpcAll.data.forEach(p=>{
-   if(p?.user_id&&(p.is_admin_user||String(p.handle||"").toLowerCase().startsWith("admin-")||adminUserIds.includes(p.user_id))){
-    found.set(p.user_id,{...p,is_admin_user:true});
-   }
-  });
- }
- if(!rpcAdm.error&&Array.isArray(rpcAdm.data)){
-  rpcAdm.data.forEach(p=>{
-   if(p?.user_id)found.set(p.user_id,{...found.get(p.user_id),...p,is_admin_user:true});
-  });
+ (creatorProfiles||[]).forEach(p=>{
+  if(p?.user_id&&isAdminProfileRecord(p))found.set(p.user_id,{...p,is_admin_user:true});
+ });
+ parseRows(rpcAll.error?null:rpcAll.data).forEach(p=>{
+  if(p?.user_id&&(p.is_admin_user===true||isAdminProfileRecord(p)||adminUserIds.includes(p.user_id))){
+   found.set(p.user_id,{...found.get(p.user_id),...p,is_admin_user:true});
+  }
+ });
+ parseRows(rpcAdm.error?null:rpcAdm.data).forEach(p=>{
+  if(p?.user_id)found.set(p.user_id,{...found.get(p.user_id),...p,is_admin_user:true});
+ });
+ if(currentProfile?.user_id&&(isAdmin||isAdminProfileRecord(currentProfile))){
+  found.set(currentProfile.user_id,{...found.get(currentProfile.user_id),...currentProfile,is_admin_user:true});
  }
  publicAdminProfiles=[...found.values()];
  publicAdminProfiles.forEach(p=>{
@@ -2592,8 +2640,17 @@ window.openPublicAdminProfile=async uid=>{
  modal("creatorDirectoryModal",false);
  openProfile(target);
 };
-async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{await refreshAdmin();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{currentProfile=null;refreshRoleUI()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)}}
-window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)});
+function findProfileByRoute(route){
+ const needle=String(route||"").trim().toLowerCase();
+ if(!needle)return null;
+ const map=new Map();
+ [...(publicAdminProfiles||[]),...(creatorProfiles||[]),...(currentProfile?[currentProfile]:[])].forEach(p=>{
+  if(p?.user_id)map.set(p.user_id,{...map.get(p.user_id),...p});
+ });
+ return [...map.values()].find(p=>String(p.handle||"").trim().toLowerCase()===needle||String(p.user_id||"").trim().toLowerCase()===needle)||null;
+}
+async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{if(session){await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{isAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];refreshRoleUI();await fetchCreatorProfiles()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=findProfileByRoute(route);if(found)openProfile(found)}}
+window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=findProfileByRoute(route);if(found)openProfile(found)});
 function kickGifPlayback(forceReloadGif=false){
  document.querySelectorAll("img").forEach(img=>{
   if(img.loading==="lazy")img.loading="eager";
