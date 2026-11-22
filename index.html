@@ -1506,7 +1506,13 @@ async function openMyProfile(){
 }
 async function openCreatorByName(name){
  if(!creatorProfiles.length&&configured)await fetchCreatorProfiles();
- let p=creatorProfiles.find(x=>x.display_name.toLowerCase()===String(name).toLowerCase()||x.handle===name)||(currentProfile&&(currentProfile.display_name?.toLowerCase()===String(name).toLowerCase()||currentProfile.handle===name)?currentProfile:null);
+ const needle=String(name||"").trim().toLowerCase();
+ const pool=[...(creatorProfiles||[]),...(currentProfile?[currentProfile]:[])];
+ let p=pool.find(x=>
+  String(x.display_name||"").trim().toLowerCase()===needle
+  ||String(x.handle||"").trim().toLowerCase()===needle
+  ||String(x.user_id||"").trim().toLowerCase()===needle
+ );
  if(!p){toast("Thành viên này chưa tạo hồ sơ công khai.");return}
  modal("creatorDirectoryModal",false);
  openProfile(p);
@@ -2442,9 +2448,23 @@ $("submitSubcatRequestBtn")?.addEventListener("click",async()=>{
   if(btn){btn.disabled=false;btn.textContent="Gửi yêu cầu"}
  }
 });
+function getAdminProfileCandidates(){
+ const map=new Map();
+ (creatorProfiles||[]).forEach(p=>{
+  if(!p?.user_id)return;
+  const isAdm=adminUserIds.includes(p.user_id)
+   ||String(p.handle||"").startsWith("admin-")
+   ||(!!isAdmin&&!!session&&p.user_id===session.user.id);
+  if(isAdm)map.set(p.user_id,p);
+ });
+ if(currentProfile?.user_id&&((isAdmin&&session?.user?.id===currentProfile.user_id)||adminUserIds.includes(currentProfile.user_id))){
+  map.set(currentProfile.user_id,{...map.get(currentProfile.user_id),...currentProfile});
+ }
+ return [...map.values()];
+}
 function renderOutsideAdminList(){
  const box=$("outsideAdminList");if(!box)return;
- const admProfiles=(creatorProfiles||[]).filter(p=>adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-"));
+ const admProfiles=getAdminProfileCandidates();
  if(admProfiles.length){
   box.innerHTML=admProfiles.map(p=>{
    const th=p.theme||{};
@@ -2452,12 +2472,13 @@ function renderOutsideAdminList(){
    const acc=validColor(th.accent,"#d99ac6");
    const acc2=validColor(th.accent2,"#b8a5e5");
    const ink=validColor(th.textColor,bg.toLowerCase()==="#17131d"?"#f5edf8":"#51425e");
-   return `<button type="button" class="admin-profile-pill" style="--pill-bg:${esc(bg)};--pill-ink:${esc(ink)};--pill-border:${esc(acc)};--pill-glow:${esc(acc2)}" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"Admin")}'))">${esc(p.display_name||"Admin")}</button>`;
+   const targetKey=p.handle||p.display_name||"Admin";
+   return `<button type="button" class="admin-profile-pill" style="--pill-bg:${esc(bg)};--pill-ink:${esc(ink)};--pill-border:${esc(acc)};--pill-glow:${esc(acc2)}" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(targetKey)}'))">${esc(p.display_name||"Admin")}</button>`;
   }).join("");
   return;
  }
  if(adminUserIds.length){
-  box.innerHTML=adminUserIds.map((uid,idx)=>`<span class="tag">Admin ${idx+1}</span>`).join("");
+  box.innerHTML=adminUserIds.map((uid,idx)=>`<button type="button" class="admin-profile-pill" onclick="openMyProfile()">Admin ${idx+1}</button>`).join("");
  }else{
   box.innerHTML='<span class="hint">Chưa có danh sách Admin</span>';
  }
