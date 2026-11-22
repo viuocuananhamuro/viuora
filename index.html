@@ -473,6 +473,15 @@ body[data-theme="dark"] #creatorDirectoryBtn{
  color:#f8e8ff!important;
  box-shadow:0 4px 14px rgba(0,0,0,.35)!important
 }
+
+/* Directory member card actions */
+.dir-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.dir-actions .dir-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;width:100%;min-height:38px;padding:8px 10px;font-size:13px;line-height:1.2;white-space:nowrap;border-radius:12px;text-align:center}
+.dir-actions .dir-primary,.dir-actions .dir-btn:nth-child(2):last-child{grid-column:1/-1}
+.dir-actions .dir-btn.dir-danger{background:#fdeef3!important;color:#c0506f!important;border:1px solid #f0c3d1!important;box-shadow:none!important}
+.dir-actions .dir-btn.dir-danger:hover{background:#fadce7!important}
+body[data-theme="dark"] .dir-actions .dir-btn.dir-danger{background:#3a2530!important;color:#f3a9c0!important;border:1px solid #6b3f52!important}
+body[data-theme="dark"] .dir-actions .dir-btn.dir-danger:hover{background:#4a2d3b!important}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
@@ -1634,19 +1643,22 @@ async function fetchCreatorProfiles(){
  if(mergedMap.size||(!pRes.error||!rpcAll.error||!rpcAdm.error)){
   creatorProfiles=[...mergedMap.values()].sort((a,b)=>String(a.display_name||"").localeCompare(String(b.display_name||""),"vi"));
  }
- const roleMap={};
- (!aRes.error&&aRes.data?aRes.data:[]).forEach(r=>{if(r?.user_id)roleMap[r.user_id]=r.admin_role||"admin"});
- allRpcRows.forEach(p=>{if(p?.user_id&&p.admin_role)roleMap[p.user_id]=p.admin_role});
- admRpcRows.forEach(p=>{if(p?.user_id)roleMap[p.user_id]=p.admin_role||roleMap[p.user_id]||"admin"});
- if(isAdmin&&session?.user?.id)roleMap[session.user.id]=isFounderAdmin?"founder":(roleMap[session.user.id]||"admin");
- adminRoleByUserId=roleMap;
- const ids=new Set(Object.keys(roleMap));
- if(isAdmin&&session?.user?.id)ids.add(session.user.id);
- if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||isAdmin||currentProfile.theme?.isAdmin===true))ids.add(currentProfile.user_id);
- (creatorProfiles||[]).forEach(p=>{
-  if(p?.user_id&&(p.is_admin_user===true||p.theme?.isAdmin===true||String(p.handle||"").toLowerCase().startsWith("admin-")))ids.add(p.user_id);
- });
- adminUserIds=[...ids];
+  const serverOk=!aRes.error||!rpcAll.error||!rpcAdm.error;
+  const roleMap={};
+  (!aRes.error&&aRes.data?aRes.data:[]).forEach(r=>{if(r?.user_id)roleMap[r.user_id]=r.admin_role||"admin"});
+  allRpcRows.forEach(p=>{if(p?.user_id&&p.is_admin_user===true)roleMap[p.user_id]=p.admin_role||roleMap[p.user_id]||"admin"});
+  admRpcRows.forEach(p=>{if(p?.user_id)roleMap[p.user_id]=p.admin_role||roleMap[p.user_id]||"admin"});
+  if(isAdmin&&session?.user?.id)roleMap[session.user.id]=isFounderAdmin?"founder":(roleMap[session.user.id]||"admin");
+  adminRoleByUserId=roleMap;
+  const ids=new Set(Object.keys(roleMap));
+  if(isAdmin&&session?.user?.id)ids.add(session.user.id);
+  if(!serverOk){
+   /* Chỉ dùng cách đoán cũ khi KHÔNG đọc được dữ liệu từ server */
+   if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||currentProfile.theme?.isAdmin===true))ids.add(currentProfile.user_id);
+   (creatorProfiles||[]).forEach(p=>{if(p?.user_id&&(p.is_admin_user===true||p.theme?.isAdmin===true||String(p.handle||"").toLowerCase().startsWith("admin-")))ids.add(p.user_id)});
+  }
+  adminUserIds=[...ids];
+  creatorProfiles=(creatorProfiles||[]).map(p=>({...p,is_admin_user:ids.has(p.user_id),admin_role:ids.has(p.user_id)?(roleMap[p.user_id]||"admin"):null}));
  await syncAdminShowcase();
  if($("creatorDirectoryModal")?.classList.contains("show"))renderCreatorDirectory();
 }
@@ -1779,26 +1791,30 @@ window.revokeAdminRoleByFounder=async(uid,displayName)=>{
   error=old.error;
  }
  if(error)return toast("Không gỡ được quyền Admin: "+error.message);
+ const chk=await client.from("app_admins").select("user_id").eq("user_id",uid).maybeSingle();
+ if(chk.data)return toast("Chưa gỡ được quyền Admin (database vẫn còn). Hãy chạy lại file supabase_fix_v54.sql rồi thử lại.");
  delete adminRoleByUserId[uid];
  adminUserIds=adminUserIds.filter(x=>x!==uid);
  publicAdminProfiles=(publicAdminProfiles||[]).filter(x=>x.user_id!==uid);
+ creatorProfiles=(creatorProfiles||[]).map(x=>x.user_id===uid?{...x,is_admin_user:false,admin_role:null}:x);
  await fetchCreatorProfiles();
  renderCreatorDirectory();
+ if(typeof renderAdminShowcase==="function")renderAdminShowcase();
  toast(`Đã gỡ quyền Admin của "${displayName}" ♡`);
 };
 let creatorDirRoleFilter="all";
 function renderDirMemberCard(p){
  const av=safeWebUrl(p.avatar_url);
  const charCount=(items||[]).filter(x=>x.owner_id===p.user_id||x.creator?.toLowerCase()===String(p.display_name||"").toLowerCase()).length;
- const isAdm=adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&!!session&&p.user_id===session.user.id);
+ const isAdm=adminUserIds.includes(p.user_id)||(!!isAdmin&&!!session&&p.user_id===session.user.id);
  const admLabel=isAdm?adminRoleBadgeLabel(p.user_id,p):"";
  const isFounderTarget=isAdm&&getAdminRoleForUser(p.user_id,p)==="founder";
  const dirRoles=[...(admLabel?[admLabel]:[]),...roleLabelsForProfile(p)];
  const badges=[...new Set(dirRoles)].map(r=>`<span class="owner-chip" ${r==="Admin lập page"?'style="background:#f5e6ff;color:#6c3b99;font-weight:700"':""}>${esc(r)}</span>`).join(" ");
  const founderAdminBtn=isFounderAdmin&&p.user_id&&p.user_id!==session?.user?.id
   ?(!isAdm
-     ?`<button type="button" class="btn ghost sm" onclick="grantAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Thành viên")}'))">＋ Cấp Admin</button>`
-     :(!isFounderTarget?`<button type="button" class="btn red sm" onclick="revokeAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Admin")}'))">Gỡ Admin</button>`:""))
+     ?`<button type="button" class="btn ghost sm dir-btn" onclick="grantAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Thành viên")}'))">♛ Cấp Admin</button>`
+     :(!isFounderTarget?`<button type="button" class="btn sm dir-btn dir-danger" onclick="revokeAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Admin")}'))">Gỡ Admin</button>`:""))
   :"";
  return `<div class="profile-card" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px">
   <div class="profile-head" style="gap:10px">
@@ -1810,10 +1826,10 @@ function renderDirMemberCard(p){
   </div>
   ${badges?`<div style="display:flex;gap:5px;flex-wrap:wrap">${badges}</div>`:""}
   ${p.bio?`<div class="desc" style="min-height:auto;font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(p.bio)}</div>`:""}
-  <div style="display:flex;gap:6px;flex-wrap:wrap">
-   <button type="button" class="btn sm" style="flex:1" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
+  <div class="dir-actions">
+   <button type="button" class="btn sm dir-btn dir-primary" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
    ${founderAdminBtn}
-   ${isAdmin&&(p.can_creator||p.can_commission||(!isAdm&&p.is_approved))?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
+   ${isAdmin&&(p.can_creator||p.can_commission||(!isAdm&&p.is_approved))?`<button type="button" class="btn sm dir-btn dir-danger" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
   </div>
  </div>`;
 }
@@ -1913,7 +1929,7 @@ async function openProfile(p){
  const banner=safeWebUrl(p.banner_url);
  ensureProfileFontsLoaded(bodyF,headF);
  history.replaceState(null,"",`#creator/${encodeURIComponent(p.handle)}`);
- let targetIsAdmin=!!p.is_admin_user||adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&session?.user?.id===p.user_id);
+ let targetIsAdmin=adminUserIds.includes(p.user_id)||(!!isAdmin&&session?.user?.id===p.user_id);
  let targetAdmRole=targetIsAdmin?getAdminRoleForUser(p.user_id,p):null;
  if(!targetIsAdmin&&configured&&p.user_id){
   const {data:admRow}=await client.from("app_admins").select("user_id,admin_role").eq("user_id",p.user_id).maybeSingle();
@@ -2736,9 +2752,7 @@ let publicAdminProfiles=[];
 function collectAdminProfiles(){
  const byId=new Map();
  const isAdminRecord=p=>!!p&&!!p.user_id&&(
-  !!p.is_admin_user
-  ||adminUserIds.includes(p.user_id)
-  ||String(p.handle||"").toLowerCase().startsWith("admin-")
+  adminUserIds.includes(p.user_id)
   ||(!!isAdmin&&!!session&&p.user_id===session.user.id)
  );
  (publicAdminProfiles||[]).forEach(p=>{if(p?.user_id)byId.set(p.user_id,{...p,is_admin_user:true})});
@@ -2763,12 +2777,9 @@ function collectAdminProfiles(){
  return [...byId.values()];
 }
 function isAdminProfileRecord(p){
- if(!p)return false;
- if(p.is_admin_user===true||p.theme?.isAdmin===true)return true;
- if(p.user_id&&Array.isArray(adminUserIds)&&adminUserIds.includes(p.user_id))return true;
- if(String(p.handle||"").toLowerCase().startsWith("admin-"))return true;
- if(!!isAdmin&&!!session&&p.user_id&&p.user_id===session.user.id)return true;
- return false;
+ if(!p||!p.user_id)return false;
+ if(Array.isArray(adminUserIds)&&adminUserIds.includes(p.user_id))return true;
+ return !!isAdmin&&!!session&&p.user_id===session.user.id;
 }
 async function ensureLoggedInAdminProfileSynced(){
  if(!configured||!isAdmin||!session?.user?.id)return;
@@ -2817,7 +2828,7 @@ async function syncAdminShowcase(){
   if(p?.user_id&&isAdminProfileRecord(p))found.set(p.user_id,{...p,is_admin_user:true});
  });
  parseRows(rpcAll.error?null:rpcAll.data).forEach(p=>{
-  if(p?.user_id&&(p.is_admin_user===true||isAdminProfileRecord(p)||adminUserIds.includes(p.user_id))){
+  if(p?.user_id&&(p.is_admin_user===true||adminUserIds.includes(p.user_id))){
    found.set(p.user_id,{...found.get(p.user_id),...p,is_admin_user:true});
   }
  });

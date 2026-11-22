@@ -84,7 +84,18 @@ BEGIN
     RAISE EXCEPTION 'Chỉ Admin lập page mới có quyền gỡ Admin';
   END IF;
 
-  DELETE FROM public.app_admins WHERE user_id = p_user_id AND admin_role <> 'founder';
+  IF EXISTS (SELECT 1 FROM public.app_admins WHERE user_id = p_user_id AND admin_role = 'founder') THEN
+    RAISE EXCEPTION 'Không thể gỡ quyền của Admin lập page';
+  END IF;
+
+  DELETE FROM public.app_admins WHERE user_id = p_user_id;
+
+  -- Trả hồ sơ về đúng vai trò thật: không để cờ "đã duyệt" của Admin biến người share comm thành Creator
+  UPDATE public.creator_profiles
+  SET is_approved = COALESCE(can_creator, false),
+      approval_status = CASE WHEN COALESCE(pending_creator,false) OR COALESCE(pending_commission,false) THEN 'pending' ELSE 'approved' END,
+      theme = COALESCE(theme, '{}'::jsonb) - 'isAdmin'
+  WHERE user_id = p_user_id;
 END;
 $$;
 
