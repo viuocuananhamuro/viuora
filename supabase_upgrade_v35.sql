@@ -1190,3 +1190,57 @@ END;
 $$;
 
 NOTIFY pgrst, 'reload schema';
+
+-- 25. V51 RPC submit_role_request() to reliably save exact selected role (Creator vs Bbi share comm)
+CREATE OR REPLACE FUNCTION public.submit_role_request(
+  p_display_name text,
+  p_handle text,
+  p_username text,
+  p_want_creator boolean,
+  p_want_commission boolean
+)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  uid uuid := auth.uid();
+  clean_comm boolean := COALESCE(p_want_commission, false);
+  clean_crt boolean := CASE WHEN COALESCE(p_want_commission, false) THEN false ELSE COALESCE(p_want_creator, true) END;
+BEGIN
+  IF uid IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
+  INSERT INTO public.creator_profiles (
+    user_id, display_name, handle, username,
+    is_approved, can_creator, can_commission,
+    pending_creator, pending_commission, approval_status
+  )
+  VALUES (
+    uid,
+    COALESCE(NULLIF(trim(p_display_name), ''), 'Member'),
+    COALESCE(NULLIF(trim(p_handle), ''), 'member-' || left(replace(uid::text, '-', ''), 5)),
+    NULLIF(trim(p_username), ''),
+    false,
+    false,
+    false,
+    clean_crt,
+    clean_comm,
+    'pending'
+  )
+  ON CONFLICT (user_id) DO UPDATE
+    SET display_name = EXCLUDED.display_name,
+        is_approved = false,
+        can_creator = false,
+        can_commission = false,
+        pending_creator = clean_crt,
+        pending_commission = clean_comm,
+        approval_status = 'pending';
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.submit_role_request(text, text, text, boolean, boolean) TO authenticated;
+
+NOTIFY pgrst, 'reload schema';

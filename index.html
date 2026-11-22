@@ -1335,18 +1335,27 @@ $("creatorSignUp").onclick=async()=>{
      can_commission:false,
      approval_status:"pending"
     };
-    const {error:upErr}=await client.from("creator_profiles").upsert(pendingPayload,{onConflict:"user_id"});
-    if(upErr)console.warn("Upsert pending role warning:",upErr.message);
-    const {error:updRoleErr}=await client.from("creator_profiles").update({
-     display_name:name,
-     pending_creator:wantCreator,
-     pending_commission:wantCommission,
-     is_approved:false,
-     can_creator:false,
-     can_commission:false,
-     approval_status:"pending"
-    }).eq("user_id",session.user.id);
-    if(updRoleErr)console.warn("Update pending role warning:",updRoleErr.message);
+    const {error:rpcErr}=await client.rpc("submit_role_request",{
+     p_display_name:name,
+     p_handle:baseHandle,
+     p_username:email.split("@")[0],
+     p_want_creator:wantCreator,
+     p_want_commission:wantCommission
+    });
+    if(rpcErr){
+     const {error:upErr}=await client.from("creator_profiles").upsert(pendingPayload,{onConflict:"user_id"});
+     if(upErr)console.warn("Upsert pending role warning:",upErr.message);
+     const {error:updRoleErr}=await client.from("creator_profiles").update({
+      display_name:name,
+      pending_creator:wantCreator,
+      pending_commission:wantCommission,
+      is_approved:false,
+      can_creator:false,
+      can_commission:false,
+      approval_status:"pending"
+     }).eq("user_id",session.user.id);
+     if(updRoleErr)console.warn("Update pending role warning:",updRoleErr.message);
+    }
    }
    await loadCreatorProfile();
    await fetchCreatorProfiles();
@@ -2732,7 +2741,7 @@ function renderAdminShowcase(){
    ?`<img class="admin-chip-avatar" src="${esc(av)}" alt="">`
    :`<span class="admin-chip-avatar">✦</span>`;
   const isFnd=getAdminRoleForUser(p.user_id,p)==="founder";
-  return `<button type="button" class="admin-chip-btn" style="--chip-bg:${esc(bg)};--chip-ink:${esc(ink)};--chip-border:${esc(acc)};--chip-glow:${esc(acc2)}" onclick="openPublicAdminProfile('${esc(p.user_id)}')">${avatarHtml}<span>${isFnd?"♛ ":""}${esc(p.display_name||"Admin")}</span>${badge?`<span style="opacity:.78;font-weight:600;font-size:11px">· ${esc(badge)}</span>`:""}</button>`;
+  return `<button type="button" class="admin-chip-btn" style="--chip-bg:${esc(bg)};--chip-ink:${esc(ink)};--chip-border:${esc(acc)};--chip-glow:${esc(acc2)}" onclick="openPublicAdminProfile('${esc(p.user_id)}')">${avatarHtml}<span>${esc(p.display_name||"Admin")}</span>${badge?`<span style="opacity:.78;font-weight:600;font-size:11px">· ${esc(badge)}</span>`:""}</button>`;
  }).join("");
 }
 window.openPublicAdminProfile=async uid=>{
