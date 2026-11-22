@@ -1752,8 +1752,12 @@ window.grantAdminRoleByFounder=async(uid,displayName)=>{
  if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền thêm Admin.");
  if(!uid)return toast("Không tìm thấy UID tài khoản.");
  if(!confirm(`Cấp quyền Admin cho "${displayName}"? (Tài khoản vẫn giữ nguyên vai trò Creator / Bbi share comm hiện có nếu có.)`))return;
- const {error}=await client.from("app_admins").upsert({user_id:uid,admin_role:"admin"},{onConflict:"user_id"});
- if(error)return toast("Không cấp được quyền Admin: "+error.message+" — hãy chạy file SQL V48 trong Supabase.");
+ let {error}=await client.from("app_admins").upsert({user_id:uid,admin_role:"admin"},{onConflict:"user_id"});
+ if(error&&/admin_role/i.test(String(error.message||""))){
+  const fb=await client.from("app_admins").upsert({user_id:uid},{onConflict:"user_id"});
+  error=fb.error;
+ }
+ if(error)return toast("Không cấp được quyền Admin: "+error.message);
  adminRoleByUserId[uid]="admin";
  if(!adminUserIds.includes(uid))adminUserIds.push(uid);
  await fetchCreatorProfiles();
