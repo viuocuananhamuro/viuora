@@ -482,6 +482,40 @@ body[data-theme="dark"] #creatorDirectoryBtn{
 .dir-actions .dir-btn.dir-danger:hover{background:#fadce7!important}
 body[data-theme="dark"] .dir-actions .dir-btn.dir-danger{background:#3a2530!important;color:#f3a9c0!important;border:1px solid #6b3f52!important}
 body[data-theme="dark"] .dir-actions .dir-btn.dir-danger:hover{background:#4a2d3b!important}
+
+/* Admin list sits right under the intro box */
+.site-intro-box+.admin-showcase-bar{margin:-4px 0 16px;justify-content:center;padding:8px 14px}
+/* Compact layout for laptop / desktop screens */
+@media(min-width:901px){
+ body{font-size:14px}
+ .wrap{max-width:1080px;padding:16px 20px 44px}
+ .site-intro-box{padding:15px 22px;margin-bottom:12px;border-radius:18px}
+ .site-intro-text{font-size:14px;line-height:1.6}
+ .adminbar{padding:8px 12px;font-size:12.5px;margin-bottom:10px}
+ .admin-showcase-bar{font-size:12px}
+ .panel{padding:13px;border-radius:18px}
+ .toolbar{gap:8px}
+ .search{flex:1 1 210px;max-width:300px}
+ .search input{padding:8px 12px 8px 34px;font-size:13px;border-radius:12px}
+ .search b{top:5px;left:12px;font-size:16px}
+ .toolbar .btn{padding:8px 13px;font-size:13px;border-radius:11px}
+ .btn.sm{font-size:11.5px;padding:6px 9px;border-radius:9px}
+ .admin .admin-actions-bar{padding:7px 10px;margin-top:8px;gap:6px}
+ .tabs{margin:12px 0 8px;gap:7px}
+ .tab,.subtab{padding:6px 14px;font-size:13px}
+ .subtabs{gap:6px}
+ .heading{margin:14px 0 10px}
+ .heading h2{font-size:22px}
+ .heading h3{font-size:16px}
+ .grid{grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:13px}
+ .card{border-radius:16px}
+ .cover{height:122px}
+ .announce-bar-head{padding:8px 14px;font-size:12.5px}
+ .music-player{padding:6px 10px;gap:8px;border-radius:14px;font-size:12.5px}
+ .music-player button{width:30px;height:30px}
+ .bottom-theme-dock .theme-toggle-btn{width:36px;height:36px;font-size:15px}
+ footer{padding:16px;font-size:11.5px}
+}
 </style></head>
 <body>
 <canvas id="bgAmbientCanvas" aria-hidden="true"></canvas>
@@ -500,8 +534,9 @@ body[data-theme="dark"] .dir-actions .dir-btn.dir-danger:hover{background:#4a2d3
   </div>
  </div>
 </section>
+<div id="adminShowcaseBar" class="admin-showcase-bar"><span class="admin-showcase-title">✦ Admin:</span><div id="adminShowcaseList" class="admin-showcase-items"><span class="hint">Đang tải...</span></div></div>
 <div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng tải</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ CÁC CỤC DÀNG CỦA VIUORA ♡</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button><button class="btn ghost sm" id="manageAdminsBtn" style="display:none">♛ Quản lý Admin</button></div>
-<nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="adminShowcaseBar" class="admin-showcase-bar"><span class="admin-showcase-title">✦ Admin:</span><div id="adminShowcaseList" class="admin-showcase-items"><span class="hint">Đang tải...</span></div></div></div>
+<nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav></div>
 <section class="announce-drawer" id="announceDrawer" aria-label="Bảng thông báo từ Creator">
  <button type="button" class="announce-bar-head" id="announceToggle" aria-expanded="false">
   <span class="announce-ticker">
@@ -1566,7 +1601,7 @@ async function backfillApprovedRoleCategories(){
  for(const p of (creatorProfiles||[])){
   const dname=(p.display_name||p.username||"").trim();
   if(!dname)continue;
-  if(p.can_creator||(!isAdminProfileRecord(p)&&p.is_approved)){
+  if(p.can_creator){
    const skipCrt=deletedCats.includes("creator::"+dname.toLowerCase());
    const hasCrt=categories.some(c=>c.section==="creator"&&String(c.owner_name||"").toLowerCase()===dname.toLowerCase());
    if(!hasCrt&&!skipCrt){await syncRoleCategoryEntries("creator",dname);changed=true;}
@@ -1598,7 +1633,7 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
  const n=(catName||"").trim();
  const owners=new Set();
  (creatorProfiles||[]).forEach(p=>{
-  if(sectionKey==="creator"&&(p.can_creator||p.is_approved)&&p.display_name)owners.add(p.display_name.trim());
+  if(sectionKey==="creator"&&p.can_creator&&p.display_name)owners.add(p.display_name.trim());
   if(sectionKey==="commission"&&p.can_commission&&p.display_name)owners.add(p.display_name.trim());
  });
  categories.filter(c=>c.section===sectionKey&&c.owner_name).forEach(c=>owners.add(c.owner_name.trim()));
@@ -1724,7 +1759,7 @@ window.deleteCreatorRoleByAdmin=async(uid,displayName,roleKey)=>{
  if(!isAdmin)return toast("Chỉ Admin mới có quyền xóa vai trò/phân loại.");
  const p=(creatorProfiles||[]).find(x=>x.user_id===uid);
  if(!p)return toast("Không tìm thấy hồ sơ.");
- const hasCrt=!!(p.can_creator||p.is_approved);
+ const hasCrt=!!p.can_creator;
  const hasComm=!!p.can_commission;
  const chosenRole=roleKey||(hasCrt&&hasComm?(confirm(`"${displayName}" có cả Creator và Bbi share comm. Bấm OK để xóa vai trò Creator, bấm Cancel để xóa Bbi share comm.`)?"creator":"commission"):(hasCrt?"creator":"commission"));
  const roleLabel=chosenRole==="commission"?"Bbi share comm":"Creator";
@@ -1829,7 +1864,7 @@ function renderDirMemberCard(p){
   <div class="dir-actions">
    <button type="button" class="btn sm dir-btn dir-primary" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
    ${founderAdminBtn}
-   ${isAdmin&&(p.can_creator||p.can_commission||(!isAdm&&p.is_approved))?`<button type="button" class="btn sm dir-btn dir-danger" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
+   ${isAdmin&&(p.can_creator||p.can_commission)?`<button type="button" class="btn sm dir-btn dir-danger" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
   </div>
  </div>`;
 }
@@ -1853,7 +1888,7 @@ function renderCreatorDirectory(){
   const rolesStr=[...(isAdmProfile(p)?["Admin"]:[]),...roleLabelsForProfile(p)].join(" ");
   return [p.display_name,p.handle,p.bio||"",rolesStr].join(" ").toLowerCase().includes(q);
  });
- const isCreatorMember=p=>!!(p.can_creator||p.pending_creator||(!isAdmProfile(p)&&p.is_approved));
+ const isCreatorMember=p=>!!(p.can_creator||p.pending_creator);
  const isCommMember=p=>!!(p.can_commission||p.pending_commission);
  const admins=activeMembers.filter(isAdmProfile);
  const creators=activeMembers.filter(isCreatorMember);
@@ -1947,7 +1982,7 @@ async function openProfile(p){
  $("profileContent").innerHTML=`<div class="${themeClasses.join(" ")}" style="--creator-accent:${accent};--creator-accent2:${accent2};--creator-bg:${background};--creator-surface:${surface};--creator-ink:${textColor};--creator-font:'${bodyF}',sans-serif;--creator-heading-font:'${headF}',Georgia,serif;--creator-glow-color:${glowColor};--creator-glow-size:${glowSize}px"><div class="${bannerClasses.join(" ")}" ${banner?`style="background-image:linear-gradient(90deg,#0002,#0002),url('${esc(banner)}')"`:""}><strong class="profile-name-title" style="font-size:18px">${esc(p.display_name)}</strong></div><div class="profile-head">${p.avatar_url?`<img class="profile-avatar" src="${esc(safeWebUrl(p.avatar_url))}" alt="Avatar">`:`<div class="profile-avatar">♡</div>`}<div><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><strong class="profile-name-title" style="font-size:17px">${esc(p.display_name)}</strong>${badgeHtml}</div><div class="hint">@${esc(p.handle)}</div></div></div><p style="margin:12px 0 6px">${esc(p.bio||"Chưa có giới thiệu.")}</p><div class="profile-links">${(p.links||[]).filter(u=>safeWebUrl(u)).map(u=>`<a href="${esc(safeWebUrl(u))}" target="_blank" rel="noopener noreferrer" style="color:${accent};font-weight:700">${esc(new URL(safeWebUrl(u)).hostname)}</a>`).join(" · ")}</div></div><div id="creatorCharsSection"><div class="heading"><h3>CHAR của ${esc(p.display_name)}</h3><button class="btn ghost sm" id="copyCreatorPage">Chia sẻ trang</button></div><div id="creatorOwnedChars" class="creator-char-grid"><p class="hint">Đang tải CHAR...</p></div></div>`;
  const own=!!session&&session.user.id===p.user_id;
  $("profileEditor").style.display="none";$("editMyProfile").style.display=own?"inline-flex":"none";if($("saveProfile"))$("saveProfile").style.display="none";
- const canCrt=targetIsAdmin?!!p.can_creator:!!(p.is_approved||p.can_creator),canComm=!!p.can_commission;
+ const canCrt=!!p.can_creator,canComm=!!p.can_commission;
  const showCreatorStuff=!targetIsAdmin||canCrt||canComm;
  if($("creatorCharsSection"))$("creatorCharsSection").style.display=showCreatorStuff?"block":"none";
  const allRoles=[...(targetIsAdmin?[targetAdmLabel]:[]),...roleLabelsForProfile(p)];const roleBadges=[...new Set(allRoles)].map(r=>`<span class="owner-chip" ${r==="Admin lập page"?'style="background:#f5e6ff;color:#6c3b99;font-weight:700"':""}>${esc(r)}</span>`).join(" ");
@@ -1974,7 +2009,7 @@ const profilePayload=isAdmin
  ?{display_name:name,handle,avatar_url,banner_url,bio,links,theme:nextTheme,is_approved:true,approval_status:"approved"}
  :{display_name:name,handle,avatar_url,banner_url,bio,links,theme:nextTheme};
 let {data,error}=await client.from("creator_profiles").update(profilePayload).eq("user_id",session.user.id).select().single();
-if(!error&&data){await renameCategoryOwnerForProfile(prevDisplayName,name);if(data.can_creator||data.is_approved)await syncRoleCategoryEntries("creator",name);if(data.can_commission)await syncRoleCategoryEntries("commission",name);await loadAll();}if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){const retry=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links}).eq("user_id",session.user.id).select().single();data=retry.data;error=retry.error;}if(error)throw error;currentProfile=data;await fetchCreatorProfiles();toast("Đã lưu hồ sơ Creator ♡");openProfile(data)}catch(err){toast("Không lưu được hồ sơ: "+(err.message||err))}finally{if(btn){btn.disabled=false;btn.textContent="Lưu hồ sơ"}}};
+if(!error&&data){await renameCategoryOwnerForProfile(prevDisplayName,name);if(data.can_creator)await syncRoleCategoryEntries("creator",name);if(data.can_commission)await syncRoleCategoryEntries("commission",name);await loadAll();}if(error&&/column "theme"|'theme' column/i.test(String(error.message||""))){const retry=await client.from("creator_profiles").update({display_name:name,handle,avatar_url,banner_url,bio,links}).eq("user_id",session.user.id).select().single();data=retry.data;error=retry.error;}if(error)throw error;currentProfile=data;await fetchCreatorProfiles();toast("Đã lưu hồ sơ Creator ♡");openProfile(data)}catch(err){toast("Không lưu được hồ sơ: "+(err.message||err))}finally{if(btn){btn.disabled=false;btn.textContent="Lưu hồ sơ"}}};
 let lastAnnouncedUnreadCount=0;
 function formatVnDayMonth(iso){
  const d=iso?new Date(iso):new Date();
@@ -2075,7 +2110,7 @@ $("announceToggle").onclick=()=>{
 };
 function syncAnnouncementComposer(){
  const box=$("announceComposeArea");if(!box)return;
- const canPost=isAdmin||(!!session&&!!currentProfile&&(hasAnyApprovedRole(currentProfile)||currentProfile.is_approved===true));
+ const canPost=isAdmin||(!!session&&!!currentProfile&&hasAnyApprovedRole(currentProfile));
  box.style.display=canPost?"block":"none";
  $("announcePinWrap").style.display=isAdmin?"inline-flex":"none";
  if(!canPost){editingAnnouncementId=null;$("announceInput").value="";$("announceCancelEdit").style.display="none"}
@@ -2139,7 +2174,7 @@ $("announceCancelEdit").onclick=()=>{
 };
 $("announceSubmitBtn").onclick=async()=>{
  if(!session)return toast("Vui lòng đăng nhập Creator hoặc Admin để đăng thông báo.");
- const canPost=isAdmin||(!!currentProfile&&(hasAnyApprovedRole(currentProfile)||currentProfile.is_approved===true));
+ const canPost=isAdmin||(!!currentProfile&&hasAnyApprovedRole(currentProfile));
  if(!canPost)return toast("Tài khoản Creator của bạn chưa được duyệt.");
  const content=$("announceInput").value.trim();
  if(!content)return toast("Hãy nhập nội dung thông báo trước nhé.");
@@ -2355,7 +2390,7 @@ $("creatorRequestsList").addEventListener("click",async e=>{
  const el=approve||reject;if(!el||!isAdmin)return;
  const uid=el.dataset.approveCreator||el.dataset.rejectCreator,ok=!!approve;
  const {data:target}=await client.from("creator_profiles").select("*").eq("user_id",uid).maybeSingle();
- const wasCrt=!!(target?.can_creator||target?.is_approved);
+ const wasCrt=!!target?.can_creator;
  const wasComm=!!target?.can_commission;
  const hasExplicitPending=!!(target?.pending_creator||target?.pending_commission);
  const savedReq=String(target?.requested_role||"").toLowerCase();
@@ -2497,7 +2532,7 @@ let creatorItemMode=false;
 function allowedSectionsForUser(){
  if(isAdmin)return ["creator","commission"];
  const list=[];
- if(currentProfile?.is_approved||currentProfile?.can_creator)list.push("creator");
+ if(currentProfile?.can_creator)list.push("creator");
  if(currentProfile?.can_commission)list.push("commission");
  return list;
 }

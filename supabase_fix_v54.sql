@@ -249,4 +249,36 @@ $$;
 
 GRANT EXECUTE ON FUNCTION public.submit_role_request(text, text, text, boolean, boolean) TO authenticated;
 
+-- ============ 3. DỌN DỮ LIỆU: người chỉ đăng ký Bbi share comm bị gắn nhầm Creator ============
+-- 3a. Cờ is_approved chỉ còn dùng cho Admin, không còn mang nghĩa "là Creator" (web đã đổi sang chỉ đọc can_creator)
+UPDATE public.creator_profiles p
+SET is_approved = false
+WHERE p.is_approved = true
+  AND NOT COALESCE(p.can_creator, false)
+  AND NOT EXISTS (SELECT 1 FROM public.app_admins a WHERE a.user_id = p.user_id);
+
+-- 3b. Người đăng ký Bbi share comm nhưng đang bị chuyển nhầm thành Creator (mất can_commission, chưa có link Creator nào) -> trả lại Bbi share comm
+WITH fixed AS (
+  UPDATE public.creator_profiles p
+  SET can_commission = true,
+      can_creator = false,
+      is_approved = false,
+      approval_status = 'approved'
+  WHERE p.requested_role = 'commission'
+    AND p.can_creator = true
+    AND p.can_commission = false
+    AND p.pending_creator = false
+    AND NOT EXISTS (SELECT 1 FROM public.app_admins a WHERE a.user_id = p.user_id)
+    AND NOT EXISTS (SELECT 1 FROM public.library_items li WHERE li.owner_id = p.user_id AND li.main = 'creator')
+  RETURNING p.user_id, p.display_name
+)
+DELETE FROM public.categories c
+USING fixed f
+WHERE c.section = 'creator'
+  AND lower(trim(c.owner_name)) = lower(trim(f.display_name))
+  AND NOT EXISTS (
+    SELECT 1 FROM public.creator_profiles o
+    WHERE o.can_creator = true AND lower(trim(o.display_name)) = lower(trim(f.display_name))
+  );
+
 NOTIFY pgrst, 'reload schema';
