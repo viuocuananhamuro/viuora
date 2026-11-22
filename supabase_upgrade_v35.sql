@@ -1244,3 +1244,48 @@ $$;
 GRANT EXECUTE ON FUNCTION public.submit_role_request(text, text, text, boolean, boolean) TO authenticated;
 
 NOTIFY pgrst, 'reload schema';
+
+-- 26. V53 Allow approved Bbi share comm (can_commission = true) in announcements & activity logs RLS + fix any pending comm signups
+UPDATE public.creator_profiles p
+SET pending_commission = true,
+    pending_creator = false
+FROM auth.users u
+WHERE u.id = p.user_id
+  AND p.approval_status = 'pending'
+  AND (
+    COALESCE(u.raw_user_meta_data->>'selected_role', '') = 'commission'
+    OR LOWER(COALESCE(u.raw_user_meta_data->>'want_commission', 'false')) = 'true'
+  );
+
+DO $$
+BEGIN
+  DROP POLICY IF EXISTS creator_announcements_creator_or_admin_insert ON public.creator_announcements;
+  CREATE POLICY creator_announcements_creator_or_admin_insert
+  ON public.creator_announcements FOR INSERT TO authenticated
+  WITH CHECK (
+    EXISTS (SELECT 1 FROM public.app_admins WHERE user_id = auth.uid())
+    OR (
+      auth.uid() = author_id
+      AND EXISTS (
+        SELECT 1 FROM public.creator_profiles
+        WHERE user_id = auth.uid()
+          AND (is_approved = true OR can_creator = true OR can_commission = true)
+      )
+    )
+  );
+
+  DROP POLICY IF EXISTS public_activity_logs_auth_insert ON public.public_activity_logs;
+  CREATE POLICY public_activity_logs_auth_insert
+  ON public.public_activity_logs FOR INSERT TO authenticated
+  WITH CHECK (
+    EXISTS (SELECT 1 FROM public.app_admins WHERE user_id = auth.uid())
+    OR EXISTS (
+      SELECT 1 FROM public.creator_profiles
+      WHERE user_id = auth.uid()
+        AND (is_approved = true OR can_creator = true OR can_commission = true)
+    )
+  );
+END
+$$;
+
+NOTIFY pgrst, 'reload schema';
