@@ -12,6 +12,45 @@ ALTER TABLE public.app_admins
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.app_admins TO authenticated;
 GRANT SELECT ON public.app_admins TO anon;
 
+-- Đảm bảo các cột vai trò tồn tại (phòng khi các bản nâng cấp cũ chưa chạy)
+ALTER TABLE public.creator_profiles
+  ADD COLUMN IF NOT EXISTS can_creator boolean NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS can_commission boolean NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS pending_creator boolean NOT NULL DEFAULT false,
+  ADD COLUMN IF NOT EXISTS pending_commission boolean NOT NULL DEFAULT false;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'app_admins_admin_role_check') THEN
+    ALTER TABLE public.app_admins
+      ADD CONSTRAINT app_admins_admin_role_check CHECK (admin_role IN ('founder', 'admin'));
+  END IF;
+END
+$$;
+
+-- Cột admin_role mới tạo mặc định là 'admin' cho tất cả => phải chọn lại Admin lập page (founder).
+-- Nếu chưa có founder nào, tự chọn tài khoản Admin tạo sớm nhất.
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM public.app_admins WHERE admin_role = 'founder') THEN
+    UPDATE public.app_admins
+    SET admin_role = 'founder'
+    WHERE user_id = (
+      SELECT a.user_id
+      FROM public.app_admins a
+      LEFT JOIN auth.users u ON u.id = a.user_id
+      ORDER BY u.created_at ASC NULLS LAST
+      LIMIT 1
+    );
+  END IF;
+END
+$$;
+
+-- Nếu người được chọn ở trên KHÔNG phải bạn, chạy lệnh dưới (đổi email, bỏ dấu -- ở đầu 3 dòng):
+-- UPDATE public.app_admins SET admin_role = 'admin';
+-- UPDATE public.app_admins SET admin_role = 'founder'
+--   WHERE user_id = (SELECT id FROM auth.users WHERE email = 'EMAIL_CỦA_BẠN@gmail.com');
+
 -- Hàm cấp Admin: chỉ 'founder' (Admin lập page) gọi được, chạy với quyền SECURITY DEFINER nên không dính lỗi permission denied
 CREATE OR REPLACE FUNCTION public.grant_admin_role(p_user_id uuid)
 RETURNS void
