@@ -1119,3 +1119,74 @@ GRANT EXECUTE ON FUNCTION public.get_public_admin_profiles() TO anon, authentica
 GRANT EXECUTE ON FUNCTION public.get_public_profiles() TO anon, authenticated;
 
 NOTIFY pgrst, 'reload schema';
+
+-- 24. V49 Ensure Bbi share comm signup role is always recorded accurately on trigger & existing pending rows
+UPDATE public.creator_profiles p
+SET pending_commission = true,
+    pending_creator = false
+FROM auth.users u
+WHERE u.id = p.user_id
+  AND p.approval_status = 'pending'
+  AND (
+    COALESCE(u.raw_user_meta_data->>'selected_role', '') = 'commission'
+    OR LOWER(COALESCE(u.raw_user_meta_data->>'want_commission', 'false')) = 'true'
+  );
+
+CREATE OR REPLACE FUNCTION public.handle_new_creator_signup()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  creator_name text;
+  creator_handle text;
+  is_admin_user boolean;
+  want_comm boolean;
+  want_crt boolean;
+BEGIN
+  SELECT EXISTS(SELECT 1 FROM public.app_admins WHERE user_id = NEW.id) INTO is_admin_user;
+
+  IF NEW.raw_user_meta_data->>'account_type' = 'creator' OR is_admin_user THEN
+    creator_name := COALESCE(
+      NULLIF(trim(NEW.raw_user_meta_data->>'display_name'), ''),
+      NULLIF(trim(NEW.raw_user_meta_data->>'username'), ''),
+      split_part(COALESCE(NEW.email, 'creator'), '@', 1),
+      'Creator'
+    );
+    creator_handle := trim(both '-' from regexp_replace(lower(creator_name), '[^a-z0-9]+', '-', 'g'));
+    creator_handle := COALESCE(NULLIF(creator_handle, ''), 'creator') || '-' || left(replace(NEW.id::text, '-', ''), 5);
+
+    want_comm := LOWER(COALESCE(NEW.raw_user_meta_data->>'want_commission', 'false')) = 'true'
+                 OR COALESCE(NEW.raw_user_meta_data->>'selected_role', '') = 'commission';
+    want_crt := NOT want_comm;
+
+    INSERT INTO public.creator_profiles (
+      user_id, display_name, handle, username,
+      is_approved, can_creator, can_commission,
+      pending_creator, pending_commission, approval_status
+    )
+    VALUES (
+      NEW.id,
+      creator_name,
+      creator_handle,
+      NULLIF(trim(NEW.raw_user_meta_data->>'username'), ''),
+      is_admin_user,
+      false,
+      false,
+      CASE WHEN is_admin_user THEN false ELSE want_crt END,
+      CASE WHEN is_admin_user THEN false ELSE want_comm END,
+      CASE WHEN is_admin_user THEN 'approved' ELSE 'pending' END
+    )
+    ON CONFLICT (user_id) DO UPDATE
+      SET display_name = EXCLUDED.display_name,
+          is_approved = CASE WHEN is_admin_user THEN true ELSE creator_profiles.is_approved END,
+          pending_creator = CASE WHEN is_admin_user THEN false ELSE EXCLUDED.pending_creator END,
+          pending_commission = CASE WHEN is_admin_user THEN false ELSE EXCLUDED.pending_commission END,
+          approval_status = CASE WHEN is_admin_user THEN 'approved' ELSE creator_profiles.approval_status END;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+NOTIFY pgrst, 'reload schema';

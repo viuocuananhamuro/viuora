@@ -72,6 +72,9 @@ body[data-theme="dark"] #lightSubJump,body[data-theme="dark"] #darkSubJump{backg
 /* V8: touch-friendly controls and responsive checkbox rows */
 .field label.check-row{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 13px;border:1px solid var(--line);border-radius:12px;background:#fff9fd;font-size:14px;line-height:1.35;cursor:pointer;margin:7px 0}
 .field label.check-row input[type="checkbox"]{appearance:auto;-webkit-appearance:checkbox;width:22px;height:22px;min-width:22px;flex:0 0 22px;margin:0;padding:0;border:0;border-radius:4px;accent-color:#985b91;cursor:pointer}
+.field label.check-row input[type="radio"],.field input[type="radio"]{appearance:auto;-webkit-appearance:radio;width:18px;height:18px;min-width:18px;flex:0 0 18px;margin:0;padding:0;border:0;accent-color:#985b91;cursor:pointer}
+#creatorRoleChoiceField .cols{align-items:stretch}
+#creatorRoleChoiceField .check-row{height:100%;min-height:48px;justify-content:flex-start;gap:10px;padding:10px 14px;white-space:nowrap}
 .field input[type="checkbox"]{width:22px;height:22px;min-width:22px;vertical-align:middle;accent-color:#985b91}
 #designModal .field input[type="checkbox"]{width:22px;height:22px;padding:0;flex:0 0 22px}
 #designModal .field input[type="range"]{padding:0;min-height:28px;accent-color:#985b91}
@@ -1320,7 +1323,7 @@ $("creatorSignUp").onclick=async()=>{
    await refreshAdmin();
    const baseHandle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"member")+"-"+session.user.id.slice(0,5);
    if(!isAdmin){
-    const {error:upErr}=await client.from("creator_profiles").upsert({
+    const pendingPayload={
      user_id:session.user.id,
      display_name:name,
      handle:baseHandle,
@@ -1331,8 +1334,19 @@ $("creatorSignUp").onclick=async()=>{
      can_creator:false,
      can_commission:false,
      approval_status:"pending"
-    },{onConflict:"user_id"});
+    };
+    const {error:upErr}=await client.from("creator_profiles").upsert(pendingPayload,{onConflict:"user_id"});
     if(upErr)console.warn("Upsert pending role warning:",upErr.message);
+    const {error:updRoleErr}=await client.from("creator_profiles").update({
+     display_name:name,
+     pending_creator:wantCreator,
+     pending_commission:wantCommission,
+     is_approved:false,
+     can_creator:false,
+     can_commission:false,
+     approval_status:"pending"
+    }).eq("user_id",session.user.id);
+    if(updRoleErr)console.warn("Update pending role warning:",updRoleErr.message);
    }
    await loadCreatorProfile();
    await fetchCreatorProfiles();
@@ -1489,7 +1503,7 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
   }
  }
 }
-async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantComm=meta.want_commission===true||meta.want_commission==="true"||meta.selected_role==="commission";const wantCrt=!wantComm&&(meta.want_creator===true||meta.want_creator==="true"||meta.selected_role==="creator"||meta.want_creator!==false);if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
+async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantComm=meta.want_commission===true||meta.want_commission==="true"||meta.selected_role==="commission";const wantCrt=!wantComm&&(meta.want_creator===true||meta.want_creator==="true"||meta.selected_role==="creator"||meta.want_creator!==false);if(data&&!isAdmin&&data.approval_status==="pending"&&((wantComm&&!data.pending_commission)||(wantCrt&&!data.pending_creator))){const {data:fixedCp}=await client.from("creator_profiles").update({pending_creator:wantCrt,pending_commission:wantComm}).eq("user_id",session.user.id).select().maybeSingle();if(fixedCp)currentProfile=fixedCp;}if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
 async function fetchCreatorProfiles(){
  let aRes=await client.from("app_admins").select("user_id,admin_role");
  if(aRes.error&&/admin_role/i.test(String(aRes.error.message||""))){
