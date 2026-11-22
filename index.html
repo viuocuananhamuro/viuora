@@ -472,7 +472,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
   </div>
  </div>
 </section>
-<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng tải</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ CÁC CỤC DÀNG CỦA VIUORA ♡</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
+<div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng tải</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ CÁC CỤC DÀNG CỦA VIUORA ♡</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button><button class="btn ghost sm" id="manageAdminsBtn" style="display:none">♛ Quản lý Admin</button></div>
 <nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="adminShowcaseBar" class="admin-showcase-bar"><span class="admin-showcase-title">✦ Admin:</span><div id="adminShowcaseList" class="admin-showcase-items"><span class="hint">Đang tải...</span></div></div></div>
 <section class="announce-drawer" id="announceDrawer" aria-label="Bảng thông báo từ Creator">
  <button type="button" class="announce-bar-head" id="announceToggle" aria-expanded="false">
@@ -722,7 +722,7 @@ const SUPABASE_ANON_KEY="sb_publishable_kCWMASYWHpHdFrD80kqytw_T_9qGcYF";
 const BUCKET="library-images";
 const configured=!SUPABASE_URL.startsWith("YOUR_")&&!SUPABASE_ANON_KEY.startsWith("YOUR_");
 const client=configured?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
-let session=null,isAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],items=[],categories=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",intro_text:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
+let session=null,isAdmin=false,isFounderAdmin=false,currentProfile=null,creatorProfiles=[],adminUserIds=[],adminRoleByUserId={},items=[],categories=[],creatorAnnouncements=[],activityLogs=[],editingAnnouncementId=null,settings={title:"♡ Anime GGAI Library ♡",subtitle:"Collect your favorite characters & explore new worlds",eyebrow_text:"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧",magic_tagline:"♡ Save a little magic every day ♡",empty_search_text:"Chưa tìm thấy nội dung phù hợp ♡",intro_text:"Chào mừng bạn ghé thăm thư viện ♡ Khám phá các nhân vật, thế giới và chia sẻ từ cộng đồng.",admin_bar_text:"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập.",cover_url:"",bg_color:"#fff7fc",accent_color:"#d99ac6",gradient_start:"#fff7fc",gradient_end:"#f5e8ff",gradient_third:"#ffe8f3",gradient_mode:"linear",gradient_angle:135,pattern:"none",bg_image:"",background_mode:"image_only",overlay_opacity:0,panel_opacity:88,bg_ambient:"none",bg_ambient_secondary:"none",bg_ambient_color:"#ffffff",bg_ambient_density:55,bg_ambient_speed:1,bg_light_fx:"none",bg_light_intensity:45,bg_grad_flow:"none",sparkle_enabled:false,footer_text:"Made with love ♡ Anime GGAI Library",footer_color:"#806c8c",hero_gradient_mode:"linear",hero_gradient_start:"#f8d5e9",hero_gradient_end:"#ded4f7",hero_gradient_third:"#d9f4e5",hero_gradient_angle:120,body_font:"Quicksand",header_font:"Playfair Display",hero_text_color:"#6c547c",hero_subtitle_color:"#806c8c",hero_text_shadow_enabled:true,hero_text_shadow_color:"#ffffff",hero_text_shadow_blur:2,hero_text_shadow_x:0,hero_text_shadow_y:2,hero_text_bg_enabled:false,hero_text_bg_color:"#ffffff",hero_text_bg_opacity:55,hero_text_bg_radius:14,hero_text_bg_padding_x:18,hero_text_bg_padding_y:10,hero_frame_style:"none",hero_frame_color:"#ffffff",hero_frame_opacity:45,hero_frame_width:2,hero_frame_inset:12,hero_frame_glow:0,hero_text_frame_layout:"none",hero_text_frame_color:"#ffffff",hero_text_frame_opacity:28,hero_text_frame_width:1,hero_text_frame_radius:14,hero_text_frame_padding:10,music_enabled:true,sticker_tap_motion:"pop",sticker_tap_burst:"sparkles",sticker_sound_preset:"chime",sticker_sound_url:"",dark_custom_enabled:true,dark_cover_url:"",dark_hero_text_color:"#f6e7ff",dark_hero_subtitle_color:"#d5c1e4",dark_hero_gradient_mode:"linear",dark_hero_gradient_start:"#2b1e3d",dark_hero_gradient_end:"#1c182c",dark_hero_gradient_third:"#261b38",dark_hero_gradient_angle:120,dark_hero_fade_mode:"fade",dark_hero_fade_height:58,dark_hero_fade_strength:72,dark_hero_text_shadow_enabled:true,dark_hero_text_shadow_color:"#120b1f",dark_hero_text_shadow_blur:4,dark_hero_text_shadow_x:0,dark_hero_text_shadow_y:2,dark_hero_text_bg_enabled:false,dark_hero_text_bg_color:"#1f192d",dark_hero_text_bg_opacity:55,dark_hero_text_bg_radius:14,dark_hero_text_bg_padding_x:18,dark_hero_text_bg_padding_y:10,dark_hero_frame_style:"none",dark_hero_frame_color:"#d9b8f0",dark_hero_frame_opacity:45,dark_hero_frame_width:2,dark_hero_frame_inset:12,dark_hero_frame_glow:0,dark_hero_text_frame_layout:"none",dark_hero_text_frame_color:"#d9b8f0",dark_hero_text_frame_opacity:28,dark_hero_text_frame_width:1,dark_hero_text_frame_radius:14,dark_hero_text_frame_padding:10,dark_accent_color:"#e09ad0",dark_footer_color:"#e2d4ec",dark_body_font:"",dark_header_font:"",dark_bg_image:"",dark_gradient_mode:"linear",dark_gradient_start:"#191426",dark_gradient_end:"#120f1c",dark_gradient_third:"#201830",dark_gradient_angle:135,dark_pattern:"none",dark_pattern_color:"#9b7eb5",dark_pattern_opacity:18,dark_background_mode:"image_only",dark_overlay_opacity:0,dark_panel_opacity:88,dark_bg_ambient:"none",dark_bg_ambient_secondary:"none",dark_bg_ambient_color:"#e9d5ff",dark_bg_ambient_density:60,dark_bg_ambient_speed:1,dark_bg_light_fx:"none",dark_bg_light_intensity:50,dark_bg_grad_flow:"none"},stickers=[],section="all",owner="all",group="all",leaf="all",subcat="all",editing=null,designSnapshot=null,designCommitted=false;
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function toast(t){$("notice").textContent=t;$("notice").classList.add("show");setTimeout(()=>$("notice").classList.remove("show"),2600)}
 function modal(id,on=true){$(id).classList.toggle("show",on)}
@@ -1491,9 +1491,13 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
 }
 async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantComm=meta.want_commission===true||meta.want_commission==="true"||meta.selected_role==="commission";const wantCrt=!wantComm&&(meta.want_creator===true||meta.want_creator==="true"||meta.selected_role==="creator"||meta.want_creator!==false);if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
 async function fetchCreatorProfiles(){
- const [pRes,aRes,rpcAll,rpcAdm]=await Promise.all([
+ let aRes=await client.from("app_admins").select("user_id,admin_role");
+ if(aRes.error&&/admin_role/i.test(String(aRes.error.message||""))){
+  const fb=await client.from("app_admins").select("user_id");
+  aRes={...fb,data:(fb.data||[]).map(r=>({...r,admin_role:"admin"}))};
+ }
+ const [pRes,rpcAll,rpcAdm]=await Promise.all([
   client.from("creator_profiles").select("*").order("display_name"),
-  client.from("app_admins").select("user_id"),
   client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true})),
   client.rpc("get_public_admin_profiles").then(r=>r,()=>({data:null,error:true}))
  ]);
@@ -1509,8 +1513,13 @@ async function fetchCreatorProfiles(){
  if(mergedMap.size||(!pRes.error||!rpcAll.error||!rpcAdm.error)){
   creatorProfiles=[...mergedMap.values()].sort((a,b)=>String(a.display_name||"").localeCompare(String(b.display_name||""),"vi"));
  }
- const ids=new Set((!aRes.error&&aRes.data)?aRes.data.map(r=>r.user_id):[]);
- admRpcRows.forEach(p=>{if(p?.user_id)ids.add(p.user_id)});
+ const roleMap={};
+ (!aRes.error&&aRes.data?aRes.data:[]).forEach(r=>{if(r?.user_id)roleMap[r.user_id]=r.admin_role||"admin"});
+ allRpcRows.forEach(p=>{if(p?.user_id&&p.admin_role)roleMap[p.user_id]=p.admin_role});
+ admRpcRows.forEach(p=>{if(p?.user_id)roleMap[p.user_id]=p.admin_role||roleMap[p.user_id]||"admin"});
+ if(isAdmin&&session?.user?.id)roleMap[session.user.id]=isFounderAdmin?"founder":(roleMap[session.user.id]||"admin");
+ adminRoleByUserId=roleMap;
+ const ids=new Set(Object.keys(roleMap));
  if(isAdmin&&session?.user?.id)ids.add(session.user.id);
  if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||isAdmin||currentProfile.theme?.isAdmin===true))ids.add(currentProfile.user_id);
  (creatorProfiles||[]).forEach(p=>{
@@ -1620,13 +1629,45 @@ window.requestExtraCreatorRole=async roleType=>{
  toast(roleType==="commission"?"Đã gửi yêu cầu thêm quyền Bbi share comm ♡":"Đã gửi yêu cầu thêm quyền Creator ♡");
  openProfile(currentProfile);
 };
+window.grantAdminRoleByFounder=async(uid,displayName)=>{
+ if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền thêm Admin.");
+ if(!uid)return toast("Không tìm thấy UID tài khoản.");
+ if(!confirm(`Cấp quyền Admin cho "${displayName}"? (Tài khoản vẫn giữ nguyên vai trò Creator / Bbi share comm hiện có nếu có.)`))return;
+ const {error}=await client.from("app_admins").upsert({user_id:uid,admin_role:"admin"},{onConflict:"user_id"});
+ if(error)return toast("Không cấp được quyền Admin: "+error.message+" — hãy chạy file SQL V48 trong Supabase.");
+ adminRoleByUserId[uid]="admin";
+ if(!adminUserIds.includes(uid))adminUserIds.push(uid);
+ await fetchCreatorProfiles();
+ renderCreatorDirectory();
+ toast(`Đã cấp quyền Admin cho "${displayName}" ♛`);
+};
+window.revokeAdminRoleByFounder=async(uid,displayName)=>{
+ if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền gỡ Admin.");
+ if(getAdminRoleForUser(uid)==="founder")return toast("Không thể gỡ quyền của Admin lập page.");
+ if(!confirm(`Gỡ quyền Admin của "${displayName}"? (Các vai trò Creator / Bbi share comm khác của tài khoản vẫn được giữ nguyên.)`))return;
+ const {error}=await client.from("app_admins").delete().eq("user_id",uid);
+ if(error)return toast("Không gỡ được quyền Admin: "+error.message);
+ delete adminRoleByUserId[uid];
+ adminUserIds=adminUserIds.filter(x=>x!==uid);
+ publicAdminProfiles=(publicAdminProfiles||[]).filter(x=>x.user_id!==uid);
+ await fetchCreatorProfiles();
+ renderCreatorDirectory();
+ toast(`Đã gỡ quyền Admin của "${displayName}" ♡`);
+};
 let creatorDirRoleFilter="all";
 function renderDirMemberCard(p){
  const av=safeWebUrl(p.avatar_url);
  const charCount=(items||[]).filter(x=>x.owner_id===p.user_id||x.creator?.toLowerCase()===String(p.display_name||"").toLowerCase()).length;
  const isAdm=adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&!!session&&p.user_id===session.user.id);
- const dirRoles=[...(isAdm?["Admin"]:[]),...roleLabelsForProfile(p)];
- const badges=[...new Set(dirRoles)].map(r=>`<span class="owner-chip">${esc(r)}</span>`).join(" ");
+ const admLabel=isAdm?adminRoleBadgeLabel(p.user_id,p):"";
+ const isFounderTarget=isAdm&&getAdminRoleForUser(p.user_id,p)==="founder";
+ const dirRoles=[...(admLabel?[admLabel]:[]),...roleLabelsForProfile(p)];
+ const badges=[...new Set(dirRoles)].map(r=>`<span class="owner-chip" ${r==="Admin lập page"?'style="background:#f5e6ff;color:#6c3b99;font-weight:700"':""}>${esc(r)}</span>`).join(" ");
+ const founderAdminBtn=isFounderAdmin&&p.user_id&&p.user_id!==session?.user?.id
+  ?(!isAdm
+     ?`<button type="button" class="btn ghost sm" onclick="grantAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Thành viên")}'))">＋ Cấp Admin</button>`
+     :(!isFounderTarget?`<button type="button" class="btn red sm" onclick="revokeAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Admin")}'))">Gỡ Admin</button>`:""))
+  :"";
  return `<div class="profile-card" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px">
   <div class="profile-head" style="gap:10px">
    ${av?`<img class="profile-avatar" style="width:48px;height:48px;font-size:20px" src="${esc(av)}" alt="">`:`<div class="profile-avatar" style="width:48px;height:48px;font-size:20px">♡</div>`}
@@ -1637,8 +1678,9 @@ function renderDirMemberCard(p){
   </div>
   ${badges?`<div style="display:flex;gap:5px;flex-wrap:wrap">${badges}</div>`:""}
   ${p.bio?`<div class="desc" style="min-height:auto;font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(p.bio)}</div>`:""}
-  <div style="display:flex;gap:6px">
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
    <button type="button" class="btn sm" style="flex:1" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
+   ${founderAdminBtn}
    ${isAdmin&&(p.can_creator||p.can_commission||(!isAdm&&p.is_approved))?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
   </div>
  </div>`;
@@ -1711,6 +1753,16 @@ $("creatorDirectoryBtn")?.addEventListener("click",async()=>{
  renderCreatorDirectory();
  modal("creatorDirectoryModal",true);
 });
+$("manageAdminsBtn")?.addEventListener("click",async()=>{
+ if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền quản lý Admin.");
+ if(configured)await fetchCreatorProfiles();
+ if($("creatorDirectorySearch"))$("creatorDirectorySearch").value="";
+ creatorDirRoleFilter="all";
+ document.querySelectorAll("#creatorDirectoryTabs [data-dir-role]").forEach(b=>b.classList.toggle("active",b.dataset.dirRole==="all"));
+ renderCreatorDirectory();
+ modal("creatorDirectoryModal",true);
+ toast("Chọn thành viên và bấm '＋ Cấp Admin' hoặc 'Gỡ Admin' ♛");
+});
 $("creatorDirectorySearch")?.addEventListener("input",renderCreatorDirectory);
 async function openProfile(p){
  const theme=p.theme||{};
@@ -1730,13 +1782,15 @@ async function openProfile(p){
  ensureProfileFontsLoaded(bodyF,headF);
  history.replaceState(null,"",`#creator/${encodeURIComponent(p.handle)}`);
  let targetIsAdmin=!!p.is_admin_user||adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&session?.user?.id===p.user_id);
+ let targetAdmRole=targetIsAdmin?getAdminRoleForUser(p.user_id,p):null;
  if(!targetIsAdmin&&configured&&p.user_id){
-  const {data:admRow}=await client.from("app_admins").select("user_id").eq("user_id",p.user_id).maybeSingle();
-  targetIsAdmin=!!admRow;
+  const {data:admRow}=await client.from("app_admins").select("user_id,admin_role").eq("user_id",p.user_id).maybeSingle();
+  if(admRow){targetIsAdmin=true;targetAdmRole=admRow.admin_role||"admin";adminRoleByUserId[p.user_id]=targetAdmRole;}
  }
+ const targetAdmLabel=targetIsAdmin?(targetAdmRole==="founder"?"Admin lập page":"Admin"):"";
  const titleBadge=String(theme.titleBadge||p.title_badge||"").trim();
  const badgeHtml=titleBadge?`<span style="margin-left:7px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;background:color-mix(in srgb,${accent} 22%,transparent);color:${accent};border:1px solid color-mix(in srgb,${accent} 45%,transparent);vertical-align:middle">${esc(titleBadge)}</span>`:"";
- $("profileModalTitle").textContent=p.display_name+(targetIsAdmin?" · Admin":" · Creator");
+ $("profileModalTitle").textContent=p.display_name+(targetIsAdmin?` · ${targetAdmLabel}`:" · Creator");
  const themeClasses=["profile-theme"];
  if(effect&&effect!=="none")themeClasses.push("p-motion-"+effect);
  if(borderStyle&&borderStyle!=="solid")themeClasses.push("p-border-"+borderStyle);
@@ -1748,9 +1802,14 @@ async function openProfile(p){
  const canCrt=targetIsAdmin?!!p.can_creator:!!(p.is_approved||p.can_creator),canComm=!!p.can_commission;
  const showCreatorStuff=!targetIsAdmin||canCrt||canComm;
  if($("creatorCharsSection"))$("creatorCharsSection").style.display=showCreatorStuff?"block":"none";
- const allRoles=[...(targetIsAdmin?["Admin"]:[]),...roleLabelsForProfile(p)];const roleBadges=[...new Set(allRoles)].map(r=>`<span class="owner-chip">${esc(r)}</span>`).join(" ");
+ const allRoles=[...(targetIsAdmin?[targetAdmLabel]:[]),...roleLabelsForProfile(p)];const roleBadges=[...new Set(allRoles)].map(r=>`<span class="owner-chip" ${r==="Admin lập page"?'style="background:#f5e6ff;color:#6c3b99;font-weight:700"':""}>${esc(r)}</span>`).join(" ");
+ const founderProfileAction=(isFounderAdmin&&!own&&p.user_id)
+  ?(!targetIsAdmin
+     ?`<button class="btn ghost sm" type="button" onclick="grantAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Thành viên")}')).then(()=>openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}')))">♛ Cấp quyền Admin</button>`
+     :(targetAdmRole!=="founder"?`<button class="btn red sm" type="button" onclick="revokeAdminRoleByFounder('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Admin")}')).then(()=>openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}')))">Gỡ quyền Admin</button>`:""))
+  :"";
  const extraRoleBtns=own&&!isAdmin?`${!canComm&&!p.pending_commission?`<button class="btn ghost sm" type="button" onclick="requestExtraCreatorRole('commission')">＋ Đăng ký thêm Bbi share comm</button>`:""}${!canCrt&&!p.pending_creator?`<button class="btn ghost sm" type="button" onclick="requestExtraCreatorRole('creator')">＋ Đăng ký thêm Creator</button>`:""}`:"";
- $("profileFeedbackArea").innerHTML=own?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${roleBadges}</div>${showCreatorStuff?`<div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn" id="profileAddChar">＋ Đăng tải</button>${extraRoleBtns}</div><p class='hint'>Bạn sở hữu các link đã đăng. Admin vẫn có thể ẩn hoặc gỡ nội dung.</p>`:(extraRoleBtns?`<div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap">${extraRoleBtns}</div>`:"")}`:`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${roleBadges}</div><h3>Gửi feedback cho ${esc(p.display_name)}</h3><div class="field"><label>Lời nhắn</label><textarea id="feedbackMessage" maxlength="1000" placeholder="Chia sẻ cảm nhận hoặc góp ý cho Creator..."></textarea></div><button class="btn" id="sendFeedback">Gửi feedback</button>`;
+ $("profileFeedbackArea").innerHTML=own?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${roleBadges}</div>${showCreatorStuff?`<div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap"><button class="btn" id="profileAddChar">＋ Đăng tải</button>${extraRoleBtns}</div><p class='hint'>Bạn sở hữu các link đã đăng. Admin vẫn có thể ẩn hoặc gỡ nội dung.</p>`:(extraRoleBtns?`<div class="modal-actions" style="justify-content:flex-start;flex-wrap:wrap">${extraRoleBtns}</div>`:"")}`:`<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:10px">${roleBadges}${founderProfileAction}</div><h3>Gửi feedback cho ${esc(p.display_name)}</h3><div class="field"><label>Lời nhắn</label><textarea id="feedbackMessage" maxlength="1000" placeholder="Chia sẻ cảm nhận hoặc góp ý cho Creator..."></textarea></div><button class="btn" id="sendFeedback">Gửi feedback</button>`;
  const {data:owned}=await client.from("library_items").select("id,name,image_url,is_published,created_at").eq("owner_id",p.user_id).order("created_at",{ascending:false});
  const chars=owned||[];if($("creatorOwnedChars"))$("creatorOwnedChars").innerHTML=chars.length?chars.map(x=>`<div class="creator-char">${x.image_url?`<img src="${esc(safeWebUrl(x.image_url))}" alt="">`:`<div style="height:95px;display:grid;place-items:center;background:#f5e8f5">🌸</div>`}<strong>${esc(x.name)}</strong><div class="creator-char-actions">${own?`<button class="btn ghost sm" onclick="editItem('${x.id}')">Sửa</button><button class="btn red sm" onclick="deleteItem('${x.id}')">Xóa</button>`:""}${isAdmin&&!x.is_published?`<span class="hidden-chip">Đã ẩn</span>`:""}</div></div>`).join(""):`<p class="hint">Bbi ${esc(p.display_name)} chưa đăng char nào.</p>`;
  if($("copyCreatorPage"))$("copyCreatorPage").onclick=async()=>{const url=location.origin+location.pathname+"#creator/"+encodeURIComponent(p.handle);try{await navigator.clipboard.writeText(url);toast("Đã sao chép liên kết trang Creator")}catch{toast(url)}};
@@ -2214,8 +2273,18 @@ $("creatorRequestsList").addEventListener("click",async e=>{
  await fetchCreatorProfiles();
  refreshRoleUI();
 });
-function refreshRoleUI(){document.body.classList.toggle("admin",isAdmin);$("creatorRequestsBtn").style.display=isAdmin?"inline-flex":"none";$("loginBtn").style.display=session?"none":"inline-flex";$("logoutBtn").style.display=session?"inline-flex":"none";$("logoutBtn").textContent=isAdmin?"Đăng xuất Admin":"Đăng xuất Creator";if($("creatorAccountBtn"))$("creatorAccountBtn").textContent=session?"Your Profile":"♡ Creator / Comm";$("creatorAddCharBtn").classList.toggle("visible",!!session&&(isAdmin||hasAnyApprovedRole(currentProfile)));if(typeof syncAnnouncementComposer==="function")syncAnnouncementComposer()}
-async function refreshAdmin(){if(!session){isAdmin=false;refreshRoleUI();return}let {data,error}=await client.from("app_admins").select("user_id").eq("user_id",session.user.id).maybeSingle();isAdmin=!!data&&!error;refreshRoleUI()}
+
+function getAdminRoleForUser(uid, p=null){
+ if(p?.admin_role==="founder"||p?.admin_role==="admin")return p.admin_role;
+ if(uid&&adminRoleByUserId[uid])return adminRoleByUserId[uid];
+ if(uid&&session?.user?.id===uid&&isFounderAdmin)return "founder";
+ return "admin";
+}
+function adminRoleBadgeLabel(uid, p=null){
+ return getAdminRoleForUser(uid, p)==="founder"?"Admin lập page":"Admin";
+}
+function refreshRoleUI(){document.body.classList.toggle("admin",isAdmin);document.body.classList.toggle("founder-admin",isFounderAdmin);$("creatorRequestsBtn").style.display=isAdmin?"inline-flex":"none";if($("manageAdminsBtn"))$("manageAdminsBtn").style.display=isFounderAdmin?"inline-flex":"none";if($("adminBarText")&&isAdmin){$("adminBarText").textContent=isFounderAdmin?"♛ Đang đăng nhập Admin lập page · Bạn có toàn quyền chỉnh sửa và cấp/gỡ quyền Admin cho tài khoản khác.":"✧ Đang đăng nhập Admin · Các thay đổi được lưu online và hiển thị cho mọi khách truy cập."}$("loginBtn").style.display=session?"none":"inline-flex";$("logoutBtn").style.display=session?"inline-flex":"none";$("logoutBtn").textContent=isAdmin?(isFounderAdmin?"Đăng xuất Admin lập page":"Đăng xuất Admin"):"Đăng xuất Creator";if($("creatorAccountBtn"))$("creatorAccountBtn").textContent=session?"Your Profile":"♡ Creator / Comm";$("creatorAddCharBtn").classList.toggle("visible",!!session&&(isAdmin||hasAnyApprovedRole(currentProfile)));if(typeof syncAnnouncementComposer==="function")syncAnnouncementComposer()}
+async function refreshAdmin(){if(!session){isAdmin=false;isFounderAdmin=false;refreshRoleUI();return}let {data,error}=await client.from("app_admins").select("user_id,admin_role").eq("user_id",session.user.id).maybeSingle();if(error&&/admin_role/i.test(String(error.message||""))){const fb=await client.from("app_admins").select("user_id").eq("user_id",session.user.id).maybeSingle();data=fb.data?{...fb.data,admin_role:"founder"}:null;error=fb.error;}isAdmin=!!data&&!error;isFounderAdmin=isAdmin&&(data?.admin_role==="founder");if(isAdmin&&session?.user?.id)adminRoleByUserId[session.user.id]=isFounderAdmin?"founder":"admin";refreshRoleUI()}
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
 if(c.error||i.error){toast("Không tải được dữ liệu. Kiểm tra cấu hình và SQL.");console.error(c.error,i.error);return}
@@ -2270,7 +2339,7 @@ let {data,error}=await client.auth.signInWithPassword({
   email: username + "@login.animeggai.test",
   password: $("password").value
 });if(error)return toast(error.message);session=data.session;await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();modal("loginModal",false);render();toast("Đã đăng nhập Admin ♡");await loadNotifications(true)};
-$("logoutBtn").onclick=async()=>{await client.auth.signOut();session=null;isAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];lastAnnouncedUnreadCount=0;$("notifyBtn").classList.remove("has-unread");$("notifyBtn").innerHTML="♧ Thông báo";refreshRoleUI();render();if(configured){await fetchCreatorProfiles();await loadAnnouncements();await loadPublicActivityLogs(false)}else{renderAdminShowcase()}toast("Đã đăng xuất")};
+$("logoutBtn").onclick=async()=>{await client.auth.signOut();session=null;isAdmin=false;isFounderAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];lastAnnouncedUnreadCount=0;$("notifyBtn").classList.remove("has-unread");$("notifyBtn").innerHTML="♧ Thông báo";refreshRoleUI();render();if(configured){await fetchCreatorProfiles();await loadAnnouncements();await loadPublicActivityLogs(false)}else{renderAdminShowcase()}toast("Đã đăng xuất")};
 function setItemCategoryOptions(selected){let f=$("itemForm"),sec=f.elements.section.value;let owners=uniqueValues("owner_name",{section:sec});const myName=(currentProfile?.display_name||"").trim();if(!isAdmin&&myName){owners=[myName];f.elements.owner_name.disabled=true;f.elements.owner_name.innerHTML=`<option value="${esc(myName)}" selected>${esc(myName)}</option>`;}else{f.elements.owner_name.disabled=false;if(!owners.length)owners=["Chung"];f.elements.owner_name.innerHTML=owners.map(v=>`<option ${v===(f.dataset.owner||owners[0])?"selected":""}>${esc(v)}</option>`).join("");}let own=f.elements.owner_name.value;let groups=uniqueValues("group_name",{section:sec,owner_name:own});if(!groups.length)groups=uniqueValues("group_name",{section:sec});if(!groups.length)groups=["CHAR"];f.elements.group_name.innerHTML=groups.map((v,i)=>`<option ${v===(f.dataset.group||groups[0])?"selected":""}>${esc(v)}</option>`).join("");let gr=f.elements.group_name.value;let leaves=categories.filter(c=>c.section===sec&&c.owner_name===own&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec&&c.group_name===gr);if(!leaves.length)leaves=categories.filter(c=>c.section===sec);f.elements.category_id.innerHTML=leaves.map(c=>`<option value="${c.id}" ${c.id===selected?"selected":""}>${esc(c.name)}</option>`).join("");setItemSubcategoryOptions(f.dataset.subcategory||"") }
 function setItemSubcategoryOptions(selected=""){let f=$("itemForm"),c=categories.find(v=>v.id===f.elements.category_id.value),opts=c?.subcategories||[];f.elements.subcategory.innerHTML=`<option value="">-- Không chọn --</option>`+opts.map(v=>`<option ${v===selected?"selected":""}>${esc(v)}</option>`).join("") }
 $("itemForm").elements.section.onchange=()=>{ $("itemForm").dataset.owner="";$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.owner_name.onchange=()=>{ $("itemForm").dataset.owner=$("itemForm").elements.owner_name.value;$("itemForm").dataset.group="";setItemCategoryOptions()};$("itemForm").elements.group_name.onchange=()=>{$("itemForm").dataset.group=$("itemForm").elements.group_name.value;setItemCategoryOptions()};$("itemForm").elements.category_id.onchange=()=>setItemSubcategoryOptions();
@@ -2648,7 +2717,8 @@ function renderAdminShowcase(){
   const avatarHtml=av
    ?`<img class="admin-chip-avatar" src="${esc(av)}" alt="">`
    :`<span class="admin-chip-avatar">✦</span>`;
-  return `<button type="button" class="admin-chip-btn" style="--chip-bg:${esc(bg)};--chip-ink:${esc(ink)};--chip-border:${esc(acc)};--chip-glow:${esc(acc2)}" onclick="openPublicAdminProfile('${esc(p.user_id)}')">${avatarHtml}<span>${esc(p.display_name||"Admin")}</span>${badge?`<span style="opacity:.78;font-weight:600;font-size:11px">· ${esc(badge)}</span>`:""}</button>`;
+  const isFnd=getAdminRoleForUser(p.user_id,p)==="founder";
+  return `<button type="button" class="admin-chip-btn" style="--chip-bg:${esc(bg)};--chip-ink:${esc(ink)};--chip-border:${esc(acc)};--chip-glow:${esc(acc2)}" onclick="openPublicAdminProfile('${esc(p.user_id)}')">${avatarHtml}<span>${isFnd?"♛ ":""}${esc(p.display_name||"Admin")}</span>${badge?`<span style="opacity:.78;font-weight:600;font-size:11px">· ${esc(badge)}</span>`:""}</button>`;
  }).join("");
 }
 window.openPublicAdminProfile=async uid=>{
@@ -2674,7 +2744,7 @@ function findProfileByRoute(route){
  });
  return [...map.values()].find(p=>String(p.handle||"").trim().toLowerCase()===needle||String(p.user_id||"").trim().toLowerCase()===needle)||null;
 }
-async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{if(session){await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{isAdmin=false;currentProfile=null;adminUserIds=[];publicAdminProfiles=[];refreshRoleUI();await fetchCreatorProfiles()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=findProfileByRoute(route);if(found)openProfile(found)}}
+async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{if(session){await refreshAdmin();await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{isAdmin=false;isFounderAdmin=false;currentProfile=null;adminUserIds=[];adminRoleByUserId={};publicAdminProfiles=[];refreshRoleUI();await fetchCreatorProfiles()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=findProfileByRoute(route);if(found)openProfile(found)}}
 window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=findProfileByRoute(route);if(found)openProfile(found)});
 function kickGifPlayback(forceReloadGif=false){
  document.querySelectorAll("img").forEach(img=>{

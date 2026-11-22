@@ -925,3 +925,197 @@ ALTER TABLE public.site_settings
   ADD COLUMN IF NOT EXISTS dark_bg_ambient_secondary text DEFAULT 'none';
 
 NOTIFY pgrst, 'reload schema';
+
+-- 23. V48 Two-Tier Admin System: 'founder' (Admin lập page) vs 'admin' (Admin thường) + Preserve Creator/Comm roles
+ALTER TABLE public.app_admins
+  ADD COLUMN IF NOT EXISTS admin_role text NOT NULL DEFAULT 'admin',
+  ADD COLUMN IF NOT EXISTS created_at timestamptz NOT NULL DEFAULT now();
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'app_admins_admin_role_check'
+  ) THEN
+    ALTER TABLE public.app_admins
+      ADD CONSTRAINT app_admins_admin_role_check CHECK (admin_role IN ('founder', 'admin'));
+  END IF;
+END
+$$;
+
+-- Promote the founding admin(s) to 'founder' if no founder has been designated yet
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM public.app_admins WHERE admin_role = 'founder') THEN
+    UPDATE public.app_admins
+    SET admin_role = 'founder'
+    WHERE user_id IN (
+      SELECT a.user_id
+      FROM public.app_admins a
+      LEFT JOIN auth.users u ON u.id = a.user_id
+      ORDER BY u.created_at ASC NULLS LAST
+      LIMIT 1
+    );
+  END IF;
+END
+$$;
+
+-- Restore Creator / Bbi share comm flags for any Admin who actually owns Creator/Commission items or categories
+UPDATE public.creator_profiles p
+SET can_creator = true,
+    is_approved = true,
+    approval_status = 'approved'
+FROM public.app_admins a
+WHERE p.user_id = a.user_id
+  AND (
+    EXISTS (SELECT 1 FROM public.library_items li WHERE li.owner_id = p.user_id AND li.main = 'creator')
+    OR EXISTS (SELECT 1 FROM public.categories c WHERE c.section = 'creator' AND lower(trim(c.owner_name)) = lower(trim(p.display_name)))
+  );
+
+UPDATE public.creator_profiles p
+SET can_commission = true,
+    is_approved = true,
+    approval_status = 'approved'
+FROM public.app_admins a
+WHERE p.user_id = a.user_id
+  AND (
+    EXISTS (SELECT 1 FROM public.library_items li WHERE li.owner_id = p.user_id AND li.main = 'commission')
+    OR EXISTS (SELECT 1 FROM public.categories c WHERE c.section = 'commission' AND lower(trim(c.owner_name)) = lower(trim(p.display_name)))
+  );
+
+-- Fix trigger: when adding an existing Creator/Comm user to app_admins, preserve their existing roles!
+CREATE OR REPLACE FUNCTION public.handle_new_admin_creator_profile()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  u_email text;
+  u_meta jsonb;
+  creator_name text;
+  creator_handle text;
+BEGIN
+  SELECT email, raw_user_meta_data INTO u_email, u_meta FROM auth.users WHERE id = NEW.user_id;
+  creator_name := COALESCE(
+    NULLIF(trim(u_meta->>'display_name'), ''),
+    NULLIF(trim(u_meta->>'username'), ''),
+    split_part(COALESCE(u_email, 'admin'), '@', 1),
+    'Admin'
+  );
+  creator_handle := trim(both '-' from regexp_replace(lower(creator_name), '[^a-z0-9]+', '-', 'g'));
+  creator_handle := COALESCE(NULLIF(creator_handle, ''), 'admin') || '-' || left(replace(NEW.user_id::text, '-', ''), 5);
+
+  INSERT INTO public.creator_profiles
+    (user_id, display_name, handle, username, is_approved, can_creator, can_commission, approval_status)
+  VALUES
+    (NEW.user_id, creator_name, creator_handle, NULLIF(trim(u_meta->>'username'), ''), true, false, false, 'approved')
+  ON CONFLICT (user_id) DO UPDATE
+    SET is_approved = true,
+        approval_status = 'approved',
+        can_creator = COALESCE(public.creator_profiles.can_creator, false),
+        can_commission = COALESCE(public.creator_profiles.can_commission, false);
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_app_admin_added_creator_profile ON public.app_admins;
+CREATE TRIGGER on_app_admin_added_creator_profile
+AFTER INSERT ON public.app_admins
+FOR EACH ROW
+EXECUTE FUNCTION public.handle_new_admin_creator_profile();
+
+-- RLS on app_admins: ONLY 'founder' (Admin lập page) can add, update, or delete admins
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.app_admins TO authenticated;
+
+DO $$
+BEGIN
+  DROP POLICY IF EXISTS app_admins_founder_insert ON public.app_admins;
+  CREATE POLICY app_admins_founder_insert
+  ON public.app_admins FOR INSERT TO authenticated
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.app_admins me
+      WHERE me.user_id = auth.uid() AND me.admin_role = 'founder'
+    )
+  );
+
+  DROP POLICY IF EXISTS app_admins_founder_update ON public.app_admins;
+  CREATE POLICY app_admins_founder_update
+  ON public.app_admins FOR UPDATE TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.app_admins me
+      WHERE me.user_id = auth.uid() AND me.admin_role = 'founder'
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.app_admins me
+      WHERE me.user_id = auth.uid() AND me.admin_role = 'founder'
+    )
+  );
+
+  DROP POLICY IF EXISTS app_admins_founder_delete ON public.app_admins;
+  CREATE POLICY app_admins_founder_delete
+  ON public.app_admins FOR DELETE TO authenticated
+  USING (
+    admin_role <> 'founder'
+    AND EXISTS (
+      SELECT 1 FROM public.app_admins me
+      WHERE me.user_id = auth.uid() AND me.admin_role = 'founder'
+    )
+  );
+END
+$$;
+
+-- Update public RPCs so frontend knows who is 'founder' (Admin lập page) vs 'admin' (Admin)
+CREATE OR REPLACE FUNCTION public.get_public_admin_profiles()
+RETURNS jsonb
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT COALESCE(
+    jsonb_agg(
+      to_jsonb(cp.*) || jsonb_build_object(
+        'is_admin_user', true,
+        'admin_role', COALESCE(aa.admin_role, 'admin')
+      )
+      ORDER BY (CASE WHEN aa.admin_role = 'founder' THEN 0 ELSE 1 END), cp.display_name
+    ),
+    '[]'::jsonb
+  )
+  FROM public.creator_profiles cp
+  INNER JOIN public.app_admins aa ON aa.user_id = cp.user_id;
+$$;
+
+CREATE OR REPLACE FUNCTION public.get_public_profiles()
+RETURNS jsonb
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT COALESCE(
+    jsonb_agg(
+      to_jsonb(cp.*) || jsonb_build_object(
+        'is_admin_user',
+        EXISTS (SELECT 1 FROM public.app_admins aa WHERE aa.user_id = cp.user_id),
+        'admin_role',
+        (SELECT aa.admin_role FROM public.app_admins aa WHERE aa.user_id = cp.user_id LIMIT 1)
+      )
+      ORDER BY cp.display_name
+    ),
+    '[]'::jsonb
+  )
+  FROM public.creator_profiles cp
+  WHERE cp.is_approved = true
+     OR cp.can_creator = true
+     OR cp.can_commission = true
+     OR EXISTS (SELECT 1 FROM public.app_admins aa WHERE aa.user_id = cp.user_id);
+$$;
+
+GRANT EXECUTE ON FUNCTION public.get_public_admin_profiles() TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.get_public_profiles() TO anon, authenticated;
+
+NOTIFY pgrst, 'reload schema';
