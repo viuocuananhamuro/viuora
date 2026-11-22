@@ -1463,17 +1463,30 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
 }
 async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantCrt=meta.want_creator!==false;const wantComm=!!meta.want_commission;if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
 async function fetchCreatorProfiles(){
- const [pRes,aRes]=await Promise.all([
+ const [pRes,aRes,rpcRes]=await Promise.all([
   client.from("creator_profiles").select("*").order("display_name"),
-  client.from("app_admins").select("user_id")
+  client.from("app_admins").select("user_id"),
+  client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true}))
  ]);
- if(!pRes.error)creatorProfiles=pRes.data||[];
+ const mergedMap=new Map();
+ if(!rpcRes.error&&Array.isArray(rpcRes.data)){
+  rpcRes.data.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,p)});
+ }
+ if(!pRes.error&&Array.isArray(pRes.data)){
+  pRes.data.forEach(p=>{if(p?.user_id)mergedMap.set(p.user_id,{...mergedMap.get(p.user_id),...p})});
+ }
+ if(mergedMap.size||(!pRes.error||!rpcRes.error)){
+  creatorProfiles=[...mergedMap.values()].sort((a,b)=>String(a.display_name||"").localeCompare(String(b.display_name||""),"vi"));
+ }
  const ids=new Set((!aRes.error&&aRes.data)?aRes.data.map(r=>r.user_id):[]);
  if(isAdmin&&session?.user?.id)ids.add(session.user.id);
- if(currentProfile?.user_id&&(currentProfile.handle||"").startsWith("admin-"))ids.add(currentProfile.user_id);
- (creatorProfiles||[]).forEach(p=>{if(p.user_id&&String(p.handle||"").startsWith("admin-"))ids.add(p.user_id)});
+ if(currentProfile?.user_id&&(String(currentProfile.handle||"").startsWith("admin-")||isAdmin))ids.add(currentProfile.user_id);
+ (creatorProfiles||[]).forEach(p=>{
+  if(p?.user_id&&(p.is_admin_user||String(p.handle||"").startsWith("admin-")))ids.add(p.user_id);
+ });
  adminUserIds=[...ids];
  renderOutsideAdminList();
+ if($("creatorDirectoryModal")?.classList.contains("show"))renderCreatorDirectory();
 }
 function validColor(v,fallback){return /^#[0-9a-f]{6}$/i.test(String(v||""))?v:fallback}
 function safeWebUrl(v){try{const u=new URL(String(v||""));return ["http:","https:"].includes(u.protocol)?u.href:""}catch{return ""}}
@@ -1585,11 +1598,16 @@ function renderDirMemberCard(p){
 function renderCreatorDirectory(){
  const box=$("creatorDirectoryList");if(!box)return;
  const q=($("creatorDirectorySearch")?.value||"").toLowerCase().trim();
- const combined=[...(creatorProfiles||[])];
- if(currentProfile&&currentProfile.user_id&&!combined.some(x=>x.user_id===currentProfile.user_id)){
-  combined.unshift(currentProfile);
+ const combinedMap=new Map();
+ (creatorProfiles||[]).forEach(p=>{if(p?.user_id)combinedMap.set(p.user_id,p)});
+ if(currentProfile&&currentProfile.user_id){
+  combinedMap.set(currentProfile.user_id,{...combinedMap.get(currentProfile.user_id),...currentProfile});
  }
- const isAdmProfile=p=>adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&!!session&&p.user_id===session.user.id);
+ getAdminProfileCandidates().forEach(p=>{
+  if(p?.user_id)combinedMap.set(p.user_id,{...combinedMap.get(p.user_id),...p});
+ });
+ const combined=[...combinedMap.values()];
+ const isAdmProfile=p=>!!p.is_admin_user||adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&!!session&&p.user_id===session.user.id);
  const activeMembers=combined.filter(p=>{
   const hasChars=(items||[]).some(x=>x.owner_id===p.user_id);
   if(!hasAnyApprovedRole(p)&&!hasChars&&!isAdmProfile(p))return false;
@@ -1638,7 +1656,7 @@ document.querySelectorAll("#creatorDirectoryTabs [data-dir-role]").forEach(btn=>
  });
 });
 $("creatorDirectoryBtn")?.addEventListener("click",async()=>{
- if(!creatorProfiles.length&&configured)await fetchCreatorProfiles();
+ if(configured)await fetchCreatorProfiles();
  if($("creatorDirectorySearch"))$("creatorDirectorySearch").value="";
  creatorDirRoleFilter="all";
  document.querySelectorAll("#creatorDirectoryTabs [data-dir-role]").forEach(b=>b.classList.toggle("active",b.dataset.dirRole==="all"));
@@ -1663,10 +1681,10 @@ async function openProfile(p){
  const banner=safeWebUrl(p.banner_url);
  ensureProfileFontsLoaded(bodyF,headF);
  history.replaceState(null,"",`#creator/${encodeURIComponent(p.handle)}`);
- let targetIsAdmin=false;
- if(configured&&p.user_id){
+ let targetIsAdmin=!!p.is_admin_user||adminUserIds.includes(p.user_id)||String(p.handle||"").startsWith("admin-")||(!!isAdmin&&session?.user?.id===p.user_id);
+ if(!targetIsAdmin&&configured&&p.user_id){
   const {data:admRow}=await client.from("app_admins").select("user_id").eq("user_id",p.user_id).maybeSingle();
-  targetIsAdmin=!!admRow||(!!isAdmin&&session?.user?.id===p.user_id);
+  targetIsAdmin=!!admRow;
  }
  const titleBadge=String(theme.titleBadge||p.title_badge||"").trim();
  const badgeHtml=titleBadge?`<span style="margin-left:7px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;background:color-mix(in srgb,${accent} 22%,transparent);color:${accent};border:1px solid color-mix(in srgb,${accent} 45%,transparent);vertical-align:middle">${esc(titleBadge)}</span>`:"";
@@ -2452,7 +2470,8 @@ function getAdminProfileCandidates(){
  const map=new Map();
  (creatorProfiles||[]).forEach(p=>{
   if(!p?.user_id)return;
-  const isAdm=adminUserIds.includes(p.user_id)
+  const isAdm=!!p.is_admin_user
+   ||adminUserIds.includes(p.user_id)
    ||String(p.handle||"").startsWith("admin-")
    ||(!!isAdmin&&!!session&&p.user_id===session.user.id);
   if(isAdm)map.set(p.user_id,p);
