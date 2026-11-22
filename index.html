@@ -1361,7 +1361,7 @@ async function openCreatorAuth(){
    return;
   }
   if(!isAdmin&&!hasAnyApprovedRole(currentProfile)){
-   const roleText=currentProfile?.pending_commission?"Bbi share comm":"Creator";
+   const roleText=(currentProfile?.pending_commission||currentProfile?.requested_role==="commission")?"Bbi share comm":"Creator";
    const noticeEl=$("creatorStatusNotice");
    if(noticeEl){
     noticeEl.style.display="block";
@@ -1428,6 +1428,7 @@ $("creatorSignUp").onclick=async()=>{
       username:email.split("@")[0],
       pending_creator:wantCreator,
       pending_commission:wantCommission,
+      requested_role:wantCommission?"commission":"creator",
       is_approved:false,
       can_creator:false,
       can_commission:false,
@@ -1437,6 +1438,7 @@ $("creatorSignUp").onclick=async()=>{
       display_name:name,
       pending_creator:wantCreator,
       pending_commission:wantCommission,
+      requested_role:wantCommission?"commission":"creator",
       is_approved:false,
       can_creator:false,
       can_commission:false,
@@ -1752,12 +1754,15 @@ window.grantAdminRoleByFounder=async(uid,displayName)=>{
  if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền thêm Admin.");
  if(!uid)return toast("Không tìm thấy UID tài khoản.");
  if(!confirm(`Cấp quyền Admin cho "${displayName}"? (Tài khoản vẫn giữ nguyên vai trò Creator / Bbi share comm hiện có nếu có.)`))return;
- let {error}=await client.from("app_admins").upsert({user_id:uid,admin_role:"admin"},{onConflict:"user_id"});
- if(error&&/admin_role/i.test(String(error.message||""))){
-  const fb=await client.from("app_admins").upsert({user_id:uid},{onConflict:"user_id"});
-  error=fb.error;
+ let {error}=await client.rpc("grant_admin_role",{p_user_id:uid});
+ if(error&&/could not find the function|schema cache|PGRST202/i.test(String(error.message||error.code||""))){
+  const old=await client.from("app_admins").upsert({user_id:uid,admin_role:"admin"},{onConflict:"user_id"});
+  error=old.error;
  }
- if(error)return toast("Không cấp được quyền Admin: "+error.message);
+ if(error){
+  const msg=String(error.message||"");
+  return toast("Không cấp được quyền Admin: "+msg+(/permission denied/i.test(msg)?" — hãy chạy file supabase_fix_v54.sql trong Supabase SQL Editor":""));
+ }
  adminRoleByUserId[uid]="admin";
  if(!adminUserIds.includes(uid))adminUserIds.push(uid);
  await fetchCreatorProfiles();
@@ -1768,7 +1773,11 @@ window.revokeAdminRoleByFounder=async(uid,displayName)=>{
  if(!isFounderAdmin)return toast("Chỉ Admin lập page mới có quyền gỡ Admin.");
  if(getAdminRoleForUser(uid)==="founder")return toast("Không thể gỡ quyền của Admin lập page.");
  if(!confirm(`Gỡ quyền Admin của "${displayName}"? (Các vai trò Creator / Bbi share comm khác của tài khoản vẫn được giữ nguyên.)`))return;
- const {error}=await client.from("app_admins").delete().eq("user_id",uid);
+ let {error}=await client.rpc("revoke_admin_role",{p_user_id:uid});
+ if(error&&/could not find the function|schema cache|PGRST202/i.test(String(error.message||error.code||""))){
+  const old=await client.from("app_admins").delete().eq("user_id",uid);
+  error=old.error;
+ }
  if(error)return toast("Không gỡ được quyền Admin: "+error.message);
  delete adminRoleByUserId[uid];
  adminUserIds=adminUserIds.filter(x=>x!==uid);
@@ -2314,7 +2323,7 @@ $("sendItemFeedbackBtn")?.addEventListener("click",async()=>{
 function categoryName(id){return categories.find(c=>c.id===id)?.name||"Other"}
 function sectionLabel(v){return v==="commission"?"Bbi share commission":"Creator"}
 function uniqueValues(key,filters={}){return [...new Set(categories.filter(c=>Object.entries(filters).every(([k,v])=>!v||c[k]===v)).map(c=>c[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"))}
-async function loadCreatorRequests(){if(!isAdmin)return toast("Chỉ Admin mới có quyền duyệt.");$("creatorRequestsList").innerHTML='<p class="hint">Đang tải...</p>';const {data,error}=await client.from("creator_profiles").select("user_id,username,display_name,handle,is_approved,can_creator,can_commission,pending_creator,pending_commission,approval_status,created_at").eq("approval_status","pending").order("created_at",{ascending:false});if(error){$("creatorRequestsList").textContent="Không tải được danh sách: "+error.message;return}const rows=data||[];$("creatorRequestsList").innerHTML=rows.map(p=>{const reqRoles=[];if(p.pending_creator)reqRoles.push("Creator");if(p.pending_commission)reqRoles.push("Bbi share comm");if(!reqRoles.length&&!p.is_approved&&!p.can_creator&&!p.can_commission)reqRoles.push("Creator");return `<div class="request-row"><div><strong>${esc(p.display_name||"Creator")}</strong><div class="hint">@${esc(p.username||p.handle||"unknown")} · ${new Date(p.created_at).toLocaleString("vi-VN")}</div><span class="request-status">Đăng ký: <strong>${esc(reqRoles.join(" + "))}</strong></span></div><div class="request-actions"><button class="btn sm" data-approve-creator="${p.user_id}">Duyệt</button><button class="btn ghost sm" data-reject-creator="${p.user_id}">Từ chối</button></div></div>`}).join("")||'<p class="hint">Không có yêu cầu đang chờ.</p>'}
+async function loadCreatorRequests(){if(!isAdmin)return toast("Chỉ Admin mới có quyền duyệt.");$("creatorRequestsList").innerHTML='<p class="hint">Đang tải...</p>';const {data,error}=await client.from("creator_profiles").select("user_id,username,display_name,handle,is_approved,can_creator,can_commission,pending_creator,pending_commission,requested_role,approval_status,created_at").eq("approval_status","pending").order("created_at",{ascending:false});if(error){$("creatorRequestsList").textContent="Không tải được danh sách: "+error.message;return}const rows=data||[];$("creatorRequestsList").innerHTML=rows.map(p=>{const reqRoles=[];if(p.pending_creator)reqRoles.push("Creator");if(p.pending_commission)reqRoles.push("Bbi share comm");if(!reqRoles.length&&!p.is_approved&&!p.can_creator&&!p.can_commission)reqRoles.push(p.requested_role==="commission"?"Bbi share comm":"Creator");return `<div class="request-row"><div><strong>${esc(p.display_name||"Creator")}</strong><div class="hint">@${esc(p.username||p.handle||"unknown")} · ${new Date(p.created_at).toLocaleString("vi-VN")}</div><span class="request-status">Đăng ký: <strong>${esc(reqRoles.join(" + "))}</strong></span></div><div class="request-actions"><button class="btn sm" data-approve-creator="${p.user_id}">Duyệt</button><button class="btn ghost sm" data-reject-creator="${p.user_id}">Từ chối</button></div></div>`}).join("")||'<p class="hint">Không có yêu cầu đang chờ.</p>'}
 $("creatorRequestsBtn").onclick=async()=>{await loadCreatorRequests();modal("creatorRequestsModal")};
 $("refreshCreatorRequests").onclick=loadCreatorRequests;
 function currentAdminDisplayName(){
@@ -2333,8 +2342,10 @@ $("creatorRequestsList").addEventListener("click",async e=>{
  const wasCrt=!!(target?.can_creator||target?.is_approved);
  const wasComm=!!target?.can_commission;
  const hasExplicitPending=!!(target?.pending_creator||target?.pending_commission);
- const reqCrt=hasExplicitPending?!!target?.pending_creator:(!wasCrt&&!wasComm);
- const reqComm=hasExplicitPending?!!target?.pending_commission:false;
+ const savedReq=String(target?.requested_role||"").toLowerCase();
+ const noRoleYet=!wasCrt&&!wasComm;
+ const reqCrt=hasExplicitPending?!!target?.pending_creator:(noRoleYet&&savedReq!=="commission");
+ const reqComm=hasExplicitPending?!!target?.pending_commission:(noRoleYet&&savedReq==="commission");
  const nextCrt=ok?(wasCrt||reqCrt):wasCrt;
  const nextComm=ok?(wasComm||reqComm):wasComm;
  const notifyCrt=ok&&reqCrt;
