@@ -919,4 +919,9 @@ BEGIN
 END;
 $$;
 
+-- 22. V42 Add secondary ambient background motion columns (Light & Dark Mode)
+ALTER TABLE public.site_settings
+  ADD COLUMN IF NOT EXISTS bg_ambient_secondary text DEFAULT 'none',
+  ADD COLUMN IF NOT EXISTS dark_bg_ambient_secondary text DEFAULT 'none';
+
 NOTIFY pgrst, 'reload schema';
