@@ -2614,7 +2614,8 @@ if(creatorItemMode||!canEditCreatorField){
 }if(x){for(let k of ["name","url","creator","description"])f.elements[k].value=x[k]||"";f.elements.tags.value=(x.tags||[]).join(", ")}if($("reqSubcatBtnRow"))$("reqSubcatBtnRow").style.display=(!isAdmin&&!!session)?"block":"none";modal("itemModal")}
 $("creatorAddCharBtn").onclick=()=>openItem(null,true);window.editItem=id=>{let x=items.find(a=>a.id===id);if(!x)return;modal("profileModal",false);openItem(x,!isAdmin)};
 async function uploadImage(file,folderOverride=null){if(!file)throw new Error("Chưa chọn file");const maxBytes=100*1024*1024;if(file.size>maxBytes)throw new Error("File vượt quá 100 MB");const ext=(file.name.split(".").pop()||"jpg").toLowerCase(),baseFolder=folderOverride||(creatorItemMode&&session&&!isAdmin?`creator/${session.user.id}`:""),path=`${baseFolder?baseFolder.replace(/\/$/,"")+"/":""}${crypto.randomUUID()}.${ext}`,mime=file.type||"application/octet-stream";if(file.size<=6*1024*1024){const {error}=await client.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:mime,cacheControl:"3600"});if(error)throw error;}else{if(!window.tus?.Upload)throw new Error("Không tải được thư viện upload resumable; hãy tải lại trang");const {data,error}=await client.auth.getSession();if(error||!data.session)throw new Error("Phiên đăng nhập hết hạn, vui lòng đăng nhập lại");await new Promise((resolve,reject)=>{const upload=new tus.Upload(file,{endpoint:`${SUPABASE_URL}/storage/v1/upload/resumable`,retryDelays:[0,1000,3000,5000],chunkSize:6*1024*1024,headers:{authorization:`Bearer ${data.session.access_token}`,apikey:SUPABASE_ANON_KEY},metadata:{bucketName:BUCKET,objectName:path,contentType:mime,cacheControl:"3600"},onError:reject,onSuccess:resolve});upload.start()})}return client.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
-$("itemForm").onsubmit=async e=>{e.preventDefault();let f=e.target,old=items.find(x=>x.id===editing),creatorMode=!isAdmin&&!!session;const allowed=allowedSectionsForUser();if(!isAdmin&&!creatorMode)return toast("Bạn cần đăng nhập để đăng CHAR");if(creatorMode&&!allowed.length)return toast("Tài khoản chưa được Admin duyệt quyền.");if(creatorMode&&editing&&old?.owner_id!==session.user.id)return toast("Bạn không sở hữu CHAR này");let image_url=old?.image_url||"";try{if(f.elements.image_file.files[0])image_url=await uploadImage(f.elements.image_file.files[0]);let selectedCat=categories.find(c=>c.id===f.elements.category_id.value);if(!selectedCat)throw new Error("Vui lòng chọn phân loại hợp lệ.");if(!isAdmin&&currentProfile?.display_name&&String(selectedCat.owner_name||"").trim().toLowerCase()!==currentProfile.display_name.trim().toLowerCase()){throw new Error("Bạn chỉ có thể đăng link trong mục tên của riêng mình.");}if(creatorMode&&!allowed.includes(selectedCat.section)){throw new Error(selectedCat.section==="creator"?"Tài khoản Bbi share comm chỉ được đăng trong khu vực Bbi share commission.":"Tài khoản Creator chỉ được đăng trong khu vực Creator.")}let row={name:f.elements.name.value.trim(),main:selectedCat.section,category_id:f.elements.category_id.value,subcategory:f.elements.subcategory.value||null,url:f.elements.url.value.trim(),creator:(!isAdmin&&!currentProfile?.can_commission)?(currentProfile?.display_name||f.elements.creator.value.trim()):f.elements.creator.value.trim(),tags:f.elements.tags.value.split(",").map(t=>t.trim()).filter(Boolean).slice(0,10),description:f.elements.description.value.trim(),image_url,owner_id:old?.owner_id||(creatorMode?session.user.id:null),is_published:old?.is_published!==false};let result=editing?await client.from("library_items").update(row).eq("id",editing):await client.from("library_items").insert(row);if(result.error)throw result.error;if(!editing&&row.is_published!==false){const actorName=row.creator||currentProfile?.display_name||(isAdmin?"Admin":"Creator");const catLabel=categoryName(row.category_id);try{await client.from("public_activity_logs").insert({creator_id:session?.user?.id||null,creator_name:actorName,item_name:row.name,detail:`Khu vực: ${sectionLabel(row.main)} · Danh mục: ${catLabel}`})}catch(_){}}f.elements.section.disabled=false;modal("itemModal",false);await loadAll();toast(editing?"Đã cập nhật CHAR":"Đã đăng CHAR thành công ♡");if(creatorMode&&currentProfile&&$("profileModal")?.classList.contains("show"))openProfile(currentProfile)}catch(err){f.elements.section.disabled=false;toast(/row-level security/i.test(err.message||"")?"Chưa có quyền đăng link vào nhóm này. Nhờ Admin chạy file SQL supabase_fix_v57.sql trong Supabase nhé.":"Lỗi lưu CHAR: "+err.message)}};
+$("itemForm").onsubmit=async e=>{e.preventDefault();let f=e.target,old=items.find(x=>x.id===editing),creatorMode=!isAdmin&&!!session;const allowed=allowedSectionsForUser();if(!isAdmin&&!creatorMode)return toast("Bạn cần đăng nhập để đăng CHAR");if(creatorMode&&!allowed.length)return toast("Tài khoản chưa được Admin duyệt quyền.");if(creatorMode&&editing&&old?.owner_id!==session.user.id)return toast("Bạn không sở hữu CHAR này");let image_url=old?.image_url||"";try{if(f.elements.image_file.files[0])image_url=await uploadImage(f.elements.image_file.files[0]);let selectedCat=categories.find(c=>c.id===f.elements.category_id.value);if(!selectedCat)throw new Error("Vui lòng chọn phân loại hợp lệ.");if(!isAdmin&&currentProfile?.display_name&&String(selectedCat.owner_name||"").trim().toLowerCase()!==currentProfile.display_name.trim().toLowerCase()){throw new Error("Bạn chỉ có thể đăng link trong mục tên của riêng mình.");}if(creatorMode&&!allowed.includes(selectedCat.section)){throw new Error(selectedCat.section==="creator"?"Tài khoản Bbi share comm chỉ được đăng trong khu vực Bbi share commission.":"Tài khoản Creator chỉ được đăng trong khu vực Creator.")}let row={name:f.elements.name.value.trim(),main:selectedCat.section,category_id:f.elements.category_id.value,subcategory:f.elements.subcategory.value||null,url:f.elements.url.value.trim(),creator:(!isAdmin&&!currentProfile?.can_commission)?(currentProfile?.display_name||f.elements.creator.value.trim()):f.elements.creator.value.trim(),tags:f.elements.tags.value.split(",").map(t=>t.trim()).filter(Boolean).slice(0,10),description:f.elements.description.value.trim(),image_url,owner_id:old?.owner_id||(creatorMode?session.user.id:null),is_published:old?.is_published!==false};const direct=async()=>needRows(editing?await client.from("library_items").update(row).eq("id",editing).select():await client.from("library_items").insert(row).select());
+let result=creatorMode?await viaRpc("my_item_save",{p_id:editing?String(editing):null,p_row:row},direct):await direct();if(result.error)throw result.error;if(!editing&&row.is_published!==false){const actorName=row.creator||currentProfile?.display_name||(isAdmin?"Admin":"Creator");const catLabel=categoryName(row.category_id);try{await client.from("public_activity_logs").insert({creator_id:session?.user?.id||null,creator_name:actorName,item_name:row.name,detail:`Khu vực: ${sectionLabel(row.main)} · Danh mục: ${catLabel}`})}catch(_){}}f.elements.section.disabled=false;modal("itemModal",false);await loadAll();toast(editing?"Đã cập nhật CHAR":"Đã đăng CHAR thành công ♡");if(creatorMode&&currentProfile&&$("profileModal")?.classList.contains("show"))openProfile(currentProfile)}catch(err){f.elements.section.disabled=false;toast(/row-level security/i.test(err.message||"")?"Chưa có quyền đăng link vào nhóm này. Nhờ Admin chạy file SQL supabase_fix_v58.sql trong Supabase nhé.":"Lỗi lưu CHAR: "+err.message)}};
 window.deleteItem=async id=>{let x=items.find(a=>a.id===id);if(!x||(!isAdmin&&(!session||x.owner_id!==session.user.id)))return toast("Bạn không có quyền xóa CHAR này");if(!confirm("Xóa CHAR này? Hành động này không thể hoàn tác."))return;const wasProfileOpen=$("profileModal")?.classList.contains("show");let {error}=await client.from("library_items").delete().eq("id",id);if(error)return toast(error.message);await loadAll();toast("Đã xóa CHAR");if(wasProfileOpen&&currentProfile)openProfile(currentProfile)};
 window.togglePublish=async id=>{if(!isAdmin)return;const x=items.find(a=>a.id===id);if(!x)return;const next=x.is_published===false;const {error}=await client.from("library_items").update({is_published:next}).eq("id",id);if(error)return toast("Không cập nhật được trạng thái: "+error.message);await loadAll();toast(next?"Đã hiển thị CHAR":"Đã ẩn CHAR")};
 $("designBtn").onclick=()=>{$("dTitle").value=settings.title||"";$("dSubtitle").value=settings.subtitle||"";$("dEyebrow").value=settings.eyebrow_text??"✧ YOUR PERSONAL CHARACTER UNIVERSE ✧";$("dMagicTagline").value=settings.magic_tagline??"♡ Save a little magic every day ♡";$("dCoverRemove").checked=false;$("dBg").value=settings.bg_color||"#fff7fc";$("dAccent").value=settings.accent_color||"#d99ac6";
@@ -2807,11 +2808,19 @@ document.addEventListener("keydown",e=>{
  closeModalSafely(opened[opened.length-1].id);
 });
 /* v56: Creator tự tạo / sửa / xóa nhóm của mình (không cần gửi yêu cầu cho Admin) */
+
+/* v58: gọi hàm server (RPC) trước; nếu chưa chạy SQL v58 thì dùng cách cũ. Báo lỗi nếu Supabase âm thầm bỏ qua (0 dòng). */
+async function viaRpc(fn,args,direct){
+ const r=await client.rpc(fn,args);
+ if(r.error&&(r.error.code==="PGRST202"||/could not find the function|schema cache/i.test(r.error.message||"")))return direct();
+ return r;
+}
+const needRows=r=>{if(!r.error&&Array.isArray(r.data)&&r.data.length===0)r.error={message:"row-level security: không có dòng nào được thay đổi"};return r};
 let mgrSec="creator";
 const mgrMyName=()=>(currentProfile?.display_name||"").trim();
 const mgrIsMine=c=>String(c.owner_name||"").trim().toLowerCase()===mgrMyName().toLowerCase();
 function mgrMyRows(){return allCatRows().filter(c=>c.section===mgrSec&&mgrIsMine(c))}
-const mgrErr=err=>{const m=String(err?.message||err||"");return /row-level security|policy|permission/i.test(m)?"Bạn chưa có quyền chỉnh nhóm này. Nhờ Admin chạy file SQL supabase_fix_v56.sql trong Supabase nhé.":"Lỗi: "+m};
+const mgrErr=err=>{const m=String(err?.message||err||"");return /row-level security|policy|permission/i.test(m)?"Bạn chưa có quyền chỉnh nhóm này. Nhờ Admin chạy file SQL supabase_fix_v58.sql trong Supabase nhé.":"Lỗi: "+m};
 function mgrRefreshItemForm(pick={}){
  const f=$("itemForm");if(!f)return;
  f.dataset.owner=mgrMyName();
@@ -2838,12 +2847,14 @@ function drawSubcatManager(){
  }).join("");
 }
 async function mgrAddCat(group,name){
- const ph=mgrMyRows().find(c=>(c.group_name||"CHAR")===group&&isPhCat(c));
- if(ph){const r=await client.from("categories").update({name}).eq("id",ph.id).select().single();return r}
- const row={main:mgrSec,section:mgrSec,owner_name:mgrMyName(),group_name:group,name,subcategories:[],slug:"u-"+crypto.randomUUID().slice(0,8),sort_order:60};
- let r=await client.from("categories").insert({...row,owner_id:session.user.id}).select().single();
- if(r.error&&/owner_id/i.test(r.error.message||"")&&!/row-level/i.test(r.error.message||""))r=await client.from("categories").insert(row).select().single();
- return r;
+ return viaRpc("my_cat_add",{p_section:mgrSec,p_group:group,p_name:name},async()=>{
+  const ph=mgrMyRows().find(c=>(c.group_name||"CHAR")===group&&isPhCat(c));
+  if(ph)return needRows(await client.from("categories").update({name}).eq("id",ph.id).select()).error?{error:{message:"row-level security"}}:{data:{...ph,name}};
+  const row={main:mgrSec,section:mgrSec,owner_name:mgrMyName(),group_name:group,name,subcategories:[],slug:"u-"+crypto.randomUUID().slice(0,8),sort_order:60};
+  let r=await client.from("categories").insert({...row,owner_id:session.user.id}).select().single();
+  if(r.error&&/owner_id/i.test(r.error.message||"")&&!/row-level/i.test(r.error.message||""))r=await client.from("categories").insert(row).select().single();
+  return r;
+ });
 }
 $("openSubcatRequestBtn")?.addEventListener("click",()=>{
  if(!session)return toast("Đăng nhập trước nhé");
@@ -2877,13 +2888,13 @@ $("mgrList")?.addEventListener("click",async e=>{
  if(act==="rename-group"){
   const val=prompt("Tên nhóm mới:",group);if(!val?.trim()||val.trim()===group)return;
   const ids=mgrMyRows().filter(c=>(c.group_name||"CHAR")===group).map(c=>c.id);
-  const {error}=await client.from("categories").update({group_name:val.trim()}).in("id",ids);
+  const {error}=await viaRpc("my_group_rename",{p_section:mgrSec,p_old:group,p_new:val.trim()},async()=>needRows(await client.from("categories").update({group_name:val.trim()}).in("id",ids).select()));
   if(error)return toast(mgrErr(error));await mgrReload({group:val.trim()});
  }else if(act==="del-group"){
   const ids=mgrMyRows().filter(c=>(c.group_name||"CHAR")===group).map(c=>c.id);
   if(items.some(x=>ids.includes(x.category_id)))return toast("Nhóm này vẫn có link. Hãy chuyển hoặc xóa link trước.");
   if(!confirm("Xóa nhóm "+group+" cùng các phân loại nhỏ bên trong?"))return;
-  const {error}=await client.from("categories").delete().in("id",ids);
+  const {error}=await viaRpc("my_cat_delete",{p_ids:ids.map(String),p_keep_last:false},async()=>needRows(await client.from("categories").delete().in("id",ids).select()));
   if(error)return toast(mgrErr(error));await mgrReload({group:""});
  }else if(act==="add-cat"){
   const inp=grpEl.querySelector("[data-cat-input]"),n=inp.value.trim();if(!n)return toast("Hãy nhập tên phân loại nhỏ");
@@ -2892,23 +2903,23 @@ $("mgrList")?.addEventListener("click",async e=>{
   await mgrReload({group,categoryId:data?.id,subcategory:""});
  }else if(act==="rename-cat"&&cat){
   const val=prompt("Tên phân loại nhỏ mới:",cat.name);if(!val?.trim()||val.trim()===cat.name)return;
-  const {error}=await client.from("categories").update({name:val.trim()}).eq("id",cat.id);
+  const {error}=await viaRpc("my_cat_rename",{p_id:String(cat.id),p_name:val.trim()},async()=>needRows(await client.from("categories").update({name:val.trim()}).eq("id",cat.id).select()));
   if(error)return toast(mgrErr(error));await mgrReload({});
  }else if(act==="del-cat"&&cat){
   if(items.some(x=>x.category_id===cat.id))return toast("Phân loại đang có link. Hãy chuyển link trước.");
   if(!confirm("Xóa phân loại nhỏ \""+cat.name+"\"? (Nhóm vẫn được giữ lại)"))return;
   const same=x=>x.section===cat.section&&x.owner_name===cat.owner_name&&(x.group_name||"CHAR")===(cat.group_name||"CHAR");
   const keepGroup=!categories.some(x=>x.id!==cat.id&&same(x))&&!catPlaceholders.some(same);
-  const r=keepGroup?await client.from("categories").update({name:PH_NAME,subcategories:[]}).eq("id",cat.id):await client.from("categories").delete().eq("id",cat.id);
+  const r=await viaRpc("my_cat_delete",{p_ids:[String(cat.id)],p_keep_last:keepGroup},async()=>needRows(keepGroup?await client.from("categories").update({name:PH_NAME,subcategories:[]}).eq("id",cat.id).select():await client.from("categories").delete().eq("id",cat.id).select()));
   if(r.error)return toast(mgrErr(r.error));await mgrReload({});
  }else if(act==="add-sub"&&cat){
   const inp=catEl.querySelector("[data-sub-input]"),v=inp.value.trim();if(!v)return toast("Hãy nhập tên mục con");
   const list=[...new Set([...(cat.subcategories||[]),v])];
-  const {error}=await client.from("categories").update({subcategories:list}).eq("id",cat.id);
+  const {error}=await viaRpc("my_cat_subs",{p_id:String(cat.id),p_subs:list},async()=>needRows(await client.from("categories").update({subcategories:list}).eq("id",cat.id).select()));
   if(error)return toast(mgrErr(error));await mgrReload({categoryId:cat.id,subcategory:v});
  }else if(act==="del-sub"&&cat){
   const list=(cat.subcategories||[]).filter((_,i)=>i!==Number(btn.dataset.i));
-  const {error}=await client.from("categories").update({subcategories:list}).eq("id",cat.id);
+  const {error}=await viaRpc("my_cat_subs",{p_id:String(cat.id),p_subs:list},async()=>needRows(await client.from("categories").update({subcategories:list}).eq("id",cat.id).select()));
   if(error)return toast(mgrErr(error));await mgrReload({});
  }
 });
