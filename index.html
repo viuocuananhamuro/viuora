@@ -434,8 +434,14 @@ body[data-theme="dark"] .activity-row{border-color:#493b52}
  .eyebrow{font-size:8px!important;letter-spacing:1px!important}
  .tab{padding:4.5px 8.5px;font-size:10.5px}
 }
-.outside-admin-bar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.72);font-size:12px}.outside-admin-label{color:#765d85}body[data-theme="dark"] .outside-admin-bar{background:rgba(43,34,51,.85);border-color:#51415b}body[data-theme="dark"] .outside-admin-label{color:#e8c9f0}
-.admin-profile-pill,body[data-theme="dark"] .admin-profile-pill{display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--pill-border,var(--accent))!important;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700;line-height:1.3;background:var(--pill-bg,#fff7fc)!important;color:var(--pill-ink,#51425e)!important;box-shadow:0 3px 10px color-mix(in srgb,var(--pill-glow,var(--accent2)) 35%,transparent)!important;transition:transform .16s ease,box-shadow .16s ease}.admin-profile-pill:hover,body[data-theme="dark"] .admin-profile-pill:hover{transform:translateY(-1px)}
+.admin-showcase-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:11px;padding:9px 13px;border-radius:15px;border:1px solid var(--line);background:rgba(255,255,255,.78);font-size:12.5px}
+.admin-showcase-title{font-weight:700;color:#765d85;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.admin-showcase-items{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap}
+.admin-chip-btn,body[data-theme="dark"] .admin-chip-btn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--chip-border,var(--accent))!important;border-radius:999px;padding:4px 12px 4px 6px;font-size:12px;font-weight:700;line-height:1.25;background:var(--chip-bg,#fff7fc)!important;color:var(--chip-ink,#51425e)!important;box-shadow:0 3px 10px color-mix(in srgb,var(--chip-glow,var(--accent2)) 32%,transparent)!important;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease}
+.admin-chip-btn:hover,body[data-theme="dark"] .admin-chip-btn:hover{transform:translateY(-1.5px)}
+.admin-chip-avatar{width:20px;height:20px;border-radius:50%;object-fit:cover;display:inline-grid;place-items:center;font-size:11px;background:linear-gradient(135deg,var(--chip-border,var(--accent)),var(--chip-glow,var(--accent2)));color:#fff;flex:none}
+body[data-theme="dark"] .admin-showcase-bar{background:rgba(43,34,51,.88);border-color:#51415b}
+body[data-theme="dark"] .admin-showcase-title{color:#e8c9f0}
 
 .site-intro-box{margin:0 0 18px;padding:24px 26px;border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,var(--panel-opacity,.9));box-shadow:var(--shadow);backdrop-filter:blur(10px);position:relative}
 .site-intro-top{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
@@ -462,7 +468,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
  </div>
 </section>
 <div class="panel"><div class="toolbar"><div class="search"><b>⌕</b><input id="search" placeholder="Tìm tên nhân vật, creator, mô tả..."></div><button class="btn creator-add" id="creatorAddCharBtn">＋ Đăng tải</button><button class="btn ghost" id="creatorDirectoryBtn" type="button">♡ Danh sách cục dàng của web</button></div><div class="admin-actions-bar admin-only" id="adminActionsBar"><span class="hint" style="font-weight:700;margin-right:4px">♙ Thao tác Admin:</span><button class="btn sm" id="creatorRequestsBtn">♙ Yêu cầu cần duyệt</button><button class="btn ghost sm" id="catsBtn">☷ Danh mục</button><button class="btn ghost sm" id="designBtn">✧ Trang trí</button></div>
-<nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="outsideAdminBar" class="outside-admin-bar"><strong class="outside-admin-label">✦ Admin:</strong><span id="outsideAdminList" class="hint" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">Đang tải...</span></div></div>
+<nav class="tabs" id="sectionTabs"><button class="tab active" data-section="all">Tất cả</button><button class="tab" data-section="creator">Creator</button><button class="tab" data-section="commission">Bbi share commission</button></nav><nav class="subtabs" id="ownerTabs"></nav><nav class="subtabs" id="groupTabs"></nav><nav class="subtabs" id="leafTabs"></nav><nav class="subtabs" id="subcatTabs"></nav><div id="adminShowcaseBar" class="admin-showcase-bar"><span class="admin-showcase-title">✦ Admin:</span><div id="adminShowcaseList" class="admin-showcase-items"><span class="hint">Đang tải...</span></div></div></div>
 <section class="announce-drawer" id="announceDrawer" aria-label="Bảng thông báo từ Creator">
  <button type="button" class="announce-bar-head" id="announceToggle" aria-expanded="false">
   <span class="announce-ticker">
@@ -485,7 +491,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 <div class="heading"><div><h2 id="sectionTitle">Khám phá thư viện</h2><div class="muted" id="count">Đang tải...</div></div><div class="muted" id="magicTagline">♡ Save a little magic every day ♡</div></div><section class="grid" id="cards"><div class="empty">Đang kết nối thư viện... ✧</div></section></main>
 <footer id="siteFooter">Made with love ♡ Anime GGAI Library</footer><div id="stickers"></div><div class="bottom-theme-dock" id="bottomThemeDock"><div class="music-player" id="musicPlayer" style="display:none"><button id="musicToggle" type="button" aria-label="Phát nhạc">▶</button><span class="music-name" id="musicName">Music</span><audio id="siteAudio" loop></audio></div><button class="theme-toggle-btn" id="themeToggle" type="button" title="Chuyển giao diện sáng/tối" aria-label="Chuyển giao diện">☾</button></div><div class="notice" id="notice"></div>
 <div class="modal" id="loginModal"><div class="dialog"><h2>♡ Admin Login</h2><div class="field"><label>Tên đăng nhập</label><input id="username" type="text" autocomplete="username"></div><div class="field"><label>Mật khẩu</label><input id="password" type="password" autocomplete="current-password"></div><div class="modal-actions"><button class="btn ghost" data-close="loginModal">Hủy</button><button class="btn" id="loginSubmit">Đăng nhập</button></div></div></div>
-<div class="modal" id="subcatRequestModal"><div class="dialog"><h2>♡ Yêu cầu tạo nhóm nhỏ mới</h2><p class="hint">Đề xuất thêm phân loại / nhóm nhỏ ngoài các nhóm có sẵn mà Admin đã tạo.</p><div class="field"><label>Khu vực</label><select id="reqSubcatSection"><option value="creator">Creator</option><option value="commission">Người đẹp tốt bụng share</option></select></div><div class="field"><label>Tên nhóm lớn (vd: CHAR, OPW...)</label><input id="reqSubcatGroup" placeholder="Ví dụ: CHAR"></div><div class="field"><label>Tên nhóm nhỏ / phân loại nhỏ muốn yêu cầu *</label><input id="reqSubcatName" required placeholder="Ví dụ: Sci-fi, Slice of life..."></div><div class="field"><label>Ghi chú thêm cho Admin</label><textarea id="reqSubcatNote" maxlength="300" style="min-height:60px" placeholder="Lý do hoặc gợi ý thêm (tùy chọn)..."></textarea></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="subcatRequestModal">Đóng</button><button type="button" class="btn" id="submitSubcatRequestBtn">Gửi yêu cầu</button></div></div></div>
+<div class="modal" id="subcatRequestModal"><div class="dialog"><h2>♡ Yêu cầu tạo nhóm nhỏ mới</h2><p class="hint">Đề xuất thêm phân loại / nhóm nhỏ ngoài các nhóm có sẵn mà Admin đã tạo.</p><div class="field"><label>Khu vực</label><select id="reqSubcatSection"><option value="creator">Creator</option><option value="commission">Bbi share comm</option></select></div><div class="field"><label>Tên nhóm lớn (vd: CHAR, OPW...)</label><input id="reqSubcatGroup" placeholder="Ví dụ: CHAR"></div><div class="field"><label>Tên nhóm nhỏ / phân loại nhỏ muốn yêu cầu *</label><input id="reqSubcatName" required placeholder="Ví dụ: Sci-fi, Slice of life..."></div><div class="field"><label>Ghi chú thêm cho Admin</label><textarea id="reqSubcatNote" maxlength="300" style="min-height:60px" placeholder="Lý do hoặc gợi ý thêm (tùy chọn)..."></textarea></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="subcatRequestModal">Đóng</button><button type="button" class="btn" id="submitSubcatRequestBtn">Gửi yêu cầu</button></div></div></div>
 <div class="modal" id="itemModal"><div class="dialog"><h2 id="itemHeading">Thêm link mới</h2><form id="itemForm"><div class="field"><label>Tên nhân vật / thế giới *</label><input name="name" required></div><div class="field"><label>Khu vực</label><select name="section"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Creator / người đặt comm</label><select name="owner_name"></select></div><div class="field"><label>Nhóm (CHAR, OPW...)</label><select name="group_name"></select></div></div><div class="cols"><div class="field"><label>Phân loại nhỏ</label><select name="category_id"></select></div><div class="field"><label>Mục con</label><select name="subcategory"><option value="">-- Không chọn --</option></select></div></div><div id="reqSubcatBtnRow" style="display:none;margin:-4px 0 10px"><button type="button" class="btn ghost sm" id="openSubcatRequestBtn">＋ Yêu cầu tạo nhóm nhỏ mới</button></div><div class="field"><label>Link GGAI *</label><input name="url" type="url" required placeholder="https://..."></div><div class="cols"><div class="field"><label>Creator</label><input name="creator" list="creatorOptionsList" placeholder="Chọn hoặc nhập tên creator..."><datalist id="creatorOptionsList"></datalist></div><div class="field"><label>Tags (tối đa 10 tags, cách nhau bằng dấu phẩy)</label><input name="tags" placeholder="romance, fantasy, fluff, angst, slowburn..."></div></div><div class="field"><label>Mô tả</label><textarea name="description" spellcheck="false" placeholder="Nhập mô tả..."></textarea></div><div class="field"><label>Ảnh bìa CHAR</label><input name="image_file" type="file" accept="image/*"><div class="hint">Tải ảnh hoặc GIF trực tiếp từ thiết bị (tối đa 100 MB mỗi file).</div></div><div class="modal-actions"><button type="button" class="btn ghost" data-close="itemModal">Hủy</button><button class="btn">Lưu link</button></div></form></div></div>
 <div class="modal" id="designModal"><div class="dialog"><h2>✧ Customize your library</h2><div class="design-intro">Nhớ bấm <strong>Lưu giao diện</strong> trước khi thoát ra để áp dụng thay đổi nhé.</div>
 <nav class="design-tabs" role="tablist" aria-label="Nhóm tùy chỉnh">
@@ -668,7 +674,7 @@ body[data-theme="dark"] .site-intro-box{background:rgba(36,31,49,.9);border-colo
 <div class="modal" id="catsModal"><div class="dialog"><h2>☷ Quản lý danh mục</h2><div id="catList"></div><hr style="border:0;border-top:1px solid var(--line);margin:15px 0"><div class="field"><label>Khu vực</label><select id="newCatSection"><option value="creator">Creator</option><option value="commission">Bbi share commission</option></select></div><div class="cols"><div class="field"><label>Tên creator / người đặt comm</label><input id="newCatOwner" placeholder="Ví dụ: Creator A"></div><div class="field"><label>Tên nhóm</label><input id="newCatGroup" placeholder="Ví dụ: CHAR, OPW"></div></div><div class="field"><label>Tên phân loại nhỏ (Anime, Khác...)</label><input id="newCatName" placeholder="Ví dụ: Anime, Khác"></div><div class="hint">Mỗi dòng danh mục lưu theo đường dẫn Khu vực → Creator/người đặt comm → Nhóm → Phân loại nhỏ. Có thể tạo nhiều phân loại trong cùng một nhóm.</div><div class="modal-actions"><button class="btn ghost" data-close="catsModal">Đóng</button><button class="btn" id="createCat">＋ Thêm phân loại</button></div></div></div>
 
 <div class="modal" id="creatorDirectoryModal"><div class="dialog"><h2>♡ Danh sách cục dàng của web</h2><div class="subtabs" id="creatorDirectoryTabs" style="margin:8px 0 10px"><button type="button" class="subtab active" data-dir-role="all">Tất cả</button><button type="button" class="subtab" data-dir-role="admin">Admin</button><button type="button" class="subtab" data-dir-role="creator">Creator</button><button type="button" class="subtab" data-dir-role="commission">Bbi share comm</button></div><div class="search" style="max-width:100%;margin:8px 0 12px"><b>⌕</b><input id="creatorDirectorySearch" placeholder="Tìm theo tên hiển thị hoặc @handle..."></div><div id="creatorDirectoryList" style="max-height:56vh;overflow:auto;display:flex;flex-direction:column;gap:14px"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorDirectoryModal">Đóng</button></div></div></div>
-<div class="modal" id="creatorAuthModal"><div class="dialog"><h2>♡ Tài khoản Creator &amp; Bbi share comm</h2><p class="hint">Đăng ký trực tiếp bằng email, tên hiển thị và mật khẩu (không cần xác minh link). Bạn có thể chọn đăng ký làm <strong>Creator</strong>, <strong>Bbi share comm</strong> hoặc <strong>cả hai</strong>.</p><div id="creatorStatusNotice" style="display:none;padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:13px"></div><div class="field"><label>Địa chỉ Email</label><input id="creatorUsername" type="email" autocomplete="email" placeholder="vd: tenban@gmail.com"></div><div class="field" id="creatorDisplayNameField"><label>Tên hiển thị</label><input id="creatorDisplayName" placeholder="Tên hiển thị trên thư viện"></div><div class="field" id="creatorRoleChoiceField"><label>Chọn vai trò đăng ký (1 trong 2)</label><div class="cols"><label class="check-row" style="margin:0"><input id="roleRadioCreator" name="creatorRoleChoice" type="radio" value="creator" checked> Creator</label><label class="check-row" style="margin:0"><input id="roleRadioCommission" name="creatorRoleChoice" type="radio" value="commission"> Người đẹp tốt bụng share</label></div></div><div class="field"><label>Mật khẩu</label><input id="creatorPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div style="display:flex;justify-content:flex-end;margin-top:-3px"><button class="btn ghost sm" id="creatorForgotPassword" type="button">Quên mật khẩu?</button></div><div class="modal-actions" style="flex-wrap:wrap"><button class="btn ghost" data-close="creatorAuthModal">Đóng</button><button class="btn red sm" id="revokeCreatorRequestBtn" type="button" style="display:none">Thu hồi yêu cầu &amp; đăng ký lại</button><button class="btn ghost" id="creatorSignIn">Đăng nhập</button><button class="btn" id="creatorSignUp">Đăng ký tài khoản</button></div></div></div>
+<div class="modal" id="creatorAuthModal"><div class="dialog"><h2>♡ Tài khoản Creator &amp; Bbi share comm</h2><div id="creatorStatusNotice" style="display:none;padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:13px"></div><div class="field"><label>Địa chỉ Email</label><input id="creatorUsername" type="email" autocomplete="email" placeholder="vd: tenban@gmail.com"></div><div class="field" id="creatorDisplayNameField"><label>Tên hiển thị</label><input id="creatorDisplayName" placeholder="Tên hiển thị trên thư viện"></div><div class="field" id="creatorRoleChoiceField"><label>Chọn vai trò đăng ký (1 trong 2)</label><div class="cols"><label class="check-row" style="margin:0"><input id="roleRadioCreator" name="creatorRoleChoice" type="radio" value="creator" checked> Creator</label><label class="check-row" style="margin:0"><input id="roleRadioCommission" name="creatorRoleChoice" type="radio" value="commission"> Bbi share comm</label></div></div><div class="field"><label>Mật khẩu</label><input id="creatorPassword" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự"></div><div style="display:flex;justify-content:flex-end;margin-top:-3px"><button class="btn ghost sm" id="creatorForgotPassword" type="button">Quên mật khẩu?</button></div><div class="modal-actions" style="flex-wrap:wrap"><button class="btn ghost" data-close="creatorAuthModal">Đóng</button><button class="btn red sm" id="revokeCreatorRequestBtn" type="button" style="display:none">Thu hồi yêu cầu &amp; đăng ký lại</button><button class="btn ghost" id="creatorSignIn">Đăng nhập</button><button class="btn" id="creatorSignUp">Đăng ký tài khoản</button></div></div></div>
 <div class="modal" id="creatorPasswordRecoveryModal"><div class="dialog"><h2>♡ Đặt lại mật khẩu</h2><p class="hint">Nhập mật khẩu mới cho tài khoản của bạn.</p><div class="field"><label>Mật khẩu mới</label><input id="creatorNewPassword" type="password" autocomplete="new-password" placeholder="Tối thiểu 8 ký tự"></div><div class="field"><label>Nhập lại mật khẩu mới</label><input id="creatorNewPasswordConfirm" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorPasswordRecoveryModal">Đóng</button><button class="btn" id="creatorSaveNewPassword">Lưu mật khẩu mới</button></div></div></div>
 <div class="modal" id="creatorRejectedModal"><div class="dialog"><h2>♡ Yêu cầu Creator bị từ chối</h2><div id="creatorRejectedMessage" style="padding:12px 14px;border-radius:14px;border:1px solid #e79ab0;background:#fff0f5;color:#7e2946;margin:10px 0;font-size:14px">Yêu cầu đăng ký tài khoản Creator của bạn đã bị Admin từ chối. Bạn có thể thu hồi yêu cầu này để gửi đăng ký lại từ đầu.</div><div class="modal-actions"><button class="btn ghost" data-close="creatorRejectedModal">Đóng</button><button class="btn red" id="modalRevokeCreatorBtn" type="button">Thu hồi yêu cầu &amp; đăng ký lại</button></div></div></div>
 <div class="modal" id="creatorRequestsModal"><div class="dialog"><h2>♙ Yêu cầu Creator</h2><p class="hint">Chỉ Admin mới xem và duyệt được danh sách này.</p><div id="creatorRequestsList" class="request-list"></div><div class="modal-actions"><button class="btn ghost" data-close="creatorRequestsModal">Đóng</button><button class="btn" id="refreshCreatorRequests">Làm mới</button></div></div></div>
@@ -1279,7 +1285,8 @@ $("creatorSignUp").onclick=async()=>{
  $("creatorDisplayNameField").style.display="block";
  if($("creatorRoleChoiceField"))$("creatorRoleChoiceField").style.display="block";
  const email=$("creatorUsername").value.trim().toLowerCase(),password=$("creatorPassword").value,name=$("creatorDisplayName").value.trim();
- const selectedRole=document.querySelector('input[name="creatorRoleChoice"]:checked')?.value||"creator";
+ const roleRadio=document.querySelector('input[name="creatorRoleChoice"]:checked');
+ const selectedRole=roleRadio?roleRadio.value:"creator";
  const wantCreator=selectedRole==="creator";
  const wantCommission=selectedRole==="commission";
  if(!validCreatorEmail(email))return toast("Vui lòng nhập đúng định dạng email (vd: tenban@gmail.com).");
@@ -1287,7 +1294,7 @@ $("creatorSignUp").onclick=async()=>{
  if(!wantCreator&&!wantCommission)return toast("Hãy chọn ít nhất 1 vai trò: Creator hoặc Bbi share comm.");
  const btn=$("creatorSignUp");btn.disabled=true;btn.textContent="Đang đăng ký...";
  try{
-  const {data,error}=await client.auth.signUp({email,password,options:{data:{display_name:name,account_type:"creator",want_creator:wantCreator,want_commission:wantCommission}}});
+  const {data,error}=await client.auth.signUp({email,password,options:{data:{display_name:name,account_type:"creator",selected_role:selectedRole,want_creator:wantCreator,want_commission:wantCommission}}});
   if(error)throw error;
   let activeSession=data.session;
   if(!activeSession){
@@ -1295,18 +1302,25 @@ $("creatorSignUp").onclick=async()=>{
    if(!signInRes.error)activeSession=signInRes.data.session;
   }
   if(activeSession){
-   session=activeSession;await refreshAdmin();await loadCreatorProfile();
-   if(currentProfile&&!isAdmin){
-    await client.from("creator_profiles").update({
+   session=activeSession;
+   await refreshAdmin();
+   const baseHandle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"member")+"-"+session.user.id.slice(0,5);
+   if(!isAdmin){
+    const {error:upErr}=await client.from("creator_profiles").upsert({
+     user_id:session.user.id,
+     display_name:name,
+     handle:baseHandle,
+     username:email.split("@")[0],
      pending_creator:wantCreator,
      pending_commission:wantCommission,
      is_approved:false,
      can_creator:false,
      can_commission:false,
      approval_status:"pending"
-    }).eq("user_id",session.user.id);
-    await loadCreatorProfile();
+    },{onConflict:"user_id"});
+    if(upErr)console.warn("Upsert pending role warning:",upErr.message);
    }
+   await loadCreatorProfile();
    await fetchCreatorProfiles();
    if(isAdmin||hasAnyApprovedRole(currentProfile)){
     if(wantCreator)await syncRoleCategoryEntries("creator",name);
@@ -1315,7 +1329,7 @@ $("creatorSignUp").onclick=async()=>{
    }
    refreshRoleUI();syncCreatorRejectionUI();
    modal("creatorAuthModal",false);
-   toast(isAdmin?"Đã tạo hồ sơ cho Admin ♡":"Đã gửi yêu cầu đăng ký! Vui lòng chờ Admin duyệt.");
+   toast(isAdmin?"Đã tạo hồ sơ cho Admin ♡":(wantCommission?"Đã gửi yêu cầu đăng ký Bbi share comm! Vui lòng chờ Admin duyệt.":"Đã gửi yêu cầu đăng ký Creator! Vui lòng chờ Admin duyệt."));
   }else{
    modal("creatorAuthModal",false);
    toast("Tài khoản đã được tạo! Hãy tắt 'Confirm email' trong Supabase Auth → Providers → Email để đăng nhập ngay.");
@@ -1461,7 +1475,7 @@ async function propagateTemplateToSection(sectionKey, groupName, catName, subcat
   }
  }
 }
-async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantCrt=meta.want_creator!==false;const wantComm=!!meta.want_commission;if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
+async function loadCreatorProfile(){if(!session){currentProfile=null;return}const {data,error}=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();if(error){console.warn(error);return}currentProfile=data;const meta=session.user.user_metadata||{};const wantComm=meta.want_commission===true||meta.want_commission==="true"||meta.selected_role==="commission";const wantCrt=!wantComm&&(meta.want_creator===true||meta.want_creator==="true"||meta.selected_role==="creator"||meta.want_creator!==false);if(!data){if(isAdmin){currentProfile=null;return}const rawName=meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Creator");const name=rawName||"Creator";const handle=(name.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"creator")+"-"+session.user.id.slice(0,5);const ins=await client.from("creator_profiles").insert({user_id:session.user.id,display_name:name,handle,username:meta.username||null,is_approved:false,can_creator:false,can_commission:false,pending_creator:wantCrt,pending_commission:wantComm,approval_status:"pending"});if(!ins.error){const again=await client.from("creator_profiles").select("*").eq("user_id",session.user.id).maybeSingle();currentProfile=again.data}}}
 async function fetchCreatorProfiles(){
  const [pRes,aRes,rpcRes]=await Promise.all([
   client.from("creator_profiles").select("*").order("display_name"),
@@ -1485,7 +1499,7 @@ async function fetchCreatorProfiles(){
   if(p?.user_id&&(p.is_admin_user||String(p.handle||"").startsWith("admin-")))ids.add(p.user_id);
  });
  adminUserIds=[...ids];
- renderOutsideAdminList();
+ await syncAdminShowcase();
  if($("creatorDirectoryModal")?.classList.contains("show"))renderCreatorDirectory();
 }
 function validColor(v,fallback){return /^#[0-9a-f]{6}$/i.test(String(v||""))?v:fallback}
@@ -1531,14 +1545,14 @@ async function openCreatorByName(name){
  openProfile(p);
 }
 window.deleteCreatorRoleByAdmin=async(uid,displayName,roleKey)=>{
- if(!isAdmin)return toast("Chỉ Admin mới có quyền xóa chức danh/phân loại.");
+ if(!isAdmin)return toast("Chỉ Admin mới có quyền xóa vai trò/phân loại.");
  const p=(creatorProfiles||[]).find(x=>x.user_id===uid);
  if(!p)return toast("Không tìm thấy hồ sơ.");
  const hasCrt=!!(p.can_creator||p.is_approved);
  const hasComm=!!p.can_commission;
- const chosenRole=roleKey||(hasCrt&&hasComm?(confirm(`"${displayName}" có cả Creator và Bbi share comm. Bấm OK để xóa chức danh Creator, bấm Cancel để xóa Bbi share comm.`)?"creator":"commission"):(hasCrt?"creator":"commission"));
+ const chosenRole=roleKey||(hasCrt&&hasComm?(confirm(`"${displayName}" có cả Creator và Bbi share comm. Bấm OK để xóa vai trò Creator, bấm Cancel để xóa Bbi share comm.`)?"creator":"commission"):(hasCrt?"creator":"commission"));
  const roleLabel=chosenRole==="commission"?"Bbi share comm":"Creator";
- if(!confirm(`Gỡ chức danh/phân loại "${roleLabel}" của "${displayName}"? (Hồ sơ vẫn được giữ nếu còn giữ ít nhất một chức danh khác.)`))return;
+ if(!confirm(`Gỡ vai trò/phân loại "${roleLabel}" của "${displayName}"? (Hồ sơ vẫn được giữ nếu còn giữ ít nhất một vai trò khác.)`))return;
  const nextCrt=chosenRole==="creator"?false:hasCrt;
  const nextComm=chosenRole==="commission"?false:hasComm;
  const upd={
@@ -1550,7 +1564,7 @@ window.deleteCreatorRoleByAdmin=async(uid,displayName,roleKey)=>{
   approval_status:(nextCrt||nextComm)?"approved":"pending"
  };
  const {error}=await client.from("creator_profiles").update(upd).eq("user_id",uid);
- if(error)return toast("Không cập nhật được chức danh: "+error.message);
+ if(error)return toast("Không cập nhật được vai trò: "+error.message);
  const secToRemove=chosenRole==="commission"?"commission":"creator";
  if(displayName){
   await client.from("categories").delete().eq("section",secToRemove).eq("owner_name",displayName);
@@ -1559,7 +1573,7 @@ window.deleteCreatorRoleByAdmin=async(uid,displayName,roleKey)=>{
  await fetchCreatorProfiles();
  await loadAll();
  renderCreatorDirectory();
- toast(`Đã gỡ chức danh "${roleLabel}" của "${displayName}" ♡`);
+ toast(`Đã gỡ vai trò "${roleLabel}" của "${displayName}" ♡`);
 };
 window.deleteCreatorByAdmin=deleteCreatorRoleByAdmin;
 window.requestExtraCreatorRole=async roleType=>{
@@ -1591,7 +1605,7 @@ function renderDirMemberCard(p){
   ${p.bio?`<div class="desc" style="min-height:auto;font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(p.bio)}</div>`:""}
   <div style="display:flex;gap:6px">
    <button type="button" class="btn sm" style="flex:1" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(p.handle||p.display_name||"")}'))">Xem hồ sơ</button>
-   ${isAdmin&&((p.can_creator||p.is_approved)||p.can_commission)?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa chức danh</button>`:""}
+   ${isAdmin&&((p.can_creator||p.is_approved)||p.can_commission)?`<button type="button" class="btn red sm" onclick="deleteCreatorRoleByAdmin('${p.user_id}',decodeURIComponent('${encodeURIComponent(p.display_name||"Creator")}'))">Xóa vai trò</button>`:""}
   </div>
  </div>`;
 }
@@ -1603,7 +1617,7 @@ function renderCreatorDirectory(){
  if(currentProfile&&currentProfile.user_id){
   combinedMap.set(currentProfile.user_id,{...combinedMap.get(currentProfile.user_id),...currentProfile});
  }
- getAdminProfileCandidates().forEach(p=>{
+ collectAdminProfiles().forEach(p=>{
   if(p?.user_id)combinedMap.set(p.user_id,{...combinedMap.get(p.user_id),...p});
  });
  const combined=[...combinedMap.values()];
@@ -2080,7 +2094,7 @@ $("sendItemFeedbackBtn")?.addEventListener("click",async()=>{
 function categoryName(id){return categories.find(c=>c.id===id)?.name||"Other"}
 function sectionLabel(v){return v==="commission"?"Bbi share commission":"Creator"}
 function uniqueValues(key,filters={}){return [...new Set(categories.filter(c=>Object.entries(filters).every(([k,v])=>!v||c[k]===v)).map(c=>c[key]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"vi"))}
-async function loadCreatorRequests(){if(!isAdmin)return toast("Chỉ Admin mới có quyền duyệt.");$("creatorRequestsList").innerHTML='<p class="hint">Đang tải...</p>';const {data,error}=await client.from("creator_profiles").select("user_id,username,display_name,handle,is_approved,can_creator,can_commission,pending_creator,pending_commission,approval_status,created_at").eq("approval_status","pending").order("created_at",{ascending:false});if(error){$("creatorRequestsList").textContent="Không tải được danh sách: "+error.message;return}const rows=data||[];$("creatorRequestsList").innerHTML=rows.map(p=>{const reqRoles=[];if(p.pending_creator||(!p.pending_creator&&!p.pending_commission&&!p.is_approved))reqRoles.push("Creator");if(p.pending_commission)reqRoles.push("Bbi share comm");return `<div class="request-row"><div><strong>${esc(p.display_name||"Creator")}</strong><div class="hint">@${esc(p.username||p.handle||"unknown")} · ${new Date(p.created_at).toLocaleString("vi-VN")}</div><span class="request-status">Đăng ký: <strong>${esc(reqRoles.join(" + "))}</strong></span></div><div class="request-actions"><button class="btn sm" data-approve-creator="${p.user_id}">Duyệt</button><button class="btn ghost sm" data-reject-creator="${p.user_id}">Từ chối</button></div></div>`}).join("")||'<p class="hint">Không có yêu cầu đang chờ.</p>'}
+async function loadCreatorRequests(){if(!isAdmin)return toast("Chỉ Admin mới có quyền duyệt.");$("creatorRequestsList").innerHTML='<p class="hint">Đang tải...</p>';const {data,error}=await client.from("creator_profiles").select("user_id,username,display_name,handle,is_approved,can_creator,can_commission,pending_creator,pending_commission,approval_status,created_at").eq("approval_status","pending").order("created_at",{ascending:false});if(error){$("creatorRequestsList").textContent="Không tải được danh sách: "+error.message;return}const rows=data||[];$("creatorRequestsList").innerHTML=rows.map(p=>{const reqRoles=[];if(p.pending_creator)reqRoles.push("Creator");if(p.pending_commission)reqRoles.push("Bbi share comm");if(!reqRoles.length&&!p.is_approved&&!p.can_creator&&!p.can_commission)reqRoles.push("Creator");return `<div class="request-row"><div><strong>${esc(p.display_name||"Creator")}</strong><div class="hint">@${esc(p.username||p.handle||"unknown")} · ${new Date(p.created_at).toLocaleString("vi-VN")}</div><span class="request-status">Đăng ký: <strong>${esc(reqRoles.join(" + "))}</strong></span></div><div class="request-actions"><button class="btn sm" data-approve-creator="${p.user_id}">Duyệt</button><button class="btn ghost sm" data-reject-creator="${p.user_id}">Từ chối</button></div></div>`}).join("")||'<p class="hint">Không có yêu cầu đang chờ.</p>'}
 $("creatorRequestsBtn").onclick=async()=>{await loadCreatorRequests();modal("creatorRequestsModal")};
 $("refreshCreatorRequests").onclick=loadCreatorRequests;
 function currentAdminDisplayName(){
@@ -2167,7 +2181,7 @@ async function refreshAdmin(){if(!session){isAdmin=false;refreshRoleUI();return}
 async function loadAll(){if(!configured){$("cards").innerHTML='<div class="empty" style="grid-column:1/-1">Website chưa được kết nối Supabase. Hãy làm theo README và chạy file SQL trước nhé ♡</div>';$("count").textContent="Chưa cấu hình";return}
 let [c,i,s,t]=await Promise.all([client.from("categories").select("*").order("sort_order"),client.from("library_items").select("*").order("created_at",{ascending:false}),client.from("site_settings").select("*").eq("id",1).maybeSingle(),client.from("stickers").select("*").order("created_at")]);
 if(c.error||i.error){toast("Không tải được dữ liệu. Kiểm tra cấu hình và SQL.");console.error(c.error,i.error);return}
-categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();if(typeof renderOutsideAdminList==="function")renderOutsideAdminList();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
+categories=c.data||[];items=i.data||[];if(s.data)settings=s.data;if(t.data)stickers=t.data;if(!window._didRoleCatBackfill){window._didRoleCatBackfill=true;await backfillApprovedRoleCategories();}applySettings();render();await migrateStickerPositions();renderStickers();if(typeof renderAdminShowcase==="function")renderAdminShowcase();await Promise.all([loadAnnouncements(),loadPublicActivityLogs(!session)]);
 }
 function itemMatchesFilter(x, opts={}){
  const c=categories.find(v=>v.id===x.category_id);
@@ -2447,7 +2461,7 @@ $("submitSubcatRequestBtn")?.addEventListener("click",async()=>{
  if(btn){btn.disabled=true;btn.textContent="Đang gửi..."}
  try{
   const authorName=currentProfile?.display_name||(session.user.email?session.user.email.split("@")[0]:"Creator");
-  const secText=sec==="commission"?"Người đẹp tốt bụng share":"Creator";
+  const secText=sec==="commission"?"Bbi share comm":"Creator";
   const content=`[YÊU CẦU NHÓM NHỎ] Khu vực: ${secText} · Nhóm: ${grp} · Nhóm nhỏ mới: "${subName}"${note?" · Ghi chú: "+note:""}`;
   const {error}=await client.from("creator_announcements").insert({
    author_id:session.user.id,
@@ -2466,42 +2480,118 @@ $("submitSubcatRequestBtn")?.addEventListener("click",async()=>{
   if(btn){btn.disabled=false;btn.textContent="Gửi yêu cầu"}
  }
 });
-function getAdminProfileCandidates(){
- const map=new Map();
- (creatorProfiles||[]).forEach(p=>{
-  if(!p?.user_id)return;
-  const isAdm=!!p.is_admin_user
-   ||adminUserIds.includes(p.user_id)
-   ||String(p.handle||"").startsWith("admin-")
-   ||(!!isAdmin&&!!session&&p.user_id===session.user.id);
-  if(isAdm)map.set(p.user_id,p);
- });
- if(currentProfile?.user_id&&((isAdmin&&session?.user?.id===currentProfile.user_id)||adminUserIds.includes(currentProfile.user_id))){
-  map.set(currentProfile.user_id,{...map.get(currentProfile.user_id),...currentProfile});
+let publicAdminProfiles=[];
+function collectAdminProfiles(){
+ const byId=new Map();
+ const isAdminRecord=p=>!!p&&!!p.user_id&&(
+  !!p.is_admin_user
+  ||adminUserIds.includes(p.user_id)
+  ||String(p.handle||"").toLowerCase().startsWith("admin-")
+  ||(!!isAdmin&&!!session&&p.user_id===session.user.id)
+ );
+ (publicAdminProfiles||[]).forEach(p=>{if(p?.user_id)byId.set(p.user_id,{...p,is_admin_user:true})});
+ (creatorProfiles||[]).forEach(p=>{if(isAdminRecord(p))byId.set(p.user_id,{...byId.get(p.user_id),...p,is_admin_user:true})});
+ if(currentProfile?.user_id&&isAdminRecord(currentProfile)){
+  byId.set(currentProfile.user_id,{...byId.get(currentProfile.user_id),...currentProfile,is_admin_user:true});
  }
- return [...map.values()];
+ (adminUserIds||[]).forEach((uid,idx)=>{
+  if(uid&&!byId.has(uid)){
+   byId.set(uid,{
+    user_id:uid,
+    display_name:`Admin ${idx+1}`,
+    handle:`admin-${String(uid).replace(/-/g,"").slice(0,6)}`,
+    bio:"",
+    links:[],
+    theme:{},
+    is_admin_user:true,
+    _placeholder:true
+   });
+  }
+ });
+ return [...byId.values()];
 }
-function renderOutsideAdminList(){
- const box=$("outsideAdminList");if(!box)return;
- const admProfiles=getAdminProfileCandidates();
- if(admProfiles.length){
-  box.innerHTML=admProfiles.map(p=>{
-   const th=p.theme||{};
-   const bg=validColor(th.background,"#fff7fc");
-   const acc=validColor(th.accent,"#d99ac6");
-   const acc2=validColor(th.accent2,"#b8a5e5");
-   const ink=validColor(th.textColor,bg.toLowerCase()==="#17131d"?"#f5edf8":"#51425e");
-   const targetKey=p.handle||p.display_name||"Admin";
-   return `<button type="button" class="admin-profile-pill" style="--pill-bg:${esc(bg)};--pill-ink:${esc(ink)};--pill-border:${esc(acc)};--pill-glow:${esc(acc2)}" onclick="openCreatorByName(decodeURIComponent('${encodeURIComponent(targetKey)}'))">${esc(p.display_name||"Admin")}</button>`;
-  }).join("");
+async function ensureLoggedInAdminProfileSynced(){
+ if(!configured||!isAdmin||!session?.user?.id)return;
+ const existing=(creatorProfiles||[]).find(p=>p.user_id===session.user.id)||currentProfile;
+ if(existing?.user_id)return;
+ const meta=session.user.user_metadata||{};
+ const rawName=String(meta.display_name||meta.username||(session.user.email?session.user.email.split("@")[0]:"Admin")).trim()||"Admin";
+ const handle="admin-"+session.user.id.replace(/-/g,"").slice(0,6);
+ const {data,error}=await client.from("creator_profiles").upsert({
+  user_id:session.user.id,
+  display_name:rawName,
+  handle,
+  username:meta.username||null,
+  is_approved:true,
+  can_creator:true,
+  can_commission:true,
+  approval_status:"approved"
+ },{onConflict:"user_id"}).select().maybeSingle();
+ if(!error&&data){
+  currentProfile=data;
+ }
+}
+async function syncAdminShowcase(){
+ if(!configured){renderAdminShowcase();return}
+ await ensureLoggedInAdminProfileSynced();
+ const [rpcAdm,rpcAll]=await Promise.all([
+  client.rpc("get_public_admin_profiles").then(r=>r,()=>({data:null,error:true})),
+  client.rpc("get_public_profiles").then(r=>r,()=>({data:null,error:true}))
+ ]);
+ const found=new Map();
+ if(!rpcAll.error&&Array.isArray(rpcAll.data)){
+  rpcAll.data.forEach(p=>{
+   if(p?.user_id&&(p.is_admin_user||String(p.handle||"").toLowerCase().startsWith("admin-")||adminUserIds.includes(p.user_id))){
+    found.set(p.user_id,{...p,is_admin_user:true});
+   }
+  });
+ }
+ if(!rpcAdm.error&&Array.isArray(rpcAdm.data)){
+  rpcAdm.data.forEach(p=>{
+   if(p?.user_id)found.set(p.user_id,{...found.get(p.user_id),...p,is_admin_user:true});
+  });
+ }
+ publicAdminProfiles=[...found.values()];
+ publicAdminProfiles.forEach(p=>{
+  if(p.user_id&&!adminUserIds.includes(p.user_id))adminUserIds.push(p.user_id);
+ });
+ renderAdminShowcase();
+}
+function renderAdminShowcase(){
+ const box=$("adminShowcaseList");if(!box)return;
+ const list=collectAdminProfiles();
+ if(!list.length){
+  box.innerHTML='<span class="hint">Chưa có Admin nào</span>';
   return;
  }
- if(adminUserIds.length){
-  box.innerHTML=adminUserIds.map((uid,idx)=>`<button type="button" class="admin-profile-pill" onclick="openMyProfile()">Admin ${idx+1}</button>`).join("");
- }else{
-  box.innerHTML='<span class="hint">Chưa có danh sách Admin</span>';
- }
+ box.innerHTML=list.map(p=>{
+  const th=p.theme||{};
+  const bg=validColor(th.background,"#fff7fc");
+  const acc=validColor(th.accent,"#d99ac6");
+  const acc2=validColor(th.accent2,"#b8a5e5");
+  const ink=validColor(th.textColor,bg.toLowerCase()==="#17131d"?"#f5edf8":"#51425e");
+  const av=safeWebUrl(p.avatar_url);
+  const badge=String(th.titleBadge||p.title_badge||"").trim();
+  const avatarHtml=av
+   ?`<img class="admin-chip-avatar" src="${esc(av)}" alt="">`
+   :`<span class="admin-chip-avatar">✦</span>`;
+  return `<button type="button" class="admin-chip-btn" style="--chip-bg:${esc(bg)};--chip-ink:${esc(ink)};--chip-border:${esc(acc)};--chip-glow:${esc(acc2)}" onclick="openPublicAdminProfile('${esc(p.user_id)}')">${avatarHtml}<span>${esc(p.display_name||"Admin")}</span>${badge?`<span style="opacity:.78;font-weight:600;font-size:11px">· ${esc(badge)}</span>`:""}</button>`;
+ }).join("");
 }
+window.openPublicAdminProfile=async uid=>{
+ if(!uid)return;
+ if(configured&&(!publicAdminProfiles.length||!creatorProfiles.length)){
+  await fetchCreatorProfiles();
+ }
+ const target=collectAdminProfiles().find(p=>String(p.user_id)===String(uid))
+  ||(creatorProfiles||[]).find(p=>String(p.user_id)===String(uid));
+ if(!target)return toast("Không tìm thấy hồ sơ Admin.");
+ if(target._placeholder&&isAdmin&&session?.user?.id===target.user_id){
+  return openMyProfile();
+ }
+ modal("creatorDirectoryModal",false);
+ openProfile(target);
+};
 async function init(){if(!configured){loadAll();return}let {data}=await client.auth.getSession();session=data.session;client.auth.onAuthStateChange((event,s)=>{session=s;if(event==="PASSWORD_RECOVERY")setTimeout(()=>modal("creatorPasswordRecoveryModal"),0);setTimeout(async()=>{await refreshAdmin();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI()}else{currentProfile=null;refreshRoleUI()}render()},0)});await refreshAdmin();await loadAll();if(session){await loadCreatorProfile();await fetchCreatorProfiles();refreshRoleUI();await loadNotifications(true)}else{await fetchCreatorProfiles();refreshRoleUI()}const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(route){const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)}}
 window.addEventListener("hashchange",()=>{const route=decodeURIComponent(location.hash.replace(/^#creator\//,""));if(!route)return;const found=creatorProfiles.find(p=>p.handle===route);if(found)openProfile(found)});
 function kickGifPlayback(forceReloadGif=false){
