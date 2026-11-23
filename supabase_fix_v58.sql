@@ -174,4 +174,10 @@ BEGIN
   END LOOP;
 END $$;
 
+-- 9. Cột lời giới thiệu & tùy chỉnh khung giới thiệu trên site_settings
+ALTER TABLE public.site_settings ADD COLUMN IF NOT EXISTS intro_text text;
+ALTER TABLE public.site_settings ADD COLUMN IF NOT EXISTS intro_style jsonb;
+ALTER TABLE public.site_settings ADD COLUMN IF NOT EXISTS hero_width integer;
+ALTER TABLE public.site_settings ADD COLUMN IF NOT EXISTS hero_height integer;
+
 NOTIFY pgrst, 'reload schema';
