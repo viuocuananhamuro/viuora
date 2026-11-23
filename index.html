@@ -1181,6 +1181,21 @@ body[data-theme="dark"] .pe-nav{border-bottom-color:#51445e;box-shadow:0 6px 14p
  #profileEditor .field input,#profileEditor .field textarea,#profileEditor .field select{min-height:44px}
  #profileEditor .field textarea{min-height:96px}
  #profileEditor input[type="range"]{min-height:34px}
+/* ---- Xem trước hồ sơ khi chỉnh sửa ---- */
+.pe-preview{border:1px dashed color-mix(in srgb,var(--pink,#d99ac6) 60%,transparent);border-radius:16px;padding:10px;margin:0 0 12px;background:var(--pm-bg,#fff)}
+.pe-preview-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.pe-preview-spacer{flex:1}
+.pe-preview-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:#fff0c9;color:#8a6200}
+.pe-pin{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;cursor:pointer;user-select:none}
+.pe-preview-body{padding:10px 4px 4px;overflow:hidden}
+.pe-preview-note{margin:6px 2px 0;font-size:12px}
+.pe-preview.collapsed .pe-preview-body,.pe-preview.collapsed .pe-preview-note{display:none}
+.pe-preview.collapsed .pe-preview-bar{margin-bottom:0}
+.pe-preview.pinned{position:sticky;top:var(--pe-nav-h,52px);z-index:7;box-shadow:0 8px 18px -10px rgba(80,55,95,.45)}
+.pe-preview.pinned .pe-preview-body{max-height:34vh;overflow-y:auto}
+.pe-preview.pinned .pe-preview-note{display:none}
+body[data-theme="dark"] .pe-preview{background:#2a2233}
+
 }
 
 /* ---------- Thanh nhảy nhanh trong cửa sổ Trang trí: một hàng, vuốt ngang ---------- */
@@ -3351,7 +3366,7 @@ body.admin .site-intro-box .admin-showcase-bar.merged-in-intro{
 <button type="button" class="pe-chip" data-pe="pe_avatar">◎ Khung avatar</button>
 <button type="button" class="pe-chip" data-pe="pe_pattern">❀ Họa tiết &amp; tên</button>
 <button type="button" class="pe-chip" data-pe="pe_mood">☺ Trạng thái</button>
-</nav><div class="cols" id="pe_info"><div class="field"><label>Tên hiển thị</label><input id="profileName"></div><div class="field"><label>Danh xưng (hiện kế bên tên)</label><input id="profileTitleBadge" maxlength="40" placeholder="Ví dụ: Công chúa bánh bèo, Bbi mơ mộng..."></div></div><div class="field"><label>Username (không dấu, chữ thường)</label><input id="profileHandle" placeholder="my-creator"></div><div class="cols" id="pe_images"><div class="field"><label>Ảnh đại diện</label><input id="profileAvatarFile" type="file" accept="image/*"><div class="hint" id="profileAvatarCurrent">Chọn ảnh từ thiết bị của bạn</div></div><div class="field"><label>Ảnh bìa trang cá nhân</label><input id="profileBannerFile" type="file" accept="image/*"><div class="hint" id="profileBannerCurrent">Chọn ảnh từ thiết bị của bạn</div></div></div><div class="field" id="pe_bio"><label>Giới thiệu</label><textarea id="profileBio" maxlength="600" placeholder="Một chút về bạn..."></textarea></div><div class="field" id="pe_links"><label>Link mạng xã hội / portfolio (mỗi dòng một URL)</label><textarea id="profileLinks" placeholder="https://..."></textarea></div><div id="pe_font" style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
+</nav><section class="pe-preview" id="pePreview" aria-label="Xem trước hồ sơ"><div class="pe-preview-bar"><strong>👁 Xem trước hồ sơ</strong><span class="pe-preview-tag">Chưa lưu</span><span class="pe-preview-spacer"></span><label class="pe-pin"><input type="checkbox" id="pePreviewPin"> Ghim</label><button type="button" class="btn ghost sm" id="pePreviewToggle" aria-expanded="true">Thu gọn</button></div><div class="pe-preview-body" id="pePreviewBody"></div><p class="hint pe-preview-note">Mọi thay đổi hiện ngay tại đây. Nhấn “Lưu hồ sơ” để áp dụng thật.</p></section><div class="cols" id="pe_info"><div class="field"><label>Tên hiển thị</label><input id="profileName"></div><div class="field"><label>Danh xưng (hiện kế bên tên)</label><input id="profileTitleBadge" maxlength="40" placeholder="Ví dụ: Công chúa bánh bèo, Bbi mơ mộng..."></div></div><div class="field"><label>Username (không dấu, chữ thường)</label><input id="profileHandle" placeholder="my-creator"></div><div class="cols" id="pe_images"><div class="field"><label>Ảnh đại diện</label><input id="profileAvatarFile" type="file" accept="image/*"><div class="hint" id="profileAvatarCurrent">Chọn ảnh từ thiết bị của bạn</div></div><div class="field"><label>Ảnh bìa trang cá nhân</label><input id="profileBannerFile" type="file" accept="image/*"><div class="hint" id="profileBannerCurrent">Chọn ảnh từ thiết bị của bạn</div></div></div><div class="field" id="pe_bio"><label>Giới thiệu</label><textarea id="profileBio" maxlength="600" placeholder="Một chút về bạn..."></textarea></div><div class="field" id="pe_links"><label>Link mạng xã hội / portfolio (mỗi dòng một URL)</label><textarea id="profileLinks" placeholder="https://..."></textarea></div><div id="pe_font" style="border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0">
 <strong>✎ Font chữ hồ sơ</strong>
 <div class="cols">
  <div class="field"><label>Font nội dung &amp; giới thiệu</label><select id="profileBodyFont"><option value="Quicksand">Quicksand – tròn, dễ thương</option><option value="Be Vietnam Pro">Be Vietnam Pro – tiếng Việt rõ nét</option><option value="Comfortaa">Comfortaa – kawaii</option><option value="Merriweather">Merriweather – cổ điển ấm áp</option><option value="Pacifico">Pacifico – nét cọ mềm mại</option><option value="Great Vibes">Great Vibes – thư pháp thanh mảnh</option></select></div>
@@ -6132,6 +6147,74 @@ function loadAvatarEditor(theme,p){
 }
 document.addEventListener("DOMContentLoaded",buildAvatarGallery);
 buildAvatarGallery();
+
+/* ---- Xem trước hồ sơ trực tiếp trong trình chỉnh sửa ---- */
+const pePrev={timer:0,urls:new WeakMap()};
+function peFileUrl(file){if(!file)return"";let u=pePrev.urls.get(file);if(!u){u=URL.createObjectURL(file);pePrev.urls.set(file,u)}return u}
+function pePreviewTheme(){
+ const g=id=>document.getElementById(id);
+ const accent=validColor(g("profileAccent")?.value,"#d99ac6");
+ const bf=g("profileBodyFont")?.value,hf=g("profileHeaderFont")?.value;
+ return {
+  titleBadge:(g("profileTitleBadge")?.value||"").trim(),
+  accent,accent2:validColor(g("profileAccent2")?.value,"#b8a5e5"),
+  background:validColor(g("profileBackground")?.value,"#fff7fc"),
+  surface:validColor(g("profileSurface")?.value,"#ffffff"),
+  textColor:validColor(g("profileTextColor")?.value,"#51425e"),
+  bodyFont:CREATOR_FONTS.includes(bf)?bf:"Quicksand",
+  headerFont:CREATOR_FONTS.includes(hf)?hf:"Playfair Display",
+  borderStyle:g("profileBorderStyle")?.value||"solid",
+  glowColor:validColor(g("profileGlowColor")?.value,accent),
+  glowSize:Math.max(0,Math.min(32,Number(g("profileGlowSize")?.value)||0)),
+  effect:g("profileEffect")?.value||"none",
+  bannerFx:g("profileBannerFx")?.value||"none",
+  avatarFrame:g("profileAvatarFrame")?.value||"classic",
+  cardPattern:g("profileCardPattern")?.value||"none",
+  moodText:(g("profileMoodText")?.value||"").trim(),
+  ...avatarThemeFromEditor()
+ };
+}
+function renderProfilePreview(){
+ const box=document.getElementById("pePreviewBody");
+ const ed=document.getElementById("profileEditor");
+ if(!box||!ed||ed.style.display==="none")return;
+ const g=id=>document.getElementById(id);
+ const theme=pePreviewTheme();
+ const name=(g("profileName")?.value||"").trim()||"Tên hiển thị";
+ const handle=(g("profileHandle")?.value||"").trim().toLowerCase()||"username";
+ const bio=(g("profileBio")?.value||"").trim();
+ const links=(g("profileLinks")?.value||"").split(/\r?\n/).map(x=>safeWebUrl(x.trim())).filter(Boolean);
+ const avFile=g("profileAvatarFile")?.files?.[0],bnFile=g("profileBannerFile")?.files?.[0];
+ const avatarUrl=avFile?peFileUrl(avFile):safeWebUrl(currentProfile?.avatar_url);
+ const bannerUrl=bnFile?peFileUrl(bnFile):safeWebUrl(currentProfile?.banner_url);
+ ensureProfileFontsLoaded(theme.bodyFont,theme.headerFont);
+ const accent=theme.accent;
+ const badge=theme.titleBadge?`<span style="margin-left:7px;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700;background:color-mix(in srgb,${accent} 22%,transparent);color:${accent};border:1px solid color-mix(in srgb,${accent} 45%,transparent);vertical-align:middle">${esc(theme.titleBadge)}</span>`:"";
+ const mood=theme.moodText?`<div class="profile-status-tag${moodStyleClass(theme)}"><i class="st-dot" aria-hidden="true"></i><span class="st-txt">${esc(theme.moodText)}</span></div>`:"";
+ const cls=["profile-theme"];
+ if(theme.effect&&theme.effect!=="none")cls.push("p-motion-"+theme.effect);
+ if(theme.borderStyle&&theme.borderStyle!=="solid")cls.push("p-border-"+theme.borderStyle);
+ if(theme.cardPattern&&theme.cardPattern!=="none")cls.push("p-pat-"+theme.cardPattern);
+ const bcls=["profile-banner"];
+ if(theme.bannerFx&&theme.bannerFx!=="none")bcls.push("banner-fx-"+theme.bannerFx);
+ const avInnerHtml=avatarUrl?`<img class="profile-avatar" src="${esc(avatarUrl)}" alt="Avatar">`:`<div class="profile-avatar">♡</div>`;
+ const chips=links.map(u=>{let h=u;try{h=new URL(u).hostname}catch{}return `<span class="profile-link-chip">✦ ${esc(h)}</span>`}).join("");
+ box.innerHTML=`<div class="${cls.join(" ")}" style="--creator-accent:${theme.accent};--creator-accent2:${theme.accent2};--creator-bg:${theme.background};--creator-surface:${theme.surface};--creator-ink:${theme.textColor};--creator-font:'${theme.bodyFont}',sans-serif;--creator-heading-font:'${theme.headerFont}',Georgia,serif;--creator-glow-color:${theme.glowColor};--creator-glow-size:${theme.glowSize}px"><div class="${bcls.join(" ")}" ${bannerUrl?`style="background-image:linear-gradient(90deg,#0002,#0002),url('${esc(bannerUrl)}')"`:""}><strong class="profile-name-title" style="font-size:18px">${esc(name)}</strong></div><div class="profile-head">${avatarWrapHtml(theme,avInnerHtml)}<div style="min-width:0"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px"><strong class="profile-name-title${nameFxClass(theme)}" style="font-size:17px">${esc(name)}</strong>${badge}</div><div class="hint">@${esc(handle)}</div>${mood}</div></div><p style="margin:12px 0 6px">${esc(bio||"Chưa có giới thiệu.")}</p><div class="profile-links">${chips}</div></div>`;
+ const nav=document.getElementById("peNav");
+ if(nav)document.getElementById("pePreview").style.setProperty("--pe-nav-h",nav.offsetHeight+"px");
+}
+function schedulePreview(){clearTimeout(pePrev.timer);pePrev.timer=setTimeout(renderProfilePreview,60)}
+(function initProfilePreview(){
+ const ed=document.getElementById("profileEditor");if(!ed)return;
+ ["input","change"].forEach(ev=>ed.addEventListener(ev,schedulePreview));
+ const gal=document.getElementById("avFrameGallery");if(gal)gal.addEventListener("click",schedulePreview);
+ const wrap=document.getElementById("pePreview"),tg=document.getElementById("pePreviewToggle"),pin=document.getElementById("pePreviewPin");
+ if(tg)tg.addEventListener("click",()=>{const c=wrap.classList.toggle("collapsed");tg.textContent=c?"Mở rộng":"Thu gọn";tg.setAttribute("aria-expanded",String(!c));if(c)wrap.classList.remove("pinned");else if(pin?.checked)wrap.classList.add("pinned")});
+ if(pin)pin.addEventListener("change",()=>{wrap.classList.toggle("pinned",pin.checked&&!wrap.classList.contains("collapsed"));schedulePreview()});
+ const em=document.getElementById("editMyProfile");
+ if(em)em.addEventListener("click",()=>{setTimeout(renderProfilePreview,0);setTimeout(renderProfilePreview,250)});
+ window.addEventListener("resize",schedulePreview);
+})();
 
 init();
 </script>
