@@ -2584,47 +2584,49 @@ body[data-theme="dark"] .site-intro-box{
    v87 · KHOẢNG TRỐNG THOÁNG CHO HEADER & GIỚI THIỆU + HIỆU ỨNG TRƯỢT TỪ DƯỚI LÊN
    ===================================================================== */
 
-/* 1. Tạo khoảng trống thoáng, tách biệt rõ giữa Banner -> Header -> Giới thiệu -> Admin -> Nhạc -> Khung chính */
+/* 1. Cân bằng tuyệt đối khoảng trống trên (Header -> Giới thiệu) và dưới (Giới thiệu -> Thanh Admin) */
 .hero-card{
  margin:38px auto 0!important;
- padding:16px 20px 8px!important;
+ padding:16px 20px 0!important;
 }
 .hero-card::after{
- margin:28px auto 0!important;
+ margin:26px auto 0!important;
 }
 .wrap{
- padding-top:26px!important;
+ padding-top:16px!important;
 }
 .site-intro-box,
 body[data-theme="dark"] .site-intro-box{
  min-height:0!important;
- padding:42px 16px 36px!important;
- margin:12px auto 38px!important;
+ padding:60px 16px 12px!important;
+ margin:0 auto 28px!important;
 }
+/* Tổng khoảng cách trên = 0 + 16 + 0 + 60 = 76px; dưới = 76px (bằng nhau tuyệt đối) */
 .site-intro-box .admin-showcase-bar.merged-in-intro{
- margin:40px auto 0!important;
+ margin:76px auto 0!important;
 }
 .site-intro-box+.music-player.top-vinyl{
- margin:0 auto 32px!important;
+ margin:0 auto 30px!important;
 }
 @media(max-width:640px){
  .hero-card{
   margin:24px auto 0!important;
-  padding:10px 10px 4px!important;
+  padding:10px 10px 0!important;
  }
  .hero-card::after{
   margin:20px auto 0!important;
  }
  .wrap{
-  padding-top:18px!important;
+  padding-top:12px!important;
  }
  .site-intro-box,
  body[data-theme="dark"] .site-intro-box{
-  padding:32px 6px 28px!important;
-  margin:8px auto 28px!important;
+  padding:44px 6px 10px!important;
+  margin:0 auto 22px!important;
  }
+ /* Mobile: Tổng trên = 0 + 12 + 0 + 44 = 56px; dưới = 56px (bằng nhau tuyệt đối) */
  .site-intro-box .admin-showcase-bar.merged-in-intro{
-  margin:30px auto 0!important;
+  margin:56px auto 0!important;
  }
  .site-intro-box+.music-player.top-vinyl{
   margin:0 auto 24px!important;
