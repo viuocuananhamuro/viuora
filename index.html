@@ -2612,30 +2612,187 @@ body.admin .site-intro-box .admin-showcase-bar.merged-in-intro{
  margin:0 auto 30px!important;
 }
 @media(max-width:768px){
+ /* 1. Khoảng trống rộng, thoáng, cân đối trên điện thoại: Banner -> Header -> Giới thiệu -> Thanh Admin */
  .hero-card{
-  margin:44px auto 0!important;
-  padding:10px 10px 0!important;
+  margin:68px auto 0!important;
+  padding:12px 14px 0!important;
  }
  .hero-card::after{
-  margin:22px auto 0!important;
+  margin:30px auto 0!important;
  }
  .wrap{
-  padding-top:14px!important;
+  padding-top:20px!important;
  }
  .site-intro-box,
  body[data-theme="dark"] .site-intro-box{
-  padding:48px 8px 10px!important;
-  margin:0 auto 24px!important;
+  padding:64px 10px 12px!important;
+  margin:0 auto 34px!important;
  }
- /* Điện thoại: Tổng trên = 14 + 48 = 62px; dưới = 62px (bằng nhau tuyệt đối) */
+ /* Điện thoại: Tổng trên = 20 + 64 = 84px; dưới xuống thanh Admin = 84px (bằng nhau tuyệt đối) */
  .site-intro-box .admin-showcase-bar.merged-in-intro{
-  margin:62px auto 0!important;
+  margin:84px auto 0!important;
  }
  body.admin .site-intro-box .admin-showcase-bar.merged-in-intro{
-  margin:34px auto 0!important;
+  margin:52px auto 0!important;
  }
  .site-intro-box+.music-player.top-vinyl{
-  margin:0 auto 26px!important;
+  margin:0 auto 30px!important;
+ }
+
+ /* 2. Đồng bộ lại hệ thống cỡ chữ hài hòa cho toàn bộ các phần bên dưới trên điện thoại */
+ .site-intro-text{
+  font-size:14px!important;
+  line-height:1.75!important;
+  padding:0 4px;
+ }
+ .admin-showcase-bar{
+  padding:7px 12px!important;
+  font-size:12.5px!important;
+ }
+ .admin-showcase-title,
+ .admin-chip-btn,
+ body[data-theme="dark"] .admin-chip-btn{
+  font-size:12.5px!important;
+ }
+ .music-player.top-vinyl .music-name{
+  font-size:13px!important;
+ }
+ .music-player.top-vinyl .music-seek{
+  font-size:11px!important;
+ }
+
+ /* Khung tìm kiếm & nút điều hướng đồng đều */
+ .panel{
+  padding:14px!important;
+  border-radius:18px!important;
+ }
+ .panel .toolbar .search input{
+  font-size:13.5px!important;
+  padding:10px 13px 10px 36px!important;
+ }
+ .panel .toolbar .search b{
+  font-size:16px!important;
+  top:9px!important;
+ }
+ .panel .toolbar #creatorAddCharBtn.creator-add.visible{
+  font-size:12.5px!important;
+  padding:8px 14px!important;
+ }
+ .panel .toolbar #creatorDirectoryBtn{
+  font-size:12.5px!important;
+  letter-spacing:.15px!important;
+  padding:8px 12px!important;
+ }
+ .admin .admin-actions-bar .hint,
+ .admin .admin-actions-bar .btn.sm{
+  font-size:12px!important;
+ }
+ .tabs{
+  margin:14px 0 8px!important;
+ }
+ .tab{
+  font-size:12.5px!important;
+  padding:7.5px 14px!important;
+  min-height:36px!important;
+ }
+ .subtab{
+  font-size:12px!important;
+  padding:6px 12px!important;
+ }
+
+ /* Bảng tin Creator */
+ .announce-drawer{
+  margin-top:14px!important;
+ }
+ .announce-bar-head,
+ .announce-preview{
+  font-size:12.5px!important;
+ }
+ .announce-badge{
+  font-size:11px!important;
+  padding:3px 9px!important;
+ }
+ .announce-chevron{
+  font-size:11.5px!important;
+ }
+ .announce-card{
+  font-size:12.5px!important;
+ }
+
+ /* Tiêu đề mục & dòng phụ */
+ .heading{
+  margin:22px 0 12px!important;
+  gap:4px!important;
+ }
+ .heading h2{
+  font-size:19px!important;
+  line-height:1.25!important;
+ }
+ .heading .muted,
+ #count,
+ #magicTagline{
+  font-size:12px!important;
+  line-height:1.4!important;
+ }
+
+ /* Thẻ nhân vật: cỡ chữ gọn gàng, đều mắt, không bị to nhỏ lộn xộn */
+ .cardbody{
+  padding:11px!important;
+ }
+ .card h3{
+  font-size:14px!important;
+  line-height:1.32!important;
+  margin-bottom:4px!important;
+ }
+ .card .desc{
+  font-size:12px!important;
+  line-height:1.48!important;
+  min-height:34px!important;
+ }
+ .card .creator{
+  font-size:11.5px!important;
+  margin:7px 0!important;
+ }
+ .card .creator .btn.sm{
+  font-size:11.5px!important;
+  padding:2.5px 8px!important;
+ }
+ .card .tag,
+ .card .main-tag{
+  font-size:10.5px!important;
+  padding:3px 7.5px!important;
+ }
+ .card .actions{
+  gap:6px!important;
+  margin-top:10px!important;
+ }
+ .card .actions>button{
+  font-size:12px!important;
+  min-height:34px!important;
+  padding:6px 5px!important;
+  border-radius:10px!important;
+ }
+ .card .actions>button:first-child{
+  font-size:12.5px!important;
+  min-height:36px!important;
+  border-radius:11px!important;
+ }
+ .card .actions .btn-feedback-full{
+  font-size:12px!important;
+  min-height:34px!important;
+  border-radius:10px!important;
+ }
+ .card .actions-manage .btn{
+  font-size:11.5px!important;
+  min-height:32px!important;
+ }
+ .empty{
+  font-size:13px!important;
+ }
+ footer,
+ #siteFooter{
+  font-size:12px!important;
+  padding:24px 12px 32px!important;
  }
 }
 
@@ -6278,8 +6435,9 @@ function clickFx(x,y,soundOnly){
 
 /* ===== bảng tùy chỉnh cho mọi người ===== */
 const SCHEMA=[
-["Con trỏ chuột",fine,[["cur","c","Hình dạng",[["star","⭐ Sao"],["heart","💗 Tim"],["flower","🌸 Hoa"],["paw","🐾 Mèo"],["dot","● Chấm"],["off","Mặc định"]]],["curSize","r","Kích thước",60,170],["curColor","c","Màu",[["theme","Theo giao diện"],["custom","Tự chọn"],["rainbow","Cầu vồng"]]],["custom","k","Màu của bạn"],["ring","b","Vòng tròn đuổi theo"],["trail","c","Vệt phía sau",[["sparkle","✦ Lấp lánh"],["hearts","♡ Tim"],["petals","🌸 Cánh hoa"],["none","Tắt"]]]]],
-["Hiệu ứng khi bấm",true,[["click","c","Kiểu",[["classic","✿ Kiểu đơn giản"],["sparkles","✦ Lấp lánh"],["hearts","♡ Tim"],["petals","🌸 Cánh hoa"],["confetti","🎊 Confetti"],["bubbles","🫧 Bong bóng"],["stars","⭐ Sao"],["none","Tắt"]]],["power","r","Độ bung",0,250],["clickRing","b","Sóng lan ra"],["oldBurst","b","Giữ hạt bay cũ trên nút và thẻ"]]],
+["Con trỏ chuột",fine,[["cur","c","Hình dạng",[["star","⭐ Sao"],["heart","💗 Tim"],["flower","🌸 Hoa"],["paw","🐾 Mèo"],["dot","● Chấm"],["off","Mặc định"]]],["curSize","r","Kích thước",60,170],["ring","b","Vòng tròn đuổi theo"],["trail","c","Vệt phía sau",[["sparkle","✦ Lấp lánh"],["hearts","♡ Tim"],["petals","🌸 Cánh hoa"],["none","Tắt"]]]]],
+["Màu con trỏ & hiệu ứng",true,[["curColor","c","Kiểu màu",[["theme","Theo giao diện"],["custom","Tự chọn"],["rainbow","Cầu vồng"]]],["custom","k","Chọn màu riêng"]]],
+["Hiệu ứng khi bấm",true,[["click","c","Kiểu",[["classic","✿ Kiểu đơn giản"],["sparkles","✦ Lấp lánh"],["hearts","♡ Tim"],["petals","🌸 Cánh hoa"],["confetti","🎊 Confetti"],["bubbles","🫧 Bong bóng"],["stars","⭐ Sao"],["none","Tắt"]]],["power","r","Độ bung",0,250]]],
 ["Âm thanh",true,[["sound","b","Bật âm thanh hiệu ứng"],["vol","r","Âm lượng",0,100],["clickSnd","c","Tiếng khi bấm",[["chime","Chuông"],["pop","Pop"],["bell","Ting"],["sparkle","Lấp lánh"],["off","Im"]]]]],
 ["Sticker",true,[["boom","r","Độ bùng nổ khi chạm",0,200],["charge","b","Giữ lâu để nổ siêu bự"]]]];
 const panel=doc.createElement("div");panel.id="wowPanel";panel.hidden=true;panel.setAttribute("role","dialog");panel.setAttribute("aria-label","Tùy chỉnh con trỏ và hiệu ứng");
@@ -6304,13 +6462,13 @@ function sync(){panel.querySelectorAll("[data-k]").forEach(el=>{const k=el.datas
   if(el.classList.contains("wp-chip"))el.classList.toggle("on",String(PF[k])===el.dataset.v);
   else if(el.type==="checkbox")el.checked=!!PF[k];else el.value=PF[k]});
  panel.querySelectorAll("[data-o]").forEach(e=>e.textContent=PF[e.dataset.o]+"%");
- panel.querySelector("[data-if]")&&(panel.querySelector("[data-if]").hidden=PF.curColor!=="custom")}
+}
 function change(k,v){PF[k]=v;try{localStorage.setItem(KEY,JSON.stringify(PF))}catch(e){}apply();sync()}
 panel.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
  if(t.dataset.a==="x")panel.hidden=true;
  else if(t.dataset.a==="reset"){PF=Object.assign({},DEF);try{localStorage.removeItem(KEY)}catch(e){}apply();sync()}
  else if(t.dataset.k)change(t.dataset.k,t.dataset.v)});
-panel.addEventListener("input",e=>{const el=e.target,k=el.dataset.k;if(!k||el.type==="checkbox")return;change(k,el.type==="range"?+el.value:el.value)});
+panel.addEventListener("input",e=>{const el=e.target,k=el.dataset.k;if(!k||el.type==="checkbox")return;if(k==="custom")PF.curColor="custom";change(k,el.type==="range"?+el.value:el.value)});
 panel.addEventListener("change",e=>{const el=e.target;if(el.type==="checkbox")change(el.dataset.k,el.checked)});
 doc.addEventListener("keydown",e=>{if(e.key==="Escape")panel.hidden=true});
 const dock=$("bottomThemeDock"),fb=doc.createElement("button");fb.type="button";fb.id="wowFxBtn";fb.className="theme-toggle-btn";fb.textContent="🎀";fb.title="Con trỏ & hiệu ứng";fb.setAttribute("aria-label","Tùy chỉnh con trỏ và hiệu ứng");
