@@ -2395,9 +2395,9 @@ body[data-theme="dark"] #creatorAccountBtn.is-profile-btn:hover{
 .hero,
 .hero.has-cover-ratio{
  aspect-ratio:auto!important;
- height:clamp(220px,calc(var(--hero-min-height,360px) + 60px),460px)!important;
- min-height:220px!important;
- max-height:460px!important;
+ height:clamp(200px,var(--hero-min-height,315px),400px)!important;
+ min-height:200px!important;
+ max-height:400px!important;
  background-size:cover!important;
  background-position:center!important;
 }
@@ -2749,7 +2749,7 @@ body[data-theme="dark"] .site-intro-box{
   <div class="d-card-body">
    <div class="cols">
     <div class="field"><label>Độ rộng Banner <span class="d-val" id="dHeroWidthValue">100%</span></label><input id="dHeroWidth" type="range" min="60" max="100" value="100"></div>
-    <div class="field"><label>Chiều cao mặc định <span class="d-val" id="dHeroHeightValue">290px</span></label><input id="dHeroHeight" type="range" min="200" max="460" value="360"></div>
+    <div class="field"><label>Chiều cao mặc định <span class="d-val" id="dHeroHeightValue">290px</span></label><input id="dHeroHeight" type="range" min="200" max="400" value="315"></div>
    </div>
   </div>
  </details><details class="d-card" open id="dc_l_herocolor" data-mode="light" data-search="màu nền header gradient chuyển mờ">
@@ -3389,7 +3389,7 @@ function applySettings(){
  let heroSizeCfg={};
  try{heroSizeCfg=JSON.parse(localStorage.getItem("viuora_hero_size")||"{}")}catch{}
  const heroW=Math.max(60,Math.min(100,Number(settings.hero_width||heroSizeCfg.width||100)));
- const heroH=Math.max(200,Math.min(460,Number(settings.hero_height||heroSizeCfg.height||360)));
+ const heroH=Math.max(200,Math.min(400,Number(settings.hero_height||heroSizeCfg.height||315)));
  heroEl.style.setProperty("--hero-width",heroW+"%");
  heroEl.style.setProperty("--hero-radius",heroW<100?"0 0 26px 26px":"0px");
  heroEl.style.setProperty("--hero-min-height",heroH+"px");
